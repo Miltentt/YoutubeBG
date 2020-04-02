@@ -177,7 +177,7 @@ FragmentManager popup = new FragmentManager() {
 };
 
 popup = this.getSupportFragmentManager();
-Retrofit1 retrofit = new Retrofit1();
+
          finalPopup = popup;
                 recyclerView = findViewById(R.id.a);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -213,23 +213,5 @@ Retrofit1 retrofit = new Retrofit1();
 
     @Override
     public void search(String search) {
-        Call<Search_Response> youtubeResponseCall = Retrofit1.youtubeApi.searchVideo(search, "video", "AIzaSyDtg9GVjWLW_KzJzyNPsMKTYOYD8YDrod8", "snippet,id", "10", "");
-        youtubeResponseCall.enqueue(new Callback<Search_Response>() {
-            @Override
-            public void onResponse(Call<Search_Response> call, Response<Search_Response> response) {
-
-                list = response.body();
-                adapter = new Search_Adapter(list.getItems(), finalPopup,getApplicationContext());
-                recyclerView.setAdapter(adapter);
-
-            }
-
-            @Override
-            public void onFailure(Call<Search_Response> call, Throwable t) {
-
-            }
-        });
-
-
     }
 }
