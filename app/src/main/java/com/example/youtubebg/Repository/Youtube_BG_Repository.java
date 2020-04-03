@@ -7,11 +7,13 @@ import com.example.youtubebg.retrofit.Retrofit1;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class Youtube_BG_Repository {
 
     private static  Youtube_BG_Repository instance;
    private Search_Response list = new Search_Response();
+   private Retrofit1 retrofit1;
     public static Youtube_BG_Repository getInstance()
     {
         if(instance==null)
@@ -19,6 +21,9 @@ public class Youtube_BG_Repository {
             instance = new Youtube_BG_Repository();
         }
         return instance;
+    }
+    public Youtube_BG_Repository(){
+        retrofit1= Retrofit1.getInstance();
     }
     public Search_Response getSearch(String search)
     {

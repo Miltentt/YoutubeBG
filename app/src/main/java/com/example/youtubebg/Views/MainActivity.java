@@ -1,4 +1,4 @@
-package com.example.youtubebg;
+package com.example.youtubebg.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.youtubebg.Models.Search_Response;
+import com.example.youtubebg.R;
+import com.example.youtubebg.ViewModels.MainActivity_ViewModel;
 import com.example.youtubebg.Views.Fragment_search;
 import com.example.youtubebg.Views.Playlists;
 import com.example.youtubebg.adapters.Search_Adapter;
@@ -25,6 +29,8 @@ import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.List;
 
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +42,9 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
     private FragmentManager finalPopup;
     private TextView textView;
     private Search_Adapter adapter;
+    private MainActivity_ViewModel mainActivity_viewModel;
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -175,13 +184,11 @@ FragmentManager popup = new FragmentManager() {
         return false;
     }
 };
-
+mainActivity_viewModel = ViewModelProviders.of(this).get(MainActivity_ViewModel.class);
 popup = this.getSupportFragmentManager();
 
          finalPopup = popup;
-                recyclerView = findViewById(R.id.a);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                recyclerView.setLayoutManager(layoutManager);
+
 
 
 
@@ -192,7 +199,6 @@ popup = this.getSupportFragmentManager();
 
         @Override
         public boolean onCreateOptionsMenu (Menu menu){
-
             getMenuInflater().inflate(R.layout.menu, menu);
             return true;
         }
@@ -213,5 +219,33 @@ popup = this.getSupportFragmentManager();
 
     @Override
     public void search(String search) {
+        mainActivity_viewModel.getSearch(search);
+        mainActivity_viewModel.getObservable().subscribe(new Observer<Search_Response>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+
+            }
+
+            @Override
+            public void onNext(Search_Response o) {
+list=o;
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                adapter = new Search_Adapter(list.getItems(),finalPopup,getApplicationContext());
+                recyclerView = findViewById(R.id.a);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
     }
 }

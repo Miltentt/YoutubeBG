@@ -7,9 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.youtubebg.MainActivity;
 import com.example.youtubebg.R;
 
 public class Playlists extends Activity {

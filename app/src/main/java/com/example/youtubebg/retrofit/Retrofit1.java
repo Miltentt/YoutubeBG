@@ -1,6 +1,7 @@
 package com.example.youtubebg.retrofit;
 
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public  class Retrofit1 {
@@ -11,10 +12,11 @@ private static  Retrofit1 instance;
       retrofit = new retrofit2.Retrofit.Builder()
                 .baseUrl("https://www.googleapis.com/youtube/v3/")
                 .addConverterFactory(GsonConverterFactory.create())
+           .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
       youtubeApi = retrofit.create(YoutubeAPI.class);
     }
-public Retrofit1 getInstance()
+public static Retrofit1 getInstance()
 {
   if(instance==null)
   {
