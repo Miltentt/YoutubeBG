@@ -13,9 +13,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity_ViewModel extends ViewModel {
-private Youtube_BG_Repository repository;
+    private Youtube_BG_Repository repository;
     private Search_Response list = new Search_Response();
-public MainActivity_ViewModel() {
+    public MainActivity_ViewModel() {
 
 
         repository = Youtube_BG_Repository.getInstance();
@@ -23,17 +23,19 @@ public MainActivity_ViewModel() {
     }
     public Observable getObservable() {
         Observable<Search_Response> search_responseObservable = Observable
-                .just(list)
+                .fromCallable(()->list)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
         return search_responseObservable;
-}
+    }
 
 
-public void getSearch(String search)
-{
-list =repository.getSearch(search);
-}
+    public void getSearch(String search)
+
+    {
+        list =repository.getSearch(search);
+getObservable().repeat(1);
+    }
 
 
 

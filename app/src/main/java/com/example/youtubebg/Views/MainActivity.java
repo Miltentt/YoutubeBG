@@ -2,6 +2,7 @@ package com.example.youtubebg.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
     private TextView textView;
     private Search_Adapter adapter;
     private MainActivity_ViewModel mainActivity_viewModel;
+    private Observer<Search_Response> observer;
+
 
 
     @Override
@@ -55,181 +58,62 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-FragmentManager popup = new FragmentManager() {
-    @NonNull
-    @Override
-    public FragmentTransaction beginTransaction() {
-        return null;
-    }
+        mainActivity_viewModel = ViewModelProviders.of(this).get(MainActivity_ViewModel.class);
+        finalPopup = this.getSupportFragmentManager();
+        initRecycler();
+        initObserver();
+        mainActivity_viewModel.getObservable().subscribe(observer);
 
-    @Override
-    public boolean executePendingTransactions() {
-        return false;
-    }
-
-    @Nullable
-    @Override
-    public Fragment findFragmentById(int id) {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public Fragment findFragmentByTag(@Nullable String tag) {
-        return null;
-    }
-
-    @Override
-    public void popBackStack() {
 
     }
 
     @Override
-    public boolean popBackStackImmediate() {
-        return false;
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.layout.menu, menu);
+        return true;
     }
 
     @Override
-    public void popBackStack(@Nullable String name, int flags) {
-
-    }
-
-    @Override
-    public boolean popBackStackImmediate(@Nullable String name, int flags) {
-        return false;
-    }
-
-    @Override
-    public void popBackStack(int id, int flags) {
-
-    }
-
-    @Override
-    public boolean popBackStackImmediate(int id, int flags) {
-        return false;
-    }
-
-    @Override
-    public int getBackStackEntryCount() {
-        return 0;
-    }
-
-    @NonNull
-    @Override
-    public BackStackEntry getBackStackEntryAt(int index) {
-        return null;
-    }
-
-    @Override
-    public void addOnBackStackChangedListener(@NonNull OnBackStackChangedListener listener) {
-
-    }
-
-    @Override
-    public void removeOnBackStackChangedListener(@NonNull OnBackStackChangedListener listener) {
-
-    }
-
-    @Override
-    public void putFragment(@NonNull Bundle bundle, @NonNull String key, @NonNull Fragment fragment) {
-
-    }
-
-    @Nullable
-    @Override
-    public Fragment getFragment(@NonNull Bundle bundle, @NonNull String key) {
-        return null;
-    }
-
-    @NonNull
-    @Override
-    public List<Fragment> getFragments() {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public Fragment.SavedState saveFragmentInstanceState(@NonNull Fragment f) {
-        return null;
-    }
-
-    @Override
-    public boolean isDestroyed() {
-        return false;
-    }
-
-    @Override
-    public void registerFragmentLifecycleCallbacks(@NonNull FragmentLifecycleCallbacks cb, boolean recursive) {
-
-    }
-
-    @Override
-    public void unregisterFragmentLifecycleCallbacks(@NonNull FragmentLifecycleCallbacks cb) {
-
-    }
-
-    @Nullable
-    @Override
-    public Fragment getPrimaryNavigationFragment() {
-        return null;
-    }
-
-    @Override
-    public void dump(@NonNull String prefix, @Nullable FileDescriptor fd, @NonNull PrintWriter writer, @Nullable String[] args) {
-
-    }
-
-    @Override
-    public boolean isStateSaved() {
-        return false;
-    }
-};
-mainActivity_viewModel = ViewModelProviders.of(this).get(MainActivity_ViewModel.class);
-popup = this.getSupportFragmentManager();
-
-         finalPopup = popup;
-
-
-
-
-{}
-
-
-    }
-
-        @Override
-        public boolean onCreateOptionsMenu (Menu menu){
-            getMenuInflater().inflate(R.layout.menu, menu);
-            return true;
-        }
-        @Override
-        public boolean onOptionsItemSelected (MenuItem item){
-            int id = item.getItemId();
-            switch (id) {
-                case R.id.playlist: {
-                    Intent i = new Intent(this, Playlists.class);
-                    startActivity(i);
-                    break;
-                }
-
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.playlist: {
+                Intent i = new Intent(this, Playlists.class);
+                startActivity(i);
+                break;
             }
-            return super.onOptionsItemSelected(item);
+
         }
+        return super.onOptionsItemSelected(item);
+    }
 
 
     @Override
     public void search(String search) {
+
         mainActivity_viewModel.getSearch(search);
-        mainActivity_viewModel.getObservable().subscribe(new Observer<Search_Response>() {
+
+    }
+    private void initRecycler()
+    {
+        adapter = new Search_Adapter(list.getItems(), finalPopup, getApplicationContext());
+        recyclerView = findViewById(R.id.a);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void initObserver()
+    {
+        observer = new Observer<Search_Response>() {
             @Override
             public void onSubscribe(Disposable d) {
-
 
             }
 
             @Override
-            public void onNext(Search_Response o) {
-list=o;
+            public void onNext(Search_Response search_response) {
+                list= search_response;
             }
 
             @Override
@@ -239,13 +123,12 @@ list=o;
 
             @Override
             public void onComplete() {
-                adapter = new Search_Adapter(list.getItems(),finalPopup,getApplicationContext());
-                recyclerView = findViewById(R.id.a);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setAdapter(adapter);
+                adapter.updateList(list.getItems());
             }
-        });
-
+        };
     }
+
+
 }
+
+

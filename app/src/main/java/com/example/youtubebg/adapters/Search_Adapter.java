@@ -35,136 +35,136 @@ import java.util.List;
 public class Search_Adapter extends RecyclerView.Adapter<Search_Adapter.MyViewHolder>  {
 
     private List<Search_Response.Item> results= new ArrayList<>();
-private Context context;
-private FragmentManager act = new FragmentManager() {
-    @NonNull
-    @Override
-    public FragmentTransaction beginTransaction() {
-        return null;
-    }
+    private Context context;
+    private FragmentManager act = new FragmentManager() {
+        @NonNull
+        @Override
+        public FragmentTransaction beginTransaction() {
+            return null;
+        }
 
-    @Override
-    public boolean executePendingTransactions() {
-        return false;
-    }
+        @Override
+        public boolean executePendingTransactions() {
+            return false;
+        }
 
-    @Nullable
-    @Override
-    public Fragment findFragmentById(int id) {
-        return null;
-    }
+        @Nullable
+        @Override
+        public Fragment findFragmentById(int id) {
+            return null;
+        }
 
-    @Nullable
-    @Override
-    public Fragment findFragmentByTag(@Nullable String tag) {
-        return null;
-    }
+        @Nullable
+        @Override
+        public Fragment findFragmentByTag(@Nullable String tag) {
+            return null;
+        }
 
-    @Override
-    public void popBackStack() {
+        @Override
+        public void popBackStack() {
 
-    }
+        }
 
-    @Override
-    public boolean popBackStackImmediate() {
-        return false;
-    }
+        @Override
+        public boolean popBackStackImmediate() {
+            return false;
+        }
 
-    @Override
-    public void popBackStack(@Nullable String name, int flags) {
+        @Override
+        public void popBackStack(@Nullable String name, int flags) {
 
-    }
+        }
 
-    @Override
-    public boolean popBackStackImmediate(@Nullable String name, int flags) {
-        return false;
-    }
+        @Override
+        public boolean popBackStackImmediate(@Nullable String name, int flags) {
+            return false;
+        }
 
-    @Override
-    public void popBackStack(int id, int flags) {
+        @Override
+        public void popBackStack(int id, int flags) {
 
-    }
+        }
 
-    @Override
-    public boolean popBackStackImmediate(int id, int flags) {
-        return false;
-    }
+        @Override
+        public boolean popBackStackImmediate(int id, int flags) {
+            return false;
+        }
 
-    @Override
-    public int getBackStackEntryCount() {
-        return 0;
-    }
+        @Override
+        public int getBackStackEntryCount() {
+            return 0;
+        }
 
-    @NonNull
-    @Override
-    public BackStackEntry getBackStackEntryAt(int index) {
-        return null;
-    }
+        @NonNull
+        @Override
+        public BackStackEntry getBackStackEntryAt(int index) {
+            return null;
+        }
 
-    @Override
-    public void addOnBackStackChangedListener(@NonNull OnBackStackChangedListener listener) {
+        @Override
+        public void addOnBackStackChangedListener(@NonNull OnBackStackChangedListener listener) {
 
-    }
+        }
 
-    @Override
-    public void removeOnBackStackChangedListener(@NonNull OnBackStackChangedListener listener) {
+        @Override
+        public void removeOnBackStackChangedListener(@NonNull OnBackStackChangedListener listener) {
 
-    }
+        }
 
-    @Override
-    public void putFragment(@NonNull Bundle bundle, @NonNull String key, @NonNull Fragment fragment) {
+        @Override
+        public void putFragment(@NonNull Bundle bundle, @NonNull String key, @NonNull Fragment fragment) {
 
-    }
+        }
 
-    @Nullable
-    @Override
-    public Fragment getFragment(@NonNull Bundle bundle, @NonNull String key) {
-        return null;
-    }
+        @Nullable
+        @Override
+        public Fragment getFragment(@NonNull Bundle bundle, @NonNull String key) {
+            return null;
+        }
 
-    @NonNull
-    @Override
-    public List<Fragment> getFragments() {
-        return null;
-    }
+        @NonNull
+        @Override
+        public List<Fragment> getFragments() {
+            return null;
+        }
 
-    @Nullable
-    @Override
-    public Fragment.SavedState saveFragmentInstanceState(@NonNull Fragment f) {
-        return null;
-    }
+        @Nullable
+        @Override
+        public Fragment.SavedState saveFragmentInstanceState(@NonNull Fragment f) {
+            return null;
+        }
 
-    @Override
-    public boolean isDestroyed() {
-        return false;
-    }
+        @Override
+        public boolean isDestroyed() {
+            return false;
+        }
 
-    @Override
-    public void registerFragmentLifecycleCallbacks(@NonNull FragmentLifecycleCallbacks cb, boolean recursive) {
+        @Override
+        public void registerFragmentLifecycleCallbacks(@NonNull FragmentLifecycleCallbacks cb, boolean recursive) {
 
-    }
+        }
 
-    @Override
-    public void unregisterFragmentLifecycleCallbacks(@NonNull FragmentLifecycleCallbacks cb) {
+        @Override
+        public void unregisterFragmentLifecycleCallbacks(@NonNull FragmentLifecycleCallbacks cb) {
 
-    }
+        }
 
-    @Nullable
-    @Override
-    public Fragment getPrimaryNavigationFragment() {
-        return null;
-    }
+        @Nullable
+        @Override
+        public Fragment getPrimaryNavigationFragment() {
+            return null;
+        }
 
-    @Override
-    public void dump(@NonNull String prefix, @Nullable FileDescriptor fd, @NonNull PrintWriter writer, @Nullable String[] args) {
+        @Override
+        public void dump(@NonNull String prefix, @Nullable FileDescriptor fd, @NonNull PrintWriter writer, @Nullable String[] args) {
 
-    }
+        }
 
-    @Override
-    public boolean isStateSaved() {
-        return false;
-    }
-};
+        @Override
+        public boolean isStateSaved() {
+            return false;
+        }
+    };
     public Search_Adapter(List<Search_Response.Item> results, FragmentManager act, Context context)
     {
         this.results = results;
@@ -183,10 +183,10 @@ private FragmentManager act = new FragmentManager() {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-holder.title.setText(results.get(position).getSnippet().getTitle());
-Picasso.get().load(results.get(position).getSnippet().getThumbnails().getDefault().getUrl()).into(holder.thumbnail);
-holder.add.setOnClickListener(e->{ openDialog(); });
-holder.thumbnail.setOnClickListener(e-> PlayVideo(position));
+        holder.title.setText(results.get(position).getSnippet().getTitle());
+        Picasso.get().load(results.get(position).getSnippet().getThumbnails().getDefault().getUrl()).into(holder.thumbnail);
+        holder.add.setOnClickListener(e->{ openDialog(); });
+        holder.thumbnail.setOnClickListener(e-> PlayVideo(position));
 
 
 
@@ -200,32 +200,40 @@ holder.thumbnail.setOnClickListener(e-> PlayVideo(position));
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-       public TextView title;
-       public ImageView thumbnail;
-public ImageButton add;
+        public TextView title;
+        public ImageView thumbnail;
+        public ImageButton add;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-title = itemView.findViewById(R.id.textView2);
-thumbnail = itemView.findViewById(R.id.imageView);
-add = itemView.findViewById(R.id.add);
+            title = itemView.findViewById(R.id.textView2);
+            thumbnail = itemView.findViewById(R.id.imageView);
+            add = itemView.findViewById(R.id.add);
 
 
 
 
         }
+
+
+
     }
     private void openDialog() {
         Playlist_popup popup = new Playlist_popup();
         popup.show(act,"ezMPLE");
 
     }
-private void PlayVideo(int position) {
-    Bundle bundl = new Bundle();
-    bundl.putString("id",results.get(position).getId().getVideoId());
+    private void PlayVideo(int position) {
+        Bundle bundl = new Bundle();
+        bundl.putString("id",results.get(position).getId().getVideoId());
 
-Intent intent = new Intent(context, YoutubePlayerr.class);
-intent.putExtras(bundl);
-    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-context.startActivity(intent);
-}
+        Intent intent = new Intent(context, YoutubePlayerr.class);
+        intent.putExtras(bundl);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+    public void updateList(List<Search_Response.Item> response)
+    {
+        this.results = response;
+        notifyDataSetChanged();
+    }
 }
