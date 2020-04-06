@@ -18,6 +18,8 @@ private EditText Playlist_Name;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_playlist);
+        Bundle extras = getIntent().getExtras();
+        String value = extras.getString("photo");
     }
     public void finish (View view)
     {

@@ -12,9 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.example.youtubebg.Models.Search_Response;
 import com.example.youtubebg.R;
 
 public class Playlist_popup extends AppCompatDialogFragment {
+    private Search_Response.Item item;
+    public Playlist_popup(Search_Response.Item item)
+    {
+this.item=item;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -36,7 +43,9 @@ text.setOnClickListener(e->newplaylist());
 
 public void newplaylist ()
 {
+
     Intent i = new Intent(getActivity(), New_Playlist.class);
+    i.putExtra("photo",item.getSnippet().getThumbnails().getDefault().getUrl());
     startActivityForResult(i,1);
 
 }

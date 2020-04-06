@@ -1,10 +1,30 @@
 package com.example.youtubebg.Models;
 
-public class Playlist_card {
+import com.example.youtubebg.TypeConverter;
 
-    private String Url;
-    private String id;
+import java.util.List;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.TypeConverters;
+
+@Entity
+public class Playlist_card {
+    @ColumnInfo(name = "photo")
+    private String photo;
+    @ColumnInfo(name = "name")
     private String name;
+    @TypeConverters(TypeConverter.class)
+    @ColumnInfo(name = "videos")
+    private List<String> videos;
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public String getName() {
         return name;
@@ -14,19 +34,11 @@ public class Playlist_card {
         this.name = name;
     }
 
-    public String getUrl() {
-        return Url;
+    public List<String> getVideos() {
+        return videos;
     }
 
-    public void setUrl(String url) {
-        Url = url;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setVideos(List<String> videos) {
+        this.videos = videos;
     }
 }
