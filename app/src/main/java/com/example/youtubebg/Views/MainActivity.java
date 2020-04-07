@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
 
     @Override
     public void search(String search) {
-
+        mainActivity_viewModel.getObservable().subscribe(observer);
         mainActivity_viewModel.getSearch(search);
 
     }
@@ -118,12 +118,13 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
 
             @Override
             public void onError(Throwable e) {
-
+                Log.i("xd","observerfailed");
             }
 
             @Override
             public void onComplete() {
                 adapter.updateList(list.getItems());
+                Log.i("xd","tkj';la");
             }
         };
     }
