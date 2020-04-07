@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
         finalPopup = this.getSupportFragmentManager();
         initRecycler();
         initObserver();
-        mainActivity_viewModel.getObservable().subscribe(observer);
+
 
 
     }

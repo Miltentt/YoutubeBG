@@ -4,9 +4,12 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.youtubebg.DataBase.Playlist_Database;
+import com.example.youtubebg.Models.Playlist_card;
 import com.example.youtubebg.Models.Search_Response;
 import com.example.youtubebg.adapters.Search_Adapter;
 import com.example.youtubebg.retrofit.Retrofit1;
+
+import java.util.List;
 
 import androidx.room.Room;
 import retrofit2.Call;
@@ -20,6 +23,8 @@ public class Youtube_BG_Repository {
    private Search_Response list = new Search_Response();
    private Retrofit1 retrofit1;
     private Playlist_Database db;
+    private List<Playlist_card> playlists;
+    private Playlist_card playlist;
     public static Youtube_BG_Repository getInstance()
     {
         if(instance==null)
@@ -44,15 +49,28 @@ public class Youtube_BG_Repository {
 
             @Override
             public void onFailure(Call<Search_Response> call, Throwable t) {
-                Log.i("xd","sjkls");
+                Log.i("xd","retro failure");
             }
         });
 
 
         return list;
     }
+public List<Playlist_card> getPlaylists()
+{
+    playlists = db.playlist_dao().LoadAllPlaylists();
+    return playlists;
+}
+public void AddPlaylist(Playlist_card playlist_card)
+{
+    db.playlist_dao().Insert(playlist_card);
+}
+public Playlist_card getPlaylist(int id)
+{
+   playlist= db.playlist_dao().LoadPlaylist(id);
 
-
+   return  playlist;
+}
 
 
 

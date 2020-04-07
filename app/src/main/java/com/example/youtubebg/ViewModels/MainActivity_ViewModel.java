@@ -27,7 +27,7 @@ public class MainActivity_ViewModel extends ViewModel {
     }
     public Observable getObservable() {
         Observable<Search_Response> search_responseObservable = Observable
-                .just(list)
+                .fromCallable(()->list)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
         return search_responseObservable;
@@ -38,7 +38,7 @@ public class MainActivity_ViewModel extends ViewModel {
 
     {
         list =repository.getSearch(search);
-        getObservable().repeat(1);
+
 
     }
 
