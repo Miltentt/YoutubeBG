@@ -12,6 +12,14 @@ import androidx.room.TypeConverters;
 @Entity
 public class Playlist_card {
 
+    public Playlist_card(String name, String photo, List<String> videos)
+    {
+        this.name=name;
+        this.photo=photo;
+        this.videos=videos;
+    }
+
+
     @PrimaryKey(autoGenerate = true)
     private int id;
     @ColumnInfo(name = "photo")

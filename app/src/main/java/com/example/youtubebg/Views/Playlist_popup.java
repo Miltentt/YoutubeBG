@@ -46,7 +46,8 @@ public void newplaylist ()
 
     Intent i = new Intent(getActivity(), New_Playlist.class);
     i.putExtra("photo",item.getSnippet().getThumbnails().getDefault().getUrl());
-    startActivityForResult(i,1);
+    i.putExtra("id",item.getId().getVideoId());
+    startActivity(i);
 
 }
 

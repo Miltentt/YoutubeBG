@@ -1,5 +1,6 @@
 package com.example.youtubebg.Repository;
 
+import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
@@ -25,17 +26,17 @@ public class Youtube_BG_Repository {
     private Playlist_Database db;
     private List<Playlist_card> playlists;
     private Playlist_card playlist;
-    public static Youtube_BG_Repository getInstance()
+    public static Youtube_BG_Repository getInstance(Application application)
     {
         if(instance==null)
         {
-            instance = new Youtube_BG_Repository();
+            instance = new Youtube_BG_Repository(application);
         }
         return instance;
     }
-    public Youtube_BG_Repository(){
+    public Youtube_BG_Repository(Application application){
         retrofit1= Retrofit1.getInstance();
-
+db = Playlist_Database.getDatabase(application);
     }
     public Search_Response getSearch(String search)
     {
@@ -61,7 +62,7 @@ public List<Playlist_card> getPlaylists()
     playlists = db.playlist_dao().LoadAllPlaylists();
     return playlists;
 }
-public void AddPlaylist(Playlist_card playlist_card)
+public void addPlaylist(Playlist_card playlist_card)
 {
     db.playlist_dao().Insert(playlist_card);
 }

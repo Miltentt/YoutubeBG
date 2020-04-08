@@ -16,13 +16,12 @@ import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity_ViewModel extends ViewModel {
+public class MainActivity_ViewModel extends AndroidViewModel {
     private Youtube_BG_Repository repository;
     private Search_Response list = new Search_Response();
-    public MainActivity_ViewModel() {
-
-        repository = Youtube_BG_Repository.getInstance();
-
+    public MainActivity_ViewModel(Application application) {
+super(application);
+        repository = Youtube_BG_Repository.getInstance(application);
 
     }
     public Observable getObservable() {

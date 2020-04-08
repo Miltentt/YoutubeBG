@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Callback;
 
+import com.example.youtubebg.Models.Playlist_card;
 import com.example.youtubebg.Models.Search_Response;
 import com.example.youtubebg.R;
 import com.example.youtubebg.ViewModels.YoutubePlayerr;
@@ -173,6 +174,8 @@ public class Search_Adapter extends RecyclerView.Adapter<Search_Adapter.MyViewHo
     }
 
 
+
+
     @Override
     public MyViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_search,parent, false);
@@ -225,7 +228,6 @@ public class Search_Adapter extends RecyclerView.Adapter<Search_Adapter.MyViewHo
     private void PlayVideo(int position) {
         Bundle bundl = new Bundle();
         bundl.putString("id",results.get(position).getId().getVideoId());
-
         Intent intent = new Intent(context, YoutubePlayerr.class);
         intent.putExtras(bundl);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

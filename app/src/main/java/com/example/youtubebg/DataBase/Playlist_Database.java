@@ -19,7 +19,9 @@ public abstract class Playlist_Database extends RoomDatabase {
                     INSTANCE =
                             Room.databaseBuilder(context.getApplicationContext(),
                                     Playlist_Database.class,
-                                    "Playlists").build();
+                                    "Playlists")
+                                    .allowMainThreadQueries()
+                                    .build();
                 }
             }
         }
