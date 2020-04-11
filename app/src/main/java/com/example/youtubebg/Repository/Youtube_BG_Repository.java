@@ -26,17 +26,17 @@ public class Youtube_BG_Repository {
     private Playlist_Database db;
     private List<Playlist_card> playlists;
     private Playlist_card playlist;
-    public static Youtube_BG_Repository getInstance(Application application)
+    public static Youtube_BG_Repository getInstance(Context context)
     {
         if(instance==null)
         {
-            instance = new Youtube_BG_Repository(application);
+            instance = new Youtube_BG_Repository(context);
         }
         return instance;
     }
-    public Youtube_BG_Repository(Application application){
+    public Youtube_BG_Repository(Context context){
         retrofit1= Retrofit1.getInstance();
-db = Playlist_Database.getDatabase(application);
+db = Playlist_Database.getDatabase(context);
     }
     public Search_Response getSearch(String search)
     {
@@ -45,7 +45,7 @@ db = Playlist_Database.getDatabase(application);
             @Override
             public void onResponse(Call<Search_Response> call, Response<Search_Response> response) {
                 list = response.body();
-                Log.i("xd","tja");
+                Log.i("xd","retro succes");
             }
 
             @Override
@@ -73,6 +73,10 @@ public Playlist_card getPlaylist(int id)
    return  playlist;
 }
 
+public void deletePlaylist(Playlist_card playlist_card)
+{
+    db.playlist_dao().Delete(playlist_card);
+}
 
 
 

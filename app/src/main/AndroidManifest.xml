@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".Views.New_Playlist">
         </activity>
+        <activity android:name=".Views.Play_Playlist">
+        </activity>
         <activity android:name=".ViewModels.YoutubePlayerr">
 
             <intent-filter>

@@ -13,13 +13,14 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.youtubebg.Models.Playlist_card;
 import com.example.youtubebg.R;
 import com.example.youtubebg.ViewModels.MainActivity_ViewModel;
 import com.example.youtubebg.ViewModels.Playlists_ViewModel;
 import com.example.youtubebg.adapters.Playlist_Adapter;
 import com.example.youtubebg.adapters.Search_Adapter;
 
-public class Playlists extends AppCompatActivity {
+public class Playlists extends AppCompatActivity implements Playlist_Adapter.callBack {
     RecyclerView recyclerView;
     private Playlists_ViewModel playlists_viewModel;
     private Playlist_Adapter adapter;
@@ -54,11 +55,16 @@ initRecycler();
     }
 public void initRecycler()
 {
-    adapter = new Playlist_Adapter(playlists_viewModel.loadPlaylists());
+    adapter = new Playlist_Adapter(playlists_viewModel.loadPlaylists(),this);
     recyclerView = findViewById(R.id.playlists);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
     recyclerView.setLayoutManager(layoutManager);
     recyclerView.setAdapter(adapter);
 }
 
+    @Override
+    public void openPlaylist(Playlist_card card) {
+        Intent i = new Intent(this, Play_Playlist.class);
+        startActivity(i);
+    }
 }

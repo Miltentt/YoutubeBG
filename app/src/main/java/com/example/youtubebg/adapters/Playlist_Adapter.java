@@ -18,10 +18,15 @@ import java.util.List;
 public class Playlist_Adapter extends RecyclerView.Adapter<Playlist_Adapter.MyViewHolder> {
 
 private List<Playlist_card> card;
-
-public Playlist_Adapter(List<Playlist_card> card)
+public callBack callBack;
+public Playlist_Adapter(List<Playlist_card> card, callBack callBack)
 {
     this.card=card;
+    this.callBack=callBack;
+}
+
+public interface callBack{
+   void openPlaylist(Playlist_card card);
 }
 
 
@@ -38,6 +43,7 @@ public Playlist_Adapter(List<Playlist_card> card)
     public void onBindViewHolder(@NonNull Playlist_Adapter.MyViewHolder holder, int position) {
         Picasso.get().load(card.get(position).getPhoto()).into(holder.video);
         holder.name.setText(card.get(position).getName());
+        holder.video.setOnClickListener(e->onClick(position));
     }
 
     @Override
@@ -55,5 +61,9 @@ public Playlist_Adapter(List<Playlist_card> card)
            video = itemView.findViewById(R.id.video);
 name = itemView.findViewById(R.id.name);
         }
+    }
+    public void onClick(int position)
+    {
+        callBack.openPlaylist(card.get(position));
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-public class Playlists_ViewModel extends AndroidViewModel {
+public class Playlists_ViewModel extends AndroidViewModel  {
     private Youtube_BG_Repository repository;
     public Playlists_ViewModel(@NonNull Application application) {
         super(application);
