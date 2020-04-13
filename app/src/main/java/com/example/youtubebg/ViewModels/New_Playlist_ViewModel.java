@@ -19,11 +19,13 @@ public class New_Playlist_ViewModel extends AndroidViewModel {
         repository = Youtube_BG_Repository.getInstance(application);
     }
 
-    public void createPlaylist(String name, String photo,String video )
+    public void createPlaylist(String name, String photo,String video, String namess )
     {
         List<String> vid = new LinkedList<>();
         vid.add(video);
-       repository.addPlaylist(new Playlist_card(name,photo,vid));
+        List<String> names = new LinkedList<>();
+        names.add(namess);
+       repository.addPlaylist(new Playlist_card(name,photo,vid,names));
 
     }
 

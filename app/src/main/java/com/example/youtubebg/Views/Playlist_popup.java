@@ -31,6 +31,7 @@ private RecyclerView recyclerView;
 private Youtube_BG_Repository repository;
 private Playlist_card playlist_card;
 private List<String> videos= new LinkedList<>();
+private List<String> titles = new LinkedList<>();
     public Playlist_popup(Search_Response.Item item)
     {
 this.item=item;
@@ -69,6 +70,7 @@ public void newplaylist ()
     Intent i = new Intent(getActivity(), New_Playlist.class);
     i.putExtra("photo",item.getSnippet().getThumbnails().getDefault().getUrl());
     i.putExtra("id",item.getId().getVideoId());
+    i.putExtra("names",item.getSnippet().getTitle());
     startActivity(i);
 
 }
@@ -77,7 +79,10 @@ public void newplaylist ()
     public void saveVideo(Playlist_card card) {
 playlist_card = card;
 videos=card.getVideos();
+titles=card.getNames();
 videos.add(item.getId().getVideoId());
+titles.add(item.getSnippet().getTitle());
+playlist_card.setNames(titles);
 playlist_card.setVideos(videos);
 repository.deletePlaylist(card);
 repository.addPlaylist(playlist_card);

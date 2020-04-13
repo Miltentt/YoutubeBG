@@ -20,6 +20,8 @@ import com.example.youtubebg.ViewModels.Playlists_ViewModel;
 import com.example.youtubebg.adapters.Playlist_Adapter;
 import com.example.youtubebg.adapters.Search_Adapter;
 
+import java.io.Serializable;
+
 public class Playlists extends AppCompatActivity implements Playlist_Adapter.callBack {
     RecyclerView recyclerView;
     private Playlists_ViewModel playlists_viewModel;
@@ -65,6 +67,7 @@ public void initRecycler()
     @Override
     public void openPlaylist(Playlist_card card) {
         Intent i = new Intent(this, Play_Playlist.class);
+        i.putExtra("playlist",card);
         startActivity(i);
     }
 }
