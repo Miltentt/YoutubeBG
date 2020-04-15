@@ -16,16 +16,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-import retrofit2.Callback;
 
-import com.example.youtubebg.Models.Playlist_card;
 import com.example.youtubebg.Models.Search_Response;
 import com.example.youtubebg.R;
-import com.example.youtubebg.ViewModels.YoutubePlayerr;
+import com.example.youtubebg.Views.YoutubePlayerr;
 import com.example.youtubebg.Views.Playlist_popup;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerView;
 import com.squareup.picasso.Picasso;
 
 import java.io.FileDescriptor;

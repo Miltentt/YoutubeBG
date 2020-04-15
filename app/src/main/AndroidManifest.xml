@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".Views.Play_Playlist">
         </activity>
-        <activity android:name=".ViewModels.YoutubePlayerr">
+        <activity android:name=".Views.YoutubePlayerr">
 
             <intent-filter>
                 <action android:name="com.iphonik.chameleon.AppPreferenceActivity" />

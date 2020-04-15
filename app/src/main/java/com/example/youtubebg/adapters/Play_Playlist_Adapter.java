@@ -20,8 +20,9 @@ public class Play_Playlist_Adapter extends RecyclerView.Adapter<Play_Playlist_Ad
 
     private List<String> list= new LinkedList<>();
     private adapterCallBack callBack;
-    public Play_Playlist_Adapter(List<String> list )
+    public Play_Playlist_Adapter(List<String> list, adapterCallBack callBack )
     {
+        this.callBack=callBack;
         this.list=list;
     }
 

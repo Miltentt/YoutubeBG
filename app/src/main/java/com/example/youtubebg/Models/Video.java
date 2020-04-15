@@ -1,9 +1,10 @@
 package com.example.youtubebg.Models;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Video {
+public class Video implements Serializable {
 
  private String title;
  private String id;
