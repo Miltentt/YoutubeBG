@@ -12,6 +12,9 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -22,17 +25,17 @@ public class Youtube_Player_Fragment extends Fragment {
     private static final String VIDEO_ID = "VIDEO_ID";
 
     // TODO: Rename and change types of parameters
-    private String videoId;
+    private ArrayList<String> videoId;
 
     public Youtube_Player_Fragment() {
         // Required empty public constructor
     }
 
 
-    public static Youtube_Player_Fragment newInstance(String videoId) {
+    public static Youtube_Player_Fragment newInstance(ArrayList<String> videoId) {
         Youtube_Player_Fragment fragment = new Youtube_Player_Fragment();
         Bundle args = new Bundle();
-        args.putString(VIDEO_ID, videoId);
+        args.putStringArrayList(VIDEO_ID, videoId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -41,7 +44,7 @@ public class Youtube_Player_Fragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            videoId = getArguments().getString(VIDEO_ID);
+            videoId = getArguments().getStringArrayList(VIDEO_ID);
         }
     }
 
@@ -60,8 +63,9 @@ public class Youtube_Player_Fragment extends Fragment {
             public void onInitializationSuccess(YouTubePlayer.Provider arg0, YouTubePlayer youTubePlayer, boolean b) {
                 if (!b) {
                     //youTubePlayer.setFullscreen(true);
-                    youTubePlayer.loadVideo(videoId);
+                    youTubePlayer.loadVideos(videoId);
                     //yoTubePlayer.play();
+
                 }
             }
 
