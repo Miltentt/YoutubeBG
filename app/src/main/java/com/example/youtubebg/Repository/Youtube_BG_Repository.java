@@ -26,6 +26,8 @@ public class Youtube_BG_Repository {
     private Playlist_Database db;
     private List<Playlist_card> playlists;
     private Playlist_card playlist;
+    private boolean retro;
+
     public static Youtube_BG_Repository getInstance(Context context)
     {
         if(instance==null)
@@ -46,6 +48,7 @@ db = Playlist_Database.getDatabase(context);
             public void onResponse(Call<Search_Response> call, Response<Search_Response> response) {
                 list = response.body();
                 Log.i("xd","retro succes");
+
             }
 
             @Override

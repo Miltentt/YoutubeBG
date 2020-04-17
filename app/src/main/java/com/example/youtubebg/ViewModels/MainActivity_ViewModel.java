@@ -2,6 +2,7 @@ package com.example.youtubebg.ViewModels;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.example.youtubebg.Models.Search_Response;
 import com.example.youtubebg.Repository.Youtube_BG_Repository;
@@ -19,6 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 public class MainActivity_ViewModel extends AndroidViewModel {
     private Youtube_BG_Repository repository;
     private Search_Response list = new Search_Response();
+    private boolean retro;
     public MainActivity_ViewModel(Application application) {
 super(application);
         repository = Youtube_BG_Repository.getInstance(application);
@@ -41,7 +43,9 @@ super(application);
 
     }
 
+    }
 
 
 
-}
+
+

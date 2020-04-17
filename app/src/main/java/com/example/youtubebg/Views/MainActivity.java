@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
         mainActivity_viewModel = ViewModelProviders.of(this).get(MainActivity_ViewModel.class);
         finalPopup = this.getSupportFragmentManager();
         initRecycler();
-        initObserver();
 
 
 
@@ -90,8 +89,13 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
 
     @Override
     public void search(String search) {
-        mainActivity_viewModel.getObservable().subscribe(observer);
         mainActivity_viewModel.getSearch(search);
+      if(observer==null)
+      {
+          initObserver();
+      }
+        mainActivity_viewModel.getObservable().subscribe(observer);
+
 
     }
     private void initRecycler()
@@ -114,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
             @Override
             public void onNext(Search_Response search_response) {
                 list= search_response;
+                adapter.updateList(list.getItems());
             }
 
             @Override
@@ -123,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
 
             @Override
             public void onComplete() {
-                adapter.updateList(list.getItems());
+
                 Log.i("xd","tkj';la");
             }
         };

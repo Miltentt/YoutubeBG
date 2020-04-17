@@ -30,6 +30,7 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
     private Play_Playlist_Adapter adapter;
     private RecyclerView recyclerView;
     private List<Video> videos;
+
     private YoutubePlaylist_ViewModel youtubePlaylist_viewModel;
 
     @Override
