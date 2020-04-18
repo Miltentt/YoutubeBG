@@ -1,7 +1,11 @@
 package com.example.youtubebg.Views;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
+import android.view.View;
 
 import com.example.youtubebg.Fragments.Youtube_Player_Fragment;
 import com.example.youtubebg.Models.Playlist_card;
@@ -19,6 +23,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -56,5 +61,21 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
         Youtube_Player_Fragment youtubeFragment = Youtube_Player_Fragment.newInstance(youtubePlaylist_viewModel.NextVideo((List<Video>) getIntent().getSerializableExtra("videos"),name));
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flYoutube, youtubeFragment).commit();
+    }
+    public void StartFloating(View v){
+        Intent i = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,Uri.parse("package:" + getPackageName()));
+
+        startActivityForResult(i,1);
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1)
+        {
+            startService(new Intent(YoutubePlayerr.this,Floating_Window_Service.class));
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.example.youtubebg.Views;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.os.IBinder;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,11 +25,16 @@ public class Floating_Window_Service extends Service {
         super.onCreate();
       LayoutInflater  li = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
      WindowManager   wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-
+        int LAYOUT_FLAG;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        } else {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_PHONE;
+        }
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 //WindowManager.LayoutParams.TYPE_INPUT_METHOD |
-                WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,// | WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
-                WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                LAYOUT_FLAG,// | WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE| WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
 
         params.gravity = Gravity.RIGHT | Gravity.TOP;

@@ -24,4 +24,14 @@
         android:layout_height="434dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="StartFloating"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="@+id/videos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/videos" />
 </androidx.constraintlayout.widget.ConstraintLayout>
