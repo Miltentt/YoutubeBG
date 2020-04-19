@@ -1,5 +1,7 @@
 package com.example.youtubebg.Views;
 
+import android.app.Activity;
+import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,11 +32,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_Adapter.adapterCallBack {
-    private YouTubePlayerView player;
-    private YouTubePlayer.OnInitializedListener listener;
+
     private Play_Playlist_Adapter adapter;
     private RecyclerView recyclerView;
-    private List<Video> videos;
+
 
     private YoutubePlaylist_ViewModel youtubePlaylist_viewModel;
 
@@ -45,7 +46,7 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
         youtubePlaylist_viewModel = ViewModelProviders.of(this).get(YoutubePlaylist_ViewModel.class);
 
         Youtube_Player_Fragment youtubeFragment = Youtube_Player_Fragment.newInstance(youtubePlaylist_viewModel.getId((List<Video>) getIntent().getSerializableExtra("videos"),getIntent().getStringExtra("id")));
-        getSupportFragmentManager().beginTransaction()
+      getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flYoutube, youtubeFragment).commit();
 
         adapter = new Play_Playlist_Adapter(youtubePlaylist_viewModel.getNames((List<Video>) getIntent().getSerializableExtra("videos")), this);
@@ -53,6 +54,13 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        if(Settings.canDrawOverlays(this)==false)
+        {
+            Intent i = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,Uri.parse("package:" + getPackageName()));
+
+            startActivity(i);
+
+        }
  }
 
     @Override
@@ -63,10 +71,8 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
                 .replace(R.id.flYoutube, youtubeFragment).commit();
     }
     public void StartFloating(View v){
-        Intent i = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,Uri.parse("package:" + getPackageName()));
-
-        startActivityForResult(i,1);
-
+        startService(new Intent(YoutubePlayerr.this,Floating_Window_Service.class));
+Intent i = new Intent();
 
     }
 
@@ -75,7 +81,7 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==1)
         {
-            startService(new Intent(YoutubePlayerr.this,Floating_Window_Service.class));
+
         }
     }
 }
