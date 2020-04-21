@@ -10,10 +10,18 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.example.youtubebg.Fragments.Youtube_Player_Fragment;
 import com.example.youtubebg.Models.Video;
+
 import com.example.youtubebg.R;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
+
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -27,10 +35,25 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 public class Floating_Window_Service extends Service {
    private Activity act;
    private  ArrayList<String> list = new ArrayList<String>();
+   private View myview;
+   private WindowManager wm;
+   private boolean minimized;
+    LinearLayout layout;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -40,138 +63,10 @@ public class Floating_Window_Service extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        FragmentManager popup = new FragmentManager() {
-            @NonNull
-            @Override
-            public FragmentTransaction beginTransaction() {
-                return null;
-            }
 
-            @Override
-            public boolean executePendingTransactions() {
-                return false;
-            }
 
-            @Nullable
-            @Override
-            public Fragment findFragmentById(int id) {
-                return null;
-            }
-
-            @Nullable
-            @Override
-            public Fragment findFragmentByTag(@Nullable String tag) {
-                return null;
-            }
-
-            @Override
-            public void popBackStack() {
-
-            }
-
-            @Override
-            public boolean popBackStackImmediate() {
-                return false;
-            }
-
-            @Override
-            public void popBackStack(@Nullable String name, int flags) {
-
-            }
-
-            @Override
-            public boolean popBackStackImmediate(@Nullable String name, int flags) {
-                return false;
-            }
-
-            @Override
-            public void popBackStack(int id, int flags) {
-
-            }
-
-            @Override
-            public boolean popBackStackImmediate(int id, int flags) {
-                return false;
-            }
-
-            @Override
-            public int getBackStackEntryCount() {
-                return 0;
-            }
-
-            @NonNull
-            @Override
-            public BackStackEntry getBackStackEntryAt(int index) {
-                return null;
-            }
-
-            @Override
-            public void addOnBackStackChangedListener(@NonNull OnBackStackChangedListener listener) {
-
-            }
-
-            @Override
-            public void removeOnBackStackChangedListener(@NonNull OnBackStackChangedListener listener) {
-
-            }
-
-            @Override
-            public void putFragment(@NonNull Bundle bundle, @NonNull String key, @NonNull Fragment fragment) {
-
-            }
-
-            @Nullable
-            @Override
-            public Fragment getFragment(@NonNull Bundle bundle, @NonNull String key) {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public List<Fragment> getFragments() {
-                return null;
-            }
-
-            @Nullable
-            @Override
-            public Fragment.SavedState saveFragmentInstanceState(@NonNull Fragment f) {
-                return null;
-            }
-
-            @Override
-            public boolean isDestroyed() {
-                return false;
-            }
-
-            @Override
-            public void registerFragmentLifecycleCallbacks(@NonNull FragmentLifecycleCallbacks cb, boolean recursive) {
-
-            }
-
-            @Override
-            public void unregisterFragmentLifecycleCallbacks(@NonNull FragmentLifecycleCallbacks cb) {
-
-            }
-
-            @Nullable
-            @Override
-            public Fragment getPrimaryNavigationFragment() {
-                return null;
-            }
-
-            @Override
-            public void dump(@NonNull String prefix, @Nullable FileDescriptor fd, @NonNull PrintWriter writer, @Nullable String[] args) {
-
-            }
-
-            @Override
-            public boolean isStateSaved() {
-                return false;
-            }
-        };
-
-      LayoutInflater  li = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-     WindowManager   wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+        LayoutInflater li = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+         wm = (WindowManager) getSystemService(WINDOW_SERVICE);
         int LAYOUT_FLAG;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
@@ -181,16 +76,43 @@ public class Floating_Window_Service extends Service {
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 //WindowManager.LayoutParams.TYPE_INPUT_METHOD |
                 LAYOUT_FLAG,// | WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE| WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                  WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
-list.add("sfd");
-        View myview = li.inflate(R.layout.youtubeplayer, null);
+
+
         params.gravity = Gravity.RIGHT | Gravity.TOP;
-        Youtube_Player_Fragment youtubeFragment = Youtube_Player_Fragment.newInstance(list);
-       popup.beginTransaction()
-                .replace(R.id.flYoutube, youtubeFragment).commit();
+         myview = li.inflate(R.layout.youtubeplayer_service, null);
+        ImageButton minimize = myview.findViewById(R.id.mini);
+         layout = myview.findViewById(R.id.linearLayout2);
+        YouTubePlayerView youTubePlayerView = myview.findViewById(R.id.youtube_player_view);
 
-
+minimize.setOnClickListener(e->minimize());
         wm.addView(myview, params);
+
+
+        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                String videoId = "S0Q4gqBUs7c";
+                youTubePlayer.loadVideo(videoId, 0f);
+            }
+        });
     }
+    private void minimize() {
+        if (minimized == false)
+        {
+            layout.getLayoutParams().height = 1;
+        layout.getLayoutParams().width = 1;
+        layout.requestLayout();
+        minimized = true;
+    } else
+      {
+          layout.getLayoutParams().height= WindowManager.LayoutParams.WRAP_CONTENT;
+          layout.getLayoutParams().width= WindowManager.LayoutParams.MATCH_PARENT;
+          layout.requestLayout();
+          minimized=false;
+      }
+    }
+
+
 }
