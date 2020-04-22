@@ -71,8 +71,11 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
                 .replace(R.id.flYoutube, youtubeFragment).commit();
     }
     public void StartFloating(View v){
-        startService(new Intent(YoutubePlayerr.this,Floating_Window_Service.class));
-Intent i = new Intent();
+        Intent i = new Intent(YoutubePlayerr.this,Floating_Window_Service.class);
+        i.putExtra("id",getIntent().getStringExtra("id"));
+        i.putExtra("videos",getIntent().getSerializableExtra("videos"));
+        startService(i);
+
 
     }
 

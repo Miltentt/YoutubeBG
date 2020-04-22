@@ -1,6 +1,8 @@
 package com.example.youtubebg.Views;
 import android.app.Activity;
+import android.app.IntentService;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Build;
@@ -18,9 +20,13 @@ import com.example.youtubebg.Fragments.Youtube_Player_Fragment;
 import com.example.youtubebg.Models.Video;
 
 import com.example.youtubebg.R;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.NetworkListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
+
 
 
 import java.io.FileDescriptor;
@@ -47,17 +53,94 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-public class Floating_Window_Service extends Service {
+public class Floating_Window_Service extends IntentService {
    private Activity act;
-   private  ArrayList<String> list = new ArrayList<String>();
+   private  ArrayList<Video> list = new ArrayList<>();
+   private String first;
    private View myview;
+   private int i=0;
    private WindowManager wm;
    private boolean minimized;
+   private YouTubePlayerView youTubePlayerView;
+   private YouTubePlayerListener listener = new YouTubePlayerListener() {
+       @Override
+       public void onReady(YouTubePlayer youTubePlayer) {
+           String videoId = first;
+           youTubePlayer.loadVideo(videoId, 0f);
+       }
+
+       @Override
+       public void onStateChange(YouTubePlayer youTubePlayer, PlayerConstants.PlayerState playerState) {
+if(playerState==PlayerConstants.PlayerState.ENDED)
+{
+    i++;
+    youTubePlayer.loadVideo(list.get(i).getId(), 0f);
+}
+       }
+
+       @Override
+       public void onPlaybackQualityChange(YouTubePlayer youTubePlayer, PlayerConstants.PlaybackQuality playbackQuality) {
+
+       }
+
+       @Override
+       public void onPlaybackRateChange(YouTubePlayer youTubePlayer, PlayerConstants.PlaybackRate playbackRate) {
+
+       }
+
+       @Override
+       public void onError(YouTubePlayer youTubePlayer, PlayerConstants.PlayerError playerError) {
+
+       }
+
+       @Override
+       public void onCurrentSecond(YouTubePlayer youTubePlayer, float v) {
+
+       }
+
+       @Override
+       public void onVideoDuration(YouTubePlayer youTubePlayer, float v) {
+
+       }
+
+       @Override
+       public void onVideoLoadedFraction(YouTubePlayer youTubePlayer, float v) {
+
+       }
+
+       @Override
+       public void onVideoId(YouTubePlayer youTubePlayer, String s) {
+
+       }
+
+       @Override
+       public void onApiChange(YouTubePlayer youTubePlayer) {
+
+       }
+       public void onNext(YouTubePlayer youTubePlayer)
+       {
+           i++;
+           youTubePlayer.loadVideo((list.get(i).getId()), 0f);
+       }
+   };
     LinearLayout layout;
+
+
+    public Floating_Window_Service() {
+        super("xd");
+    }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    @Override
+    protected void onHandleIntent(@Nullable Intent intent) {
+        list  = (ArrayList<Video>) intent.getSerializableExtra("videos");
+        first= intent.getStringExtra("id");
+
     }
 
     @Override
@@ -66,7 +149,7 @@ public class Floating_Window_Service extends Service {
 
 
         LayoutInflater li = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-         wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+        wm = (WindowManager) getSystemService(WINDOW_SERVICE);
         int LAYOUT_FLAG;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
@@ -76,27 +159,20 @@ public class Floating_Window_Service extends Service {
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 //WindowManager.LayoutParams.TYPE_INPUT_METHOD |
                 LAYOUT_FLAG,// | WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
-                  WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
 
 
         params.gravity = Gravity.RIGHT | Gravity.TOP;
-         myview = li.inflate(R.layout.youtubeplayer_service, null);
+        myview = li.inflate(R.layout.youtubeplayer_service, null);
         ImageButton minimize = myview.findViewById(R.id.mini);
-         layout = myview.findViewById(R.id.linearLayout2);
-        YouTubePlayerView youTubePlayerView = myview.findViewById(R.id.youtube_player_view);
-
-minimize.setOnClickListener(e->minimize());
+        layout = myview.findViewById(R.id.linearLayout2);
+         youTubePlayerView = myview.findViewById(R.id.youtube_player_view);
+        youTubePlayerView.setEnableAutomaticInitialization(false);
+        youTubePlayerView.initialize(listener,false);
+        minimize.setOnClickListener(e -> minimize());
         wm.addView(myview, params);
 
-
-        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-            @Override
-            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                String videoId = "S0Q4gqBUs7c";
-                youTubePlayer.loadVideo(videoId, 0f);
-            }
-        });
     }
     private void minimize() {
         if (minimized == false)
