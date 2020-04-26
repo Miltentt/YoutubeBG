@@ -24,7 +24,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstan
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.NetworkListener;
+
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 
@@ -55,17 +55,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 public class Floating_Window_Service extends IntentService {
    private Activity act;
-   private  ArrayList<Video> list = new ArrayList<>();
+   private  ArrayList<String> list = new ArrayList<>();
    private String first;
    private View myview;
    private int i=0;
    private WindowManager wm;
    private boolean minimized;
    private YouTubePlayerView youTubePlayerView;
+   private ImageButton next;
+   private int input=0;
+   private ImageButton previous;
    private YouTubePlayerListener listener = new YouTubePlayerListener() {
        @Override
        public void onReady(YouTubePlayer youTubePlayer) {
-           String videoId = first;
+           String videoId = list.get(i);
            youTubePlayer.loadVideo(videoId, 0f);
        }
 
@@ -74,8 +77,28 @@ public class Floating_Window_Service extends IntentService {
 if(playerState==PlayerConstants.PlayerState.ENDED)
 {
     i++;
-    youTubePlayer.loadVideo(list.get(i).getId(), 0f);
+    youTubePlayer.loadVideo(list.get(i), 0f);
 }
+           if(playerState==PlayerConstants.PlayerState.PAUSED)
+           {
+               if(input==0)
+               {
+
+               }
+               if(input==1)
+               {
+                   i++;
+                   youTubePlayer.loadVideo(list.get(i), 0f);
+               }
+
+                   if(input==2)
+                   {
+                       i--;
+                       youTubePlayer.loadVideo(list.get(i), 0f);
+                   }
+               input=0;
+           }
+
        }
 
        @Override
@@ -117,11 +140,6 @@ if(playerState==PlayerConstants.PlayerState.ENDED)
        public void onApiChange(YouTubePlayer youTubePlayer) {
 
        }
-       public void onNext(YouTubePlayer youTubePlayer)
-       {
-           i++;
-           youTubePlayer.loadVideo((list.get(i).getId()), 0f);
-       }
    };
     LinearLayout layout;
 
@@ -138,9 +156,13 @@ if(playerState==PlayerConstants.PlayerState.ENDED)
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        list  = (ArrayList<Video>) intent.getSerializableExtra("videos");
-        first= intent.getStringExtra("id");
 
+        first= intent.getStringExtra("id");
+        list.add(first);
+for(int j=0;j< ((ArrayList<Video>) intent.getSerializableExtra("videos")).size();j++)
+{
+    list.add((((ArrayList<Video>) intent.getSerializableExtra("videos")).get(j).getId()));
+}
     }
 
     @Override
@@ -168,10 +190,15 @@ if(playerState==PlayerConstants.PlayerState.ENDED)
         ImageButton minimize = myview.findViewById(R.id.mini);
         layout = myview.findViewById(R.id.linearLayout2);
          youTubePlayerView = myview.findViewById(R.id.youtube_player_view);
+         next = myview.findViewById(R.id.imageButton6);
+         next.setOnClickListener(e->onNext());
+         previous = myview.findViewById(R.id.imageButton7);
+         previous.setOnClickListener(e->onPrevious());
         youTubePlayerView.setEnableAutomaticInitialization(false);
         youTubePlayerView.initialize(listener,false);
         minimize.setOnClickListener(e -> minimize());
         wm.addView(myview, params);
+
 
     }
     private void minimize() {
@@ -189,6 +216,17 @@ if(playerState==PlayerConstants.PlayerState.ENDED)
           minimized=false;
       }
     }
+public void onNext()
+{
+    input=1;
+  youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::pause);
+}
+public void onPrevious()
+{
+    input=2;
+    youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::pause);
+
+}
 
 
 }
