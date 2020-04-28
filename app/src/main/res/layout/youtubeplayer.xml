@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="StartFloating"
-        android:text="Button"
+        android:text="Float"
         app:layout_constraintBottom_toBottomOf="@+id/videos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/videos" />
