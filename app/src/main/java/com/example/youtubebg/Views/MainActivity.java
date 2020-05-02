@@ -31,6 +31,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import io.reactivex.Observer;
+import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
     private TextView textView;
     private Search_Adapter adapter;
     private MainActivity_ViewModel mainActivity_viewModel;
-    private Observer<Search_Response> observer;
+    private SingleObserver<Search_Response> observer;
 
 
 
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
         mainActivity_viewModel.getObservable().subscribe(observer);
 
 
+
     }
     private void initRecycler()
     {
@@ -109,27 +111,20 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
 
     private void initObserver()
     {
-        observer = new Observer<Search_Response>() {
+        observer = new SingleObserver<Search_Response>() {
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onNext(Search_Response search_response) {
-                list= search_response;
-                adapter.updateList(list.getItems());
+            public void onSuccess(Search_Response search_response) {
+                adapter.updateList(search_response.getItems());
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.i("xd","observerfailed");
-            }
 
-            @Override
-            public void onComplete() {
-
-                Log.i("xd","tkj';la");
             }
         };
     }

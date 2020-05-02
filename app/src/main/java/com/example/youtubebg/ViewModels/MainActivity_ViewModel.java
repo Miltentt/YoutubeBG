@@ -14,6 +14,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -26,20 +27,16 @@ super(application);
         repository = Youtube_BG_Repository.getInstance(application);
 
     }
-    public Observable getObservable() {
-        Observable<Search_Response> search_responseObservable = Observable
-                .fromCallable(()->list)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-        return search_responseObservable;
+    public Single getObservable() {
+
+        return repository.getObservable();
     }
 
 
     public void getSearch(String search)
 
     {
-        list =repository.getSearch(search);
-
+        repository.getSearch(search);
 
     }
 

@@ -181,7 +181,8 @@ for(int j=0;j< ((ArrayList<Video>) intent.getSerializableExtra("videos")).size()
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 //WindowManager.LayoutParams.TYPE_INPUT_METHOD |
                 LAYOUT_FLAG,// | WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                WindowManager.LayoutParams.LAST_SUB_WINDOW,
+
                 PixelFormat.TRANSLUCENT);
 
 

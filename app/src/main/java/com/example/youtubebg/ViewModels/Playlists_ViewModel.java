@@ -6,9 +6,11 @@ import com.example.youtubebg.Models.Playlist_card;
 import com.example.youtubebg.Repository.Youtube_BG_Repository;
 
 import java.util.List;
+;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import io.reactivex.Observable;
 
 public class Playlists_ViewModel extends AndroidViewModel  {
     private Youtube_BG_Repository repository;
@@ -17,10 +19,8 @@ public class Playlists_ViewModel extends AndroidViewModel  {
         repository = Youtube_BG_Repository.getInstance(application);
     }
 
-    public List<Playlist_card> loadPlaylists()
+    public Observable<List<Playlist_card>> loadPlaylists()
     {
-
-
         return repository.getPlaylists();
     }
 

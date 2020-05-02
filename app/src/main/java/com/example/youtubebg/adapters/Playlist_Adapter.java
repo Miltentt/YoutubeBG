@@ -66,4 +66,9 @@ name = itemView.findViewById(R.id.name);
     {
         callBack.openPlaylist(card.get(position));
     }
+    public void update(List<Playlist_card> card)
+    {
+        this.card = card;
+        notifyDataSetChanged();
+    }
 }
