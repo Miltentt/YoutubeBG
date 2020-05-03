@@ -39,13 +39,13 @@ private  List<Video> videos = new LinkedList<>();
 return videos;
     }
     public String findId(String name) {
-        String id="loool";
+        String id="";
         for (int i = 0; i < videos.size(); i++) {
             if (videos.get(i).getTitles().equals(name)) {
                 id = videos.get(i).getId();
             }
         }
-        Log.i("xd",id);
+
         return id;
     }
     public List<Video> shuffle(boolean shuffled) {

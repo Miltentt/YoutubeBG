@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.Observer;
+import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 
 import com.example.youtubebg.Models.Playlist_card;
@@ -23,13 +24,14 @@ import com.example.youtubebg.adapters.Playlist_Adapter;
 import com.example.youtubebg.adapters.Search_Adapter;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Playlists extends AppCompatActivity implements Playlist_Adapter.callBack {
     RecyclerView recyclerView;
     private Playlists_ViewModel playlists_viewModel;
     private Playlist_Adapter adapter;
-    private Observer observer;
+    private SingleObserver observer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class Playlists extends AppCompatActivity implements Playlist_Adapter.cal
         playlists_viewModel = ViewModelProviders.of(this).get(Playlists_ViewModel.class);
         initObserver();
         playlists_viewModel.loadPlaylists().subscribe(observer);
+        adapter = new Playlist_Adapter(new LinkedList<Playlist_card>(),Playlists.this);
         initRecycler();
     }
 
@@ -78,27 +81,22 @@ public class Playlists extends AppCompatActivity implements Playlist_Adapter.cal
     }
 
     private void initObserver() {
-        observer = new Observer<List<Playlist_card>>() {
+        observer = new SingleObserver<List<Playlist_card>>() {
+
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onNext(List<Playlist_card> playlist_cards) {
-                if (adapter == null) {
-                    adapter = new Playlist_Adapter(playlist_cards, Playlists.this);
-                } else {
+            public void onSuccess(List<Playlist_card> playlist_cards) {
+
                     adapter.update(playlist_cards);
-                }
+
             }
+
             @Override
             public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
 
             }
         };

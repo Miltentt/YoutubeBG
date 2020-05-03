@@ -48,7 +48,7 @@ db = Playlist_Database.getDatabase(context);
     {
         return Search_response;
     }
-public Observable<List<Playlist_card>> getPlaylists()
+public Single<List<Playlist_card>> getPlaylists()
 {
 
     return db.playlist_dao().LoadAllPlaylists()

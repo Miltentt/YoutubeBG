@@ -21,14 +21,18 @@ public class Popup_adapter extends RecyclerView.Adapter<Popup_adapter.MyViewHold
 
     private List<Playlist_card> card= new LinkedList<>();
     private adapterCallBack callBack;
-    public Popup_adapter(List<Playlist_card> card, adapterCallBack callBack)
+    public Popup_adapter(List<Playlist_card> card)
     {
-this.callBack=callBack;
+
 
         this.card=card;
 
     }
+public void setCallBack(adapterCallBack callBack)
+{
+ this.callBack= callBack;
 
+}
 
     @NonNull
     @Override
@@ -68,5 +72,10 @@ this.callBack=callBack;
     private void onClick(int position)
     {
 callBack.saveVideo(card.get(position));
+    }
+    public void update(List<Playlist_card> card)
+    {
+        this.card = card;
+        notifyDataSetChanged();
     }
 }

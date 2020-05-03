@@ -16,7 +16,7 @@ public interface Playlist_Dao {
     void Insert(Playlist_card... playlist_cards);
 
     @Query("SELECT * FROM Playlist_card")
-    Observable<List<Playlist_card>> LoadAllPlaylists();
+    Single<List<Playlist_card>> LoadAllPlaylists();
 
     @Query("SELECT * FROM Playlist_card WHERE id=:id")
     Single<Playlist_card> LoadPlaylist(int id);

@@ -13,11 +13,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import io.reactivex.Observer;
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
 
 import com.example.youtubebg.Models.Playlist_card;
 import com.example.youtubebg.Models.Search_Response;
 import com.example.youtubebg.R;
 import com.example.youtubebg.Repository.Youtube_BG_Repository;
+import com.example.youtubebg.adapters.Playlist_Adapter;
 import com.example.youtubebg.adapters.Popup_adapter;
 import com.example.youtubebg.adapters.Search_Adapter;
 
@@ -32,6 +37,7 @@ private Youtube_BG_Repository repository;
 private Playlist_card playlist_card;
 private List<String> videos= new LinkedList<>();
 private List<String> titles = new LinkedList<>();
+private SingleObserver observer;
     public Playlist_popup(Search_Response.Item item)
     {
 this.item=item;
@@ -49,7 +55,10 @@ repository = Youtube_BG_Repository.getInstance(getContext());
         builder.setView(view)
                 .setTitle("Playlists");
 
-        adapter = new Popup_adapter(repository.getPlaylists(),this);
+       initObserver();
+       repository.getPlaylists().subscribe(observer);
+        adapter = new Popup_adapter(new LinkedList<Playlist_card>());
+       adapter.setCallBack(this);
         recyclerView = view.findViewById(R.id.playlists);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -87,5 +96,28 @@ playlist_card.setVideos(videos);
 repository.deletePlaylist(card);
 repository.addPlaylist(playlist_card);
 dismiss();
+    }
+
+
+    private void initObserver() {
+        observer = new SingleObserver<List<Playlist_card>>() {
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onSuccess(List<Playlist_card> playlist_cards) {
+
+                    adapter.update(playlist_cards);
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        };
     }
 }
