@@ -1,9 +1,13 @@
 package com.example.youtubebg.Views;
 import android.app.Activity;
 import android.app.IntentService;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -65,11 +69,37 @@ public class Floating_Window_Service extends IntentService {
    private ImageButton next;
    private int input=0;
    private ImageButton previous;
+    private NotificationManager notificationManager;
+    private int position;
+    private   boolean isPlaying = false;
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getExtras().getString("actionname");
+
+            switch (action){
+                case Notification.ACTION_PREVIUOS:
+                    onTrackPrevious();
+                    break;
+                case Notification.ACTION_PLAY:
+                    if (isPlaying){
+                        onTrackPause();
+                    } else {
+                        onTrackPlay();
+                    }
+                    break;
+                case Notification.ACTION_NEXT:
+                    onTrackNext();
+                    break;
+            }
+        }
+    };
    private YouTubePlayerListener listener = new YouTubePlayerListener() {
        @Override
        public void onReady(YouTubePlayer youTubePlayer) {
            String videoId = list.get(i);
            youTubePlayer.loadVideo(videoId, 0f);
+           onTrackPlay();
        }
 
        @Override
@@ -169,6 +199,11 @@ for(int j=0;j< ((ArrayList<Video>) intent.getSerializableExtra("videos")).size()
     public void onCreate() {
         super.onCreate();
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            creatNotification();
+            registerReceiver(broadcastReceiver, new IntentFilter("Tracks"));
+            startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
+        }
 
         LayoutInflater li = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         wm = (WindowManager) getSystemService(WINDOW_SERVICE);
@@ -181,7 +216,7 @@ for(int j=0;j< ((ArrayList<Video>) intent.getSerializableExtra("videos")).size()
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 //WindowManager.LayoutParams.TYPE_INPUT_METHOD |
                 LAYOUT_FLAG,// | WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
-                WindowManager.LayoutParams.LAST_SUB_WINDOW,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE| WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
 
                 PixelFormat.TRANSLUCENT);
 
@@ -191,12 +226,13 @@ for(int j=0;j< ((ArrayList<Video>) intent.getSerializableExtra("videos")).size()
         ImageButton minimize = myview.findViewById(R.id.mini);
         layout = myview.findViewById(R.id.linearLayout2);
          youTubePlayerView = myview.findViewById(R.id.youtube_player_view);
+        youTubePlayerView.setEnableAutomaticInitialization(false);
+        youTubePlayerView.initialize(listener,false);
          next = myview.findViewById(R.id.imageButton6);
          next.setOnClickListener(e->onNext());
          previous = myview.findViewById(R.id.imageButton7);
          previous.setOnClickListener(e->onPrevious());
-        youTubePlayerView.setEnableAutomaticInitialization(false);
-        youTubePlayerView.initialize(listener,false);
+
         minimize.setOnClickListener(e -> minimize());
         wm.addView(myview, params);
 
@@ -228,6 +264,71 @@ public void onPrevious()
     youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::pause);
 
 }
+    private void creatNotification()
+    {
+        NotificationChannel channel = new NotificationChannel("channel1","name", NotificationManager.IMPORTANCE_HIGH);
+        notificationManager = getSystemService(NotificationManager.class);
+if(notificationManager != null)
+{
+    notificationManager.createNotificationChannel(channel);
+}
+
+    }
+
+
+    public void onTrackPrevious() {
+
+        position--;
+        Notification.createNotification(this, list.get(position),
+                R.drawable.ic_pause_black_24dp, position, list.size()-1);
+
+
+    }
+
+
+    public void onTrackPlay() {
+
+        Notification.createNotification(this, list.get(position),
+                R.drawable.ic_pause_black_24dp, position, list.size()-1);
+
+
+        isPlaying = true;
+
+    }
+
+
+    public void onTrackPause() {
+
+        Notification.createNotification(this, list.get(position),
+                R.drawable.ic_play_arrow_black_24dp, position, list.size()-1);
+
+
+        isPlaying = false;
+
+    }
+
+
+    public void onTrackNext() {
+
+        position++;
+        Notification.createNotification(this, list.get(position),
+                R.drawable.ic_pause_black_24dp, position, list.size()-1);
+
+
+    }
+
+@Override
+    public void onDestroy() {
+    super.onDestroy();
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        notificationManager.cancelAll();
+    }
+
+    unregisterReceiver(broadcastReceiver);
+    }
+
+
+
 
 
 }

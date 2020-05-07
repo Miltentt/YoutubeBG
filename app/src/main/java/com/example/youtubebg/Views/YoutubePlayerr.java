@@ -1,6 +1,8 @@
 package com.example.youtubebg.Views;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
@@ -85,5 +87,7 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
 
         }
     }
+
+
 
 }

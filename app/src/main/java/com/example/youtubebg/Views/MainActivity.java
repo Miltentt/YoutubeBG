@@ -114,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
         observer = new SingleObserver<Search_Response>() {
             @Override
             public void onSubscribe(Disposable d) {
-
             }
 
             @Override
