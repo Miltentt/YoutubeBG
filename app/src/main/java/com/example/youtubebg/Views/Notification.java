@@ -3,10 +3,12 @@ package com.example.youtubebg.Views;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.example.youtubebg.R;
-
+import android.support.v4.media.session.MediaSessionCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.media.app.NotificationCompat.MediaStyle;
 import androidx.core.app.NotificationManagerCompat;
 
 public class Notification {
@@ -16,7 +18,8 @@ public class Notification {
     public static void createNotification(Context context, String name, int playbutton, int pos, int size)
     {
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
-        int drw_previous=0;
+        MediaSessionCompat mediaSessionCompat = new MediaSessionCompat( context, "tag");
+        int drw_previous;
         PendingIntent pendingIntentPrevious;
 
         if (pos == 0){
@@ -35,7 +38,7 @@ public class Notification {
                 intentPlay, PendingIntent.FLAG_UPDATE_CURRENT);
 
         PendingIntent pendingIntentNext;
-        int drw_next=0;
+        int drw_next;
         if (pos == size){
             pendingIntentNext = null;
             drw_next = 0;
@@ -45,6 +48,7 @@ public class Notification {
             pendingIntentNext = PendingIntent.getBroadcast(context, 0,
                     intentNext, PendingIntent.FLAG_UPDATE_CURRENT);
             drw_next = R.drawable.ic_skip_next_black_24dp;
+
         }
 
 
@@ -58,9 +62,13 @@ android.app.Notification notification = new NotificationCompat.Builder(context, 
         .setOnlyAlertOnce(true)//show notification for only first time
         .setShowWhen(false)
 .setContentTitle(name)
+        .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
+                .setShowActionsInCompactView(0, 1, 2)
+                .setMediaSession(mediaSessionCompat.getSessionToken()))
         .addAction(drw_previous, "Previous", pendingIntentPrevious)
             .addAction(playbutton, "Play", pendingIntentPlay)
             .addAction(drw_next, "Next", pendingIntentNext)
+
         .build();
 notificationManagerCompat.notify(1,notification);
     }

@@ -35,6 +35,14 @@
         <service android:name=".Views.Floating_Window_Service">
 
         </service>
+        <service android:name=".Views.OnClearFromRecentService">
+
+        </service>
+        <receiver android:name=".Views.NotificationAction_Service" >
+
+        </receiver>
+
+
     </application>
 
 </manifest>

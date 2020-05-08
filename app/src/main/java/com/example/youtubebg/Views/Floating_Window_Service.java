@@ -12,6 +12,7 @@ import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,12 +84,15 @@ public class Floating_Window_Service extends IntentService {
                     break;
                 case Notification.ACTION_PLAY:
                     if (isPlaying){
+                        Log.i("xd","next");
                         onTrackPause();
                     } else {
                         onTrackPlay();
+                        Log.i("xd","next");
                     }
                     break;
                 case Notification.ACTION_NEXT:
+                    Log.i("xd","next");
                     onTrackNext();
                     break;
             }
@@ -202,7 +206,7 @@ for(int j=0;j< ((ArrayList<Video>) intent.getSerializableExtra("videos")).size()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             creatNotification();
             registerReceiver(broadcastReceiver, new IntentFilter("Tracks"));
-            startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
+            startService(new Intent(this, OnClearFromRecentService.class));
         }
 
         LayoutInflater li = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -281,7 +285,7 @@ if(notificationManager != null)
         position--;
         Notification.createNotification(this, list.get(position),
                 R.drawable.ic_pause_black_24dp, position, list.size()-1);
-
+onPrevious();
 
     }
 
@@ -313,7 +317,7 @@ if(notificationManager != null)
         position++;
         Notification.createNotification(this, list.get(position),
                 R.drawable.ic_pause_black_24dp, position, list.size()-1);
-
+onNext();
 
     }
 
