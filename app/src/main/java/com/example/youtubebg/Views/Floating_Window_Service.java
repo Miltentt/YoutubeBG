@@ -3,62 +3,36 @@ import android.app.Activity;
 import android.app.IntentService;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PixelFormat;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.example.youtubebg.Fragments.Youtube_Player_Fragment;
 import com.example.youtubebg.Models.Video;
 
 import com.example.youtubebg.R;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
 
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 
-
-import java.io.FileDescriptor;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-public class Floating_Window_Service extends IntentService {
+
+public class Floating_Window_Service extends IntentService  {
    private Activity act;
    private  ArrayList<String> list = new ArrayList<>();
    private String first;
@@ -71,32 +45,34 @@ public class Floating_Window_Service extends IntentService {
    private int input=0;
    private ImageButton previous;
     private NotificationManager notificationManager;
-    private int position;
+    private int position=0;
     private   boolean isPlaying = false;
-    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getExtras().getString("actionname");
+    public final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
-            switch (action){
-                case Notification.ACTION_PREVIUOS:
-                    onTrackPrevious();
-                    break;
-                case Notification.ACTION_PLAY:
-                    if (isPlaying){
-                        Log.i("xd","next");
-                        onTrackPause();
-                    } else {
-                        onTrackPlay();
-                        Log.i("xd","next");
-                    }
-                    break;
-                case Notification.ACTION_NEXT:
-                    Log.i("xd","next");
-                    onTrackNext();
-                    break;
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getExtras().getString("actionname");
+                Log.i("xd",action);
+                switch (action){
+                    case Notification.ACTION_PREVIUOS:
+                        onTrackPrevious();
+                        break;
+                    case Notification.ACTION_PLAY:
+                        if (isPlaying){
+
+                            onTrackPause();
+                        } else {
+                            onTrackPlay();
+
+                        }
+                        break;
+                    case Notification.ACTION_NEXT:
+
+                        onTrackNext();
+                        break;
+                }
             }
-        }
+
     };
    private YouTubePlayerListener listener = new YouTubePlayerListener() {
        @Override
@@ -182,6 +158,7 @@ if(playerState==PlayerConstants.PlayerState.ENDED)
         super("xd");
     }
 
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -203,42 +180,18 @@ for(int j=0;j< ((ArrayList<Video>) intent.getSerializableExtra("videos")).size()
     public void onCreate() {
         super.onCreate();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             creatNotification();
-            registerReceiver(broadcastReceiver, new IntentFilter("Tracks"));
-            startService(new Intent(this, OnClearFromRecentService.class));
-        }
+            this.registerReceiver(broadcastReceiver, new IntentFilter("track"));
+            startService(new Intent(Floating_Window_Service.this, OnClearFromRecentService.class));
+
 
         LayoutInflater li = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-        int LAYOUT_FLAG;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
-        } else {
-            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_PHONE;
-        }
-        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                //WindowManager.LayoutParams.TYPE_INPUT_METHOD |
-                LAYOUT_FLAG,// | WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE| WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
 
-                PixelFormat.TRANSLUCENT);
-
-
-        params.gravity = Gravity.RIGHT | Gravity.TOP;
         myview = li.inflate(R.layout.youtubeplayer_service, null);
-        ImageButton minimize = myview.findViewById(R.id.mini);
-        layout = myview.findViewById(R.id.linearLayout2);
          youTubePlayerView = myview.findViewById(R.id.youtube_player_view);
         youTubePlayerView.setEnableAutomaticInitialization(false);
         youTubePlayerView.initialize(listener,false);
-         next = myview.findViewById(R.id.imageButton6);
-         next.setOnClickListener(e->onNext());
-         previous = myview.findViewById(R.id.imageButton7);
-         previous.setOnClickListener(e->onPrevious());
 
-        minimize.setOnClickListener(e -> minimize());
-        wm.addView(myview, params);
 
 
     }
@@ -327,11 +280,9 @@ onNext();
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
         notificationManager.cancelAll();
     }
+unregisterReceiver(broadcastReceiver);
 
-    unregisterReceiver(broadcastReceiver);
     }
-
-
 
 
 

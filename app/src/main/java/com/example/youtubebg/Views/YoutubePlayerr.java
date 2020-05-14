@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -37,14 +40,26 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
 
     private Play_Playlist_Adapter adapter;
     private RecyclerView recyclerView;
-
-
+    private   boolean isPlaying = false;
+    BroadcastReceiver broadcastReceiver;
+    private NotificationManager notificationManager;
+    private int position=0;
     private YoutubePlaylist_ViewModel youtubePlaylist_viewModel;
 
+private static Action actioninterface;
+    public interface Action
+    {
+        public void Whichaction(String action);
+
+    }
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.youtubeplayer);
+
+
+
+
         youtubePlaylist_viewModel = ViewModelProviders.of(this).get(YoutubePlaylist_ViewModel.class);
 
         Youtube_Player_Fragment youtubeFragment = Youtube_Player_Fragment.newInstance(youtubePlaylist_viewModel.getId((List<Video>) getIntent().getSerializableExtra("videos"),getIntent().getStringExtra("id")));
@@ -88,6 +103,46 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
         }
     }
 
+    private void creatNotification()
+    {
+        NotificationChannel channel = new NotificationChannel("channel1","name", NotificationManager.IMPORTANCE_HIGH);
+        notificationManager = getSystemService(NotificationManager.class);
+        if(notificationManager != null)
+        {
+            notificationManager.createNotificationChannel(channel);
+        }
+
+    }
+    public void onTrackPrevious() {
+
+
+
+    }
+
+
+    public void onTrackPlay() {
+
+
+
+    }
+
+
+    public void onTrackPause() {
+
+
+
+    }
+
+
+    public void onTrackNext() {
+
+
+
+    }
+public static Action getActioninterface()
+{
+    return actioninterface;
+}
 
 
 }

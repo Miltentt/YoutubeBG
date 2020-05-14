@@ -8,8 +8,9 @@ import android.util.Log;
 public class NotificationAction_Service extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        context.sendBroadcast(new Intent("Tracks")
-                .putExtra("actionname",intent.getAction()));
+        Log.i("x",intent.getAction());
+       Intent broadcastIntent = new Intent("track");
+                broadcastIntent.putExtra("actionname",intent.getAction());
+                context.sendBroadcast(broadcastIntent);
     }
 }

@@ -38,7 +38,7 @@
         <service android:name=".Views.OnClearFromRecentService">
 
         </service>
-        <receiver android:name=".Views.NotificationAction_Service" >
+        <receiver android:name=".Views.NotificationAction_Service">
 
         </receiver>
 
