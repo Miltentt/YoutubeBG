@@ -18,9 +18,11 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.example.youtubebg.Models.Search_Response;
 import com.example.youtubebg.Models.Video;
 
 import com.example.youtubebg.R;
+import com.example.youtubebg.ViewModels.Service_ViewModel;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
@@ -29,8 +31,12 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.Nullable;
+import io.reactivex.Observer;
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
 
 public class Floating_Window_Service extends IntentService  {
    private Activity act;
@@ -46,6 +52,7 @@ public class Floating_Window_Service extends IntentService  {
    private ImageButton previous;
     private NotificationManager notificationManager;
     private int position=0;
+    private Observer<List<String>> observer;
     private   boolean isPlaying = false;
     public final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
@@ -174,15 +181,16 @@ for(int j=0;j< ((ArrayList<Video>) intent.getSerializableExtra("videos")).size()
 {
     list.add((((ArrayList<Video>) intent.getSerializableExtra("videos")).get(j).getId()));
 }
+        creatNotification();
+        this.registerReceiver(broadcastReceiver, new IntentFilter("track"));
+        startService(new Intent(Floating_Window_Service.this, OnClearFromRecentService.class));
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-
-            creatNotification();
-            this.registerReceiver(broadcastReceiver, new IntentFilter("track"));
-            startService(new Intent(Floating_Window_Service.this, OnClearFromRecentService.class));
+initObserver();
+        Service_ViewModel.getObservable().subscribe(observer);
 
 
         LayoutInflater li = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -282,6 +290,31 @@ onNext();
     }
 unregisterReceiver(broadcastReceiver);
 
+    }
+
+    private void initObserver()
+    {
+        observer = new Observer<List<String>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+            }
+
+            @Override
+            public void onNext(List<String> strings) {
+               Log.i("XXX",strings.get(1));
+            }
+
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
     }
 
 

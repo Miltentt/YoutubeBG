@@ -19,6 +19,7 @@ import com.example.youtubebg.Models.Playlist_card;
 import com.example.youtubebg.Models.Video;
 import com.example.youtubebg.R;
 import com.example.youtubebg.ViewModels.Play_Playlist_ViewModel;
+import com.example.youtubebg.ViewModels.Service_ViewModel;
 import com.example.youtubebg.ViewModels.YoutubePlaylist_ViewModel;
 import com.example.youtubebg.adapters.Play_Playlist_Adapter;
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -85,6 +86,7 @@ private static Action actioninterface;
 
     public void StartFloating(View v){
         Intent i = new Intent(YoutubePlayerr.this,Floating_Window_Service.class);
+        Service_ViewModel.makeObservable((youtubePlaylist_viewModel.getNames((List<Video>)getIntent().getSerializableExtra("videos"))));
         i.putExtra("id",getIntent().getStringExtra("id"));
         i.putExtra("videos",getIntent().getSerializableExtra("videos"));
 
@@ -103,42 +105,7 @@ private static Action actioninterface;
         }
     }
 
-    private void creatNotification()
-    {
-        NotificationChannel channel = new NotificationChannel("channel1","name", NotificationManager.IMPORTANCE_HIGH);
-        notificationManager = getSystemService(NotificationManager.class);
-        if(notificationManager != null)
-        {
-            notificationManager.createNotificationChannel(channel);
-        }
 
-    }
-    public void onTrackPrevious() {
-
-
-
-    }
-
-
-    public void onTrackPlay() {
-
-
-
-    }
-
-
-    public void onTrackPause() {
-
-
-
-    }
-
-
-    public void onTrackNext() {
-
-
-
-    }
 public static Action getActioninterface()
 {
     return actioninterface;
