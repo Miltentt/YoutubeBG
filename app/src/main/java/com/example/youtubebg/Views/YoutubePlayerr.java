@@ -87,8 +87,11 @@ private static Action actioninterface;
     public void StartFloating(View v){
         Intent i = new Intent(YoutubePlayerr.this,Floating_Window_Service.class);
         Service_ViewModel.makeObservable((youtubePlaylist_viewModel.getNames((List<Video>)getIntent().getSerializableExtra("videos"))));
-        i.putExtra("id",getIntent().getStringExtra("id"));
-        i.putExtra("videos",getIntent().getSerializableExtra("videos"));
+        List<String> ids = new LinkedList<>();
+       ids = youtubePlaylist_viewModel.getId((List<Video>)getIntent().getSerializableExtra("videos"),getIntent().getStringExtra("id"));
+        Service_ViewModel.makeObservableI(ids);
+
+
 
         startService(i);
     }

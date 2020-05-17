@@ -3,6 +3,7 @@ import android.app.Activity;
 import android.app.IntentService;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -38,7 +39,7 @@ import io.reactivex.Observer;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 
-public class Floating_Window_Service extends IntentService  {
+public class Floating_Window_Service extends Service {
    private Activity act;
    private  ArrayList<String> list = new ArrayList<>();
    private String first;
@@ -53,6 +54,9 @@ public class Floating_Window_Service extends IntentService  {
     private NotificationManager notificationManager;
     private int position=0;
     private Observer<List<String>> observer;
+    private List<String> names;
+    private List<String> ids;
+    private Observer<List<String>> observer2;
     private   boolean isPlaying = false;
     public final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
@@ -84,7 +88,7 @@ public class Floating_Window_Service extends IntentService  {
    private YouTubePlayerListener listener = new YouTubePlayerListener() {
        @Override
        public void onReady(YouTubePlayer youTubePlayer) {
-           String videoId = list.get(i);
+           String videoId = ids.get(i);
            youTubePlayer.loadVideo(videoId, 0f);
            onTrackPlay();
        }
@@ -94,7 +98,7 @@ public class Floating_Window_Service extends IntentService  {
 if(playerState==PlayerConstants.PlayerState.ENDED)
 {
     i++;
-    youTubePlayer.loadVideo(list.get(i), 0f);
+    youTubePlayer.loadVideo(ids.get(i), 0f);
 }
            if(playerState==PlayerConstants.PlayerState.PAUSED)
            {
@@ -105,13 +109,13 @@ if(playerState==PlayerConstants.PlayerState.ENDED)
                if(input==1)
                {
                    i++;
-                   youTubePlayer.loadVideo(list.get(i), 0f);
+                   youTubePlayer.loadVideo(ids.get(i), 0f);
                }
 
                    if(input==2)
                    {
                        i--;
-                       youTubePlayer.loadVideo(list.get(i), 0f);
+                       youTubePlayer.loadVideo(ids.get(i), 0f);
                    }
                input=0;
            }
@@ -161,10 +165,6 @@ if(playerState==PlayerConstants.PlayerState.ENDED)
     LinearLayout layout;
 
 
-    public Floating_Window_Service() {
-        super("xd");
-    }
-
 
     @Nullable
     @Override
@@ -172,52 +172,31 @@ if(playerState==PlayerConstants.PlayerState.ENDED)
         return null;
     }
 
-    @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
 
-        first= intent.getStringExtra("id");
-        list.add(first);
-for(int j=0;j< ((ArrayList<Video>) intent.getSerializableExtra("videos")).size();j++)
-{
-    list.add((((ArrayList<Video>) intent.getSerializableExtra("videos")).get(j).getId()));
-}
-        creatNotification();
-        this.registerReceiver(broadcastReceiver, new IntentFilter("track"));
-        startService(new Intent(Floating_Window_Service.this, OnClearFromRecentService.class));
-    }
+
+
 
     @Override
     public void onCreate() {
         super.onCreate();
 initObserver();
-        Service_ViewModel.getObservable().subscribe(observer);
-
-
+initObserver2();
+        Service_ViewModel.getObservableNames().subscribe(observer);
+Service_ViewModel.getObservableID().subscribe(observer2);
+        creatNotification();
+        this.registerReceiver(broadcastReceiver, new IntentFilter("track"));
+        startService(new Intent(Floating_Window_Service.this, OnClearFromRecentService.class));
         LayoutInflater li = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
         myview = li.inflate(R.layout.youtubeplayer_service, null);
          youTubePlayerView = myview.findViewById(R.id.youtube_player_view);
         youTubePlayerView.setEnableAutomaticInitialization(false);
-        youTubePlayerView.initialize(listener,false);
+        youTubePlayerView.initialize(listener);
 
 
 
     }
-    private void minimize() {
-        if (minimized == false)
-        {
-            layout.getLayoutParams().height = 1;
-        layout.getLayoutParams().width = 1;
-        layout.requestLayout();
-        minimized = true;
-    } else
-      {
-          layout.getLayoutParams().height= WindowManager.LayoutParams.WRAP_CONTENT;
-          layout.getLayoutParams().width= WindowManager.LayoutParams.MATCH_PARENT;
-          layout.requestLayout();
-          minimized=false;
-      }
-    }
+
 public void onNext()
 {
     input=1;
@@ -244,8 +223,8 @@ if(notificationManager != null)
     public void onTrackPrevious() {
 
         position--;
-        Notification.createNotification(this, list.get(position),
-                R.drawable.ic_pause_black_24dp, position, list.size()-1);
+        Notification.createNotification(this, names.get(position),
+                R.drawable.ic_pause_black_24dp, position, names.size()-1);
 onPrevious();
 
     }
@@ -253,22 +232,24 @@ onPrevious();
 
     public void onTrackPlay() {
 
-        Notification.createNotification(this, list.get(position),
-                R.drawable.ic_pause_black_24dp, position, list.size()-1);
+        Notification.createNotification(this, names.get(position),
+                R.drawable.ic_pause_black_24dp, position, names.size()-1);
+isPlaying=true;
+        input=0;
+youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::play);
 
-
-        isPlaying = true;
 
     }
 
 
     public void onTrackPause() {
 
-        Notification.createNotification(this, list.get(position),
-                R.drawable.ic_play_arrow_black_24dp, position, list.size()-1);
+        Notification.createNotification(this, names.get(position),
+                R.drawable.ic_play_arrow_black_24dp, position, names.size()-1);
 
-
-        isPlaying = false;
+isPlaying=false;
+        input=0;
+        youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::pause);
 
     }
 
@@ -276,8 +257,8 @@ onPrevious();
     public void onTrackNext() {
 
         position++;
-        Notification.createNotification(this, list.get(position),
-                R.drawable.ic_pause_black_24dp, position, list.size()-1);
+        Notification.createNotification(this, names.get(position),
+                R.drawable.ic_pause_black_24dp, position, names.size()-1);
 onNext();
 
     }
@@ -302,6 +283,7 @@ unregisterReceiver(broadcastReceiver);
             @Override
             public void onNext(List<String> strings) {
                Log.i("XXX",strings.get(1));
+               names=strings;
             }
 
 
@@ -316,7 +298,31 @@ unregisterReceiver(broadcastReceiver);
             }
         };
     }
+    private void initObserver2()
+    {
+        observer2 = new Observer<List<String>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+            }
 
+            @Override
+            public void onNext(List<String> strings) {
+                Log.i("XXX",strings.get(1));
+                ids=strings;
+            }
+
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+    }
 
 
 }
