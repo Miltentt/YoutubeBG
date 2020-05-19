@@ -48,6 +48,16 @@ return videos;
 
         return id;
     }
+    public String findName(String namee) {
+        String name="";
+        for (int i = 0; i < videos.size(); i++) {
+            if (videos.get(i).getTitles().equals(namee)) {
+                name = videos.get(i).getTitles();
+            }
+        }
+
+        return name;
+    }
     public List<Video> shuffle(boolean shuffled) {
         if (shuffled == true) {
             Collections.shuffle(videos);

@@ -9,10 +9,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+
 
 import com.example.youtubebg.Fragments.Youtube_Player_Fragment;
 import com.example.youtubebg.Models.Playlist_card;
@@ -33,6 +38,8 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,18 +54,13 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
     private int position=0;
     private YoutubePlaylist_ViewModel youtubePlaylist_viewModel;
 
-private static Action actioninterface;
-    public interface Action
-    {
-        public void Whichaction(String action);
 
-    }
+
+
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.youtubeplayer);
-
-
 
 
         youtubePlaylist_viewModel = ViewModelProviders.of(this).get(YoutubePlaylist_ViewModel.class);
@@ -72,7 +74,7 @@ private static Action actioninterface;
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-       canDrawOverlays();
+        canDrawOverlays();
  }
 
     @Override
@@ -84,9 +86,16 @@ private static Action actioninterface;
     }
 
 
-    public void StartFloating(View v){
+    public void StartFloating(){
         Intent i = new Intent(YoutubePlayerr.this,Floating_Window_Service.class);
-        Service_ViewModel.makeObservable((youtubePlaylist_viewModel.getNames((List<Video>)getIntent().getSerializableExtra("videos"))));
+        List<String> names = new LinkedList<>();
+        names.add(getIntent().getStringExtra("first"));
+        List<Video> list = (List<Video>) getIntent().getSerializableExtra("videos");
+        for(int j = 0; j<list.size(); j++)
+        {
+            names.add(youtubePlaylist_viewModel.getNames((List<Video>) getIntent().getSerializableExtra("videos")).get(j));
+        }
+        Service_ViewModel.makeObservable(names);
         List<String> ids = new LinkedList<>();
        ids = youtubePlaylist_viewModel.getId((List<Video>)getIntent().getSerializableExtra("videos"),getIntent().getStringExtra("id"));
         Service_ViewModel.makeObservableI(ids);
@@ -97,22 +106,38 @@ private static Action actioninterface;
     }
 
 
+
+
     public void canDrawOverlays()
     {
-        if(Settings.canDrawOverlays(this)==false)
-        {
-            Intent i = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,Uri.parse("package:" + getPackageName()));
+        if(Settings.canDrawOverlays(getApplicationContext())&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
 
-            startActivity(i);
 
+
+        }
+        else{
+            startActivityForResult(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION), 1);
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.layout.background_menu, menu);
+        return true;
+    }
 
-public static Action getActioninterface()
-{
-    return actioninterface;
-}
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.background: {
+StartFloating();
+                break;
+            }
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

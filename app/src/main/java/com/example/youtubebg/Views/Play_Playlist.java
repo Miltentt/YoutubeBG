@@ -42,6 +42,7 @@ private Playlist_card card;
 Intent i = new Intent(this,YoutubePlayerr.class);
 play_playlist_viewModel.populate(card);
 i.putExtra("id",play_playlist_viewModel.findId(name));
+i.putExtra("first",play_playlist_viewModel.findName(name));
 play_playlist_viewModel.switchfirst(name);
 i.putExtra("videos", (Serializable) play_playlist_viewModel.shuffle(true));
 startActivity(i);

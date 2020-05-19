@@ -282,7 +282,7 @@ unregisterReceiver(broadcastReceiver);
 
             @Override
             public void onNext(List<String> strings) {
-               Log.i("XXX",strings.get(1));
+               Log.i("XXX",strings.get(0));
                names=strings;
             }
 
@@ -307,7 +307,6 @@ unregisterReceiver(broadcastReceiver);
 
             @Override
             public void onNext(List<String> strings) {
-                Log.i("XXX",strings.get(1));
                 ids=strings;
             }
 
