@@ -3,12 +3,9 @@ package com.example.youtubebg.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.youtubebg.Models.Playlist_card;
 import com.example.youtubebg.R;
-import com.example.youtubebg.Views.Play_Playlist;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -55,7 +52,7 @@ public class Play_Playlist_Adapter extends RecyclerView.Adapter<Play_Playlist_Ad
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.name);
+            name = itemView.findViewById(R.id.grav);
         }
     }
 

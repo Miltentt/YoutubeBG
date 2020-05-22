@@ -1,6 +1,5 @@
 package com.example.youtubebg.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 
 import com.example.youtubebg.Models.Playlist_card;
 import com.example.youtubebg.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -60,7 +58,7 @@ public void setCallBack(adapterCallBack callBack)
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.name);
+            name = itemView.findViewById(R.id.grav);
         }
     }
 

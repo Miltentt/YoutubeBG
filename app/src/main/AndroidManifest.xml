@@ -32,13 +32,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <service android:name=".Views.Floating_Window_Service">
+        <service android:name=".Service.Floating_Window_Service">
 
         </service>
-        <service android:name=".Views.OnClearFromRecentService">
+        <service android:name=".Service.OnClearFromRecentService">
 
         </service>
-        <receiver android:name=".Views.NotificationAction_Service">
+        <receiver android:name=".Service.NotificationAction_Service">
 
         </receiver>
 

@@ -1,6 +1,4 @@
-package com.example.youtubebg.Views;
-import android.app.Activity;
-import android.app.IntentService;
+package com.example.youtubebg.Service;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
@@ -8,19 +6,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-
-import com.example.youtubebg.Models.Search_Response;
-import com.example.youtubebg.Models.Video;
 
 import com.example.youtubebg.R;
 import com.example.youtubebg.ViewModels.Service_ViewModel;
@@ -31,26 +21,17 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.You
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
 import io.reactivex.Observer;
-import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 
 public class Floating_Window_Service extends Service {
-   private Activity act;
-   private  ArrayList<String> list = new ArrayList<>();
-   private String first;
    private View myview;
    private int i=0;
-   private WindowManager wm;
-   private boolean minimized;
    private YouTubePlayerView youTubePlayerView;
-   private ImageButton next;
    private int input=0;
-   private ImageButton previous;
     private NotificationManager notificationManager;
     private int position=0;
     private Observer<List<String>> observer;
@@ -162,7 +143,7 @@ if(playerState==PlayerConstants.PlayerState.ENDED)
 
        }
    };
-    LinearLayout layout;
+
 
 
 
@@ -197,17 +178,8 @@ Service_ViewModel.getObservableID().subscribe(observer2);
 
     }
 
-public void onNext()
-{
-    input=1;
-  youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::pause);
-}
-public void onPrevious()
-{
-    input=2;
-    youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::pause);
 
-}
+
     private void creatNotification()
     {
         NotificationChannel channel = new NotificationChannel("channel1","name", NotificationManager.IMPORTANCE_HIGH);
@@ -225,7 +197,8 @@ if(notificationManager != null)
         position--;
         Notification.createNotification(this, names.get(position),
                 R.drawable.ic_pause_black_24dp, position, names.size()-1);
-onPrevious();
+        input=2;
+        youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::pause);
 
     }
 
@@ -259,7 +232,8 @@ isPlaying=false;
         position++;
         Notification.createNotification(this, names.get(position),
                 R.drawable.ic_pause_black_24dp, position, names.size()-1);
-onNext();
+        input=1;
+        youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::pause);
 
     }
 

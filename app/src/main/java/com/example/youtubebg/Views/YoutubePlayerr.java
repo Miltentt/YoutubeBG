@@ -1,45 +1,24 @@
 package com.example.youtubebg.Views;
 
-import android.app.Activity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 
 import com.example.youtubebg.Fragments.Youtube_Player_Fragment;
-import com.example.youtubebg.Models.Playlist_card;
 import com.example.youtubebg.Models.Video;
 import com.example.youtubebg.R;
-import com.example.youtubebg.ViewModels.Play_Playlist_ViewModel;
+import com.example.youtubebg.Service.Floating_Window_Service;
 import com.example.youtubebg.ViewModels.Service_ViewModel;
 import com.example.youtubebg.ViewModels.YoutubePlaylist_ViewModel;
 import com.example.youtubebg.adapters.Play_Playlist_Adapter;
-import com.google.android.youtube.player.YouTubeBaseActivity;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerView;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,15 +27,7 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
 
     private Play_Playlist_Adapter adapter;
     private RecyclerView recyclerView;
-    private   boolean isPlaying = false;
-    BroadcastReceiver broadcastReceiver;
-    private NotificationManager notificationManager;
-    private int position=0;
     private YoutubePlaylist_ViewModel youtubePlaylist_viewModel;
-
-
-
-
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -74,7 +45,7 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        canDrawOverlays();
+
  }
 
     @Override
@@ -87,7 +58,7 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
 
 
     public void StartFloating(){
-        Intent i = new Intent(YoutubePlayerr.this,Floating_Window_Service.class);
+        Intent i = new Intent(YoutubePlayerr.this, Floating_Window_Service.class);
         List<String> names = new LinkedList<>();
         names.add(getIntent().getStringExtra("first"));
         List<Video> list = (List<Video>) getIntent().getSerializableExtra("videos");
@@ -99,26 +70,11 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
         List<String> ids = new LinkedList<>();
        ids = youtubePlaylist_viewModel.getId((List<Video>)getIntent().getSerializableExtra("videos"),getIntent().getStringExtra("id"));
         Service_ViewModel.makeObservableI(ids);
-
-
-
         startService(i);
     }
 
 
 
-
-    public void canDrawOverlays()
-    {
-        if(Settings.canDrawOverlays(getApplicationContext())&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-
-
-
-        }
-        else{
-            startActivityForResult(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION), 1);
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

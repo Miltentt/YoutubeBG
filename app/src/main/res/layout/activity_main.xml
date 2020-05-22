@@ -29,7 +29,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/a"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:paddingTop="20dp"
+            android:paddingBottom="30dp" />
 
     </LinearLayout>
 

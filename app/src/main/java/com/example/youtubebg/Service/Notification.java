@@ -1,14 +1,14 @@
-package com.example.youtubebg.Views;
+package com.example.youtubebg.Service;
 
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.example.youtubebg.R;
+import com.example.youtubebg.Service.NotificationAction_Service;
+
 import android.support.v4.media.session.MediaSessionCompat;
 import androidx.core.app.NotificationCompat;
-import androidx.media.app.NotificationCompat.MediaStyle;
 import androidx.core.app.NotificationManagerCompat;
 
 public class Notification {

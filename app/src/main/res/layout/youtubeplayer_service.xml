@@ -7,38 +7,6 @@
     android:paddingTop="40dp">
 
     <LinearLayout
-        android:id="@+id/lin"
-        android:layout_width="wrap_content"
-        android:layout_height="63dp"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
-
-        <ImageButton
-            android:id="@+id/mini"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-
-            android:src="@android:drawable/button_onoff_indicator_off" />
-
-        <ImageButton
-            android:id="@+id/imageButton7"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-
-            android:src="@android:drawable/ic_media_rew" />
-
-        <ImageButton
-            android:id="@+id/imageButton6"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-
-            android:src="@android:drawable/ic_media_ff" />
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

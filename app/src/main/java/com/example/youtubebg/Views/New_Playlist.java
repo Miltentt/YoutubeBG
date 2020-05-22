@@ -1,6 +1,5 @@
 package com.example.youtubebg.Views;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.youtubebg.R;
-import com.example.youtubebg.ViewModels.MainActivity_ViewModel;
 import com.example.youtubebg.ViewModels.New_Playlist_ViewModel;
 
 public class New_Playlist extends AppCompatActivity {
@@ -30,7 +28,7 @@ private String title;
          photo = extras.getString("photo");
         id = extras.getString("id");
         title = extras.getString("names");
-        name = findViewById(R.id.name);
+        name = findViewById(R.id.grav);
         new_playlist_viewModel = ViewModelProviders.of(this).get(New_Playlist_ViewModel.class);
     }
     public void finish (View view)
