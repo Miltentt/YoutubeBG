@@ -1,5 +1,10 @@
 package com.example.youtubebg.Views;
 
+import com.example.youtubebg.ViewModels.Delete_Playlist_ViewModel;
+import com.example.youtubebg.adapters.Delete_Playlist_Adapter;
+import com.example.youtubebg.adapters.Playlist_Adapter;
+
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,55 +31,26 @@ import com.example.youtubebg.adapters.Search_Adapter;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
+import androidx.annotation.Nullable;
 
-public class Playlists extends AppCompatActivity implements Playlist_Adapter.callBack {
+public class Delete_Playlist extends AppCompatActivity implements Delete_Playlist_Adapter.callBack {
     RecyclerView recyclerView;
-    private Playlists_ViewModel playlists_viewModel;
-    private Playlist_Adapter adapter;
+    private Delete_Playlist_ViewModel playlists_viewModel;
+    private Delete_Playlist_Adapter adapter;
     private SingleObserver observer;
+    private List<Playlist_card> list;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.playlists);
-        playlists_viewModel = ViewModelProviders.of(this).get(Playlists_ViewModel.class);
+        playlists_viewModel = ViewModelProviders.of(this).get(Delete_Playlist_ViewModel.class);
         initObserver();
         playlists_viewModel.loadPlaylists().subscribe(observer);
-        adapter = new Playlist_Adapter(new LinkedList<Playlist_card>(),Playlists.this);
+        adapter = new Delete_Playlist_Adapter(new LinkedList<Playlist_card>(), this);
         initRecycler();
-    }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.layout.playlist_menu, menu);
-        return true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        playlists_viewModel.loadPlaylists().subscribe(observer);
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.search: {
-                Intent i = new Intent(this, MainActivity.class);
-                startActivity(i);
-                break;
-            }
-            case R.id.delete: {
-                Intent i = new Intent(this, Delete_Playlist.class);
-                startActivityForResult(i,1);
-                break;
-            }
-
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void initRecycler() {
@@ -85,11 +61,26 @@ public class Playlists extends AppCompatActivity implements Playlist_Adapter.cal
         recyclerView.setAdapter(adapter);
     }
 
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                setResult(RESULT_OK);
+                this.finish();
+        break;
+        }
+        return true;
+    }
+
+
     @Override
     public void openPlaylist(Playlist_card card) {
-        Intent i = new Intent(this, Play_Playlist.class);
-        i.putExtra("playlist", card);
-        startActivity(i);
+   playlists_viewModel.deletePlaylist(card);
+list.remove(card);
+adapter.updateList(list);
     }
 
     private void initObserver() {
@@ -102,8 +93,8 @@ public class Playlists extends AppCompatActivity implements Playlist_Adapter.cal
 
             @Override
             public void onSuccess(List<Playlist_card> playlist_cards) {
-
-                    adapter.update(playlist_cards);
+list = playlist_cards;
+                adapter.updateList(list);
 
             }
 
@@ -114,3 +105,5 @@ public class Playlists extends AppCompatActivity implements Playlist_Adapter.cal
         };
     }
 }
+
+
