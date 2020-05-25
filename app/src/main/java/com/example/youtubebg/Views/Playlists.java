@@ -86,9 +86,9 @@ public class Playlists extends AppCompatActivity implements Playlist_Adapter.cal
     }
 
     @Override
-    public void openPlaylist(Playlist_card card) {
+    public void openPlaylist(int id) {
         Intent i = new Intent(this, Play_Playlist.class);
-        i.putExtra("playlist", card);
+        i.putExtra("id", id);
         startActivity(i);
     }
 

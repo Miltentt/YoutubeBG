@@ -26,7 +26,7 @@ public Playlist_Adapter(List<Playlist_card> card, callBack callBack)
 }
 
 public interface callBack{
-   void openPlaylist(Playlist_card card);
+   void openPlaylist(int id);
 }
 
 
@@ -64,7 +64,7 @@ name = itemView.findViewById(R.id.grav);
     }
     public void onClick(int position)
     {
-        callBack.openPlaylist(card.get(position));
+        callBack.openPlaylist(card.get(position).getId());
     }
     public void update(List<Playlist_card> card)
     {
