@@ -41,11 +41,7 @@ public class Play_Playlist extends AppCompatActivity implements Play_Playlist_Ad
         id = getIntent().getIntExtra("id",0);
         play_playlist_viewModel = ViewModelProviders.of(this).get(Play_Playlist_ViewModel.class);
         play_playlist_viewModel.getPlaylist(id).subscribe(observer);
-        adapter = new Play_Playlist_Adapter(new LinkedList<String>(), this);
-        recyclerView = findViewById(R.id.recycler);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+       initRecycler();
     }
 
     @Override
@@ -58,7 +54,15 @@ public class Play_Playlist extends AppCompatActivity implements Play_Playlist_Ad
         i.putExtra("videos", (Serializable) play_playlist_viewModel.shuffle(true));
         startActivity(i);
     }
+public void initRecycler()
+{
+    adapter = new Play_Playlist_Adapter(new LinkedList<String>(), this);
+    recyclerView = findViewById(R.id.recycler);
+    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+    recyclerView.setLayoutManager(layoutManager);
+    recyclerView.setAdapter(adapter);
 
+}
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 

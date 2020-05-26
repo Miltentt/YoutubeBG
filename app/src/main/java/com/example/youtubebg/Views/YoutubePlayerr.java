@@ -1,5 +1,7 @@
 package com.example.youtubebg.Views;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -88,12 +90,28 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
         int id = item.getItemId();
         switch (id) {
             case R.id.background: {
-StartFloating();
+if(isMyServiceRunning(Floating_Window_Service.class)==false) {
+    StartFloating();
+}
+else
+{
+     Intent a = new Intent(YoutubePlayerr.this, Floating_Window_Service.class);
+    stopService(a);
+}
                 break;
             }
+
 
         }
         return super.onOptionsItemSelected(item);
     }
-
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

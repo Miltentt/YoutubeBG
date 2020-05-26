@@ -20,7 +20,7 @@
 
         <fragment
             android:id="@+id/fragment2"
-            android:name="com.example.youtubebg.Views.Fragment_search"
+            android:name="com.example.youtubebg.Fragments.Fragment_search"
             android:layout_width="match_parent"
             android:layout_height="46dp"
             android:layout_marginTop="8dp"

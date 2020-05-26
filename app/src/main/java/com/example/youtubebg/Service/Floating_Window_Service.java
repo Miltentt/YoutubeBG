@@ -44,7 +44,7 @@ public class Floating_Window_Service extends Service {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getExtras().getString("actionname");
-                Log.i("xd",action);
+
                 switch (action){
                     case Notification.ACTION_PREVIUOS:
                         onTrackPrevious();
@@ -173,9 +173,6 @@ Service_ViewModel.getObservableID().subscribe(observer2);
          youTubePlayerView = myview.findViewById(R.id.youtube_player_view);
         youTubePlayerView.setEnableAutomaticInitialization(false);
         youTubePlayerView.initialize(listener);
-
-
-
     }
 
 
@@ -188,7 +185,6 @@ if(notificationManager != null)
 {
     notificationManager.createNotificationChannel(channel);
 }
-
     }
 
 
@@ -244,7 +240,8 @@ isPlaying=false;
         notificationManager.cancelAll();
     }
 unregisterReceiver(broadcastReceiver);
-
+    input=0;
+youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::pause);
     }
 
     private void initObserver()
@@ -256,7 +253,6 @@ unregisterReceiver(broadcastReceiver);
 
             @Override
             public void onNext(List<String> strings) {
-               Log.i("XXX",strings.get(0));
                names=strings;
             }
 
@@ -296,6 +292,4 @@ unregisterReceiver(broadcastReceiver);
             }
         };
     }
-
-
 }

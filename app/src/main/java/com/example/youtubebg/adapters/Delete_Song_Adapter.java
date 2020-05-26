@@ -62,12 +62,12 @@ public class Delete_Song_Adapter extends RecyclerView.Adapter<Delete_Song_Adapte
 
     public interface adapterCallBack
     {
-        public void saveVideo(int position);
+        public void removeVideo(int position);
 
     }
     private void onClick(int position)
     {
-        callBack.saveVideo(position);
+        callBack.removeVideo(position);
     }
     public void updateAdapter(List<String> updatedlist)
     {

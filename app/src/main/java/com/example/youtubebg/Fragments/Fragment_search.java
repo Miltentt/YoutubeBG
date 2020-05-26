@@ -1,6 +1,5 @@
-package com.example.youtubebg.Views;
+package com.example.youtubebg.Fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.youtubebg.R;
-import com.example.youtubebg.ViewModels.Search_Popup;
 
 
 public class Fragment_search extends Fragment {
