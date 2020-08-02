@@ -12,7 +12,7 @@
         android:roundIcon="@drawable/youtube"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Views.MainActivity">
+        <activity android:name=".Search_Video.Views.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

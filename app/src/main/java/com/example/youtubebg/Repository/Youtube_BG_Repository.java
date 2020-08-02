@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.example.youtubebg.DataBase.Playlist_Database;
 import com.example.youtubebg.Models.Playlist_card;
-import com.example.youtubebg.Models.Search_Response;
-import com.example.youtubebg.retrofit.Retrofit1;
+import com.example.youtubebg.retrofit.RetrofitAutoComplete;
+import com.example.youtubebg.retrofit.RetrofitYoutube;
 
 import java.util.List;
 
@@ -17,11 +17,13 @@ import io.reactivex.schedulers.Schedulers;
 public class Youtube_BG_Repository {
 
     private static  Youtube_BG_Repository instance;
-   private Retrofit1 retrofit1;
+    private RetrofitYoutube retrofitYoutube;
+    private RetrofitAutoComplete retrofitAutoComplete;
     private Playlist_Database db;
     private List<Playlist_card> playlists;
     private Playlist_card playlist;
-    private boolean retro;
+
+
 
     public static Youtube_BG_Repository getInstance(Context context)
     {
@@ -32,15 +34,25 @@ public class Youtube_BG_Repository {
         return instance;
     }
     public Youtube_BG_Repository(Context context) {
-        retrofit1 = Retrofit1.getInstance();
+        retrofitYoutube = RetrofitYoutube.getInstance();
+        retrofitAutoComplete = RetrofitAutoComplete.getInstance();
         db = Playlist_Database.getDatabase(context);
+
     }
 
     // Retrofit
     public Single getSearch(String search)
     {
-        return  Retrofit1.youtubeApi.searchVideo(search, "video", "AIzaSyDtg9GVjWLW_KzJzyNPsMKTYOYD8YDrod8", "snippet,id", "10", "");
+        return  RetrofitYoutube.youtubeApi.searchVideo(search, "video", "AIzaSyDtg9GVjWLW_KzJzyNPsMKTYOYD8YDrod8", "snippet,id", "10", "");
     }
+public Observable getAutoComplete(String search)
+{
+
+    return RetrofitAutoComplete.autoCompleteAPI.searchAutoComplete("youtube",search,"en");
+
+}
+
+
 
 
     //  Room Database

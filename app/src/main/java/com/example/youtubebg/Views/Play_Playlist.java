@@ -7,15 +7,12 @@ import android.view.MenuItem;
 
 import com.example.youtubebg.Models.Playlist_card;
 import com.example.youtubebg.R;
-import com.example.youtubebg.ViewModels.MainActivity_ViewModel;
+import com.example.youtubebg.Search_Video.Views.MainActivity;
 import com.example.youtubebg.ViewModels.Play_Playlist_ViewModel;
 import com.example.youtubebg.adapters.Play_Playlist_Adapter;
-import com.example.youtubebg.adapters.Playlist_Adapter;
-import com.example.youtubebg.adapters.Popup_adapter;
 
 import java.io.Serializable;
 import java.util.LinkedList;
-import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

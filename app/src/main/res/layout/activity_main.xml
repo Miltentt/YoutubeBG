@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.MainActivity">
+    tools:context=".Search_Video.Views.MainActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -20,7 +20,7 @@
 
         <fragment
             android:id="@+id/fragment2"
-            android:name="com.example.youtubebg.Fragments.Fragment_search"
+            android:name="com.example.youtubebg.Search_Video.Views.Fragment_search"
             android:layout_width="match_parent"
             android:layout_height="46dp"
             android:layout_marginTop="8dp"

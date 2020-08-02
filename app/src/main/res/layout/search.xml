@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.example.youtubebg.Fragments.Fragment_search"
+        android:name="com.example.youtubebg.Search_Video.Views.Fragment_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

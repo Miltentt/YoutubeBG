@@ -1,4 +1,4 @@
-package com.example.youtubebg.ViewModels;
+package com.example.youtubebg.Search_Video.ViewModel;
 
 import android.app.Application;
 import android.content.Context;

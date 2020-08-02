@@ -1,21 +1,19 @@
-package com.example.youtubebg.Views;
+package com.example.youtubebg.Search_Video.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.youtubebg.Models.Search_Response;
 import com.example.youtubebg.R;
-import com.example.youtubebg.ViewModels.MainActivity_ViewModel;
-import com.example.youtubebg.Fragments.Fragment_search;
+import com.example.youtubebg.Search_Video.ViewModel.MainActivity_ViewModel;
+import com.example.youtubebg.Views.Playlists;
 import com.example.youtubebg.adapters.Search_Adapter;
 
 import io.reactivex.SingleObserver;

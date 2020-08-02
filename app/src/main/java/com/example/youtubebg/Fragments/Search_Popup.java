@@ -30,7 +30,7 @@ public class Search_Popup extends AppCompatDialogFragment {
         builder.setView(view)
                 .setTitle("Playlists");
       search = view.findViewById(R.id.search);
-      button = view.findViewById(R.id.imageButton);
+
 
 
         return builder.create();
