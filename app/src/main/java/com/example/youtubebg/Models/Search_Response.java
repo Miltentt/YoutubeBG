@@ -170,14 +170,14 @@ public class Search_Response {
 
 
             public static class Thumbnails {
-                @SerializedName("default")
-                private Default _default;
+                @SerializedName("high")
+                private High high;
 
-                public Default getDefault() {
-                    return _default;
+                public High getDefault() {
+                    return high;
                 }
 
-                public static final class Default {
+                public static final class High {
                     private String url;
                     private int width, height;
 

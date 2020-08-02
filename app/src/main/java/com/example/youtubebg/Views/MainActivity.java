@@ -2,9 +2,9 @@ package com.example.youtubebg.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -22,9 +22,8 @@ import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends AppCompatActivity implements Fragment_search.searchresult {
-    Search_Response list = new Search_Response();
-    RecyclerView recyclerView;
-    private FragmentManager finalPopup;
+    private Search_Response search_response = new Search_Response();
+    private RecyclerView recyclerView;
     private Search_Adapter adapter;
     private MainActivity_ViewModel mainActivity_viewModel;
     private SingleObserver<Search_Response> observer;
@@ -42,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainActivity_viewModel = ViewModelProviders.of(this).get(MainActivity_ViewModel.class);
-        finalPopup = this.getSupportFragmentManager();
         initRecycler();
 
 
@@ -84,8 +82,8 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
     }
     private void initRecycler()
     {
-        adapter = new Search_Adapter(list.getItems(), finalPopup, getApplicationContext());
-        recyclerView = findViewById(R.id.a);
+        adapter = new Search_Adapter(search_response.getItems(), this.getSupportFragmentManager(), getApplicationContext());
+        recyclerView = findViewById(R.id.Youtube_Search_recyclerview);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -101,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
             @Override
             public void onSuccess(Search_Response search_response) {
                 adapter.updateList(search_response.getItems());
+                Log.i("xd",(search_response.getItems().get(0).getSnippet().getThumbnails().getDefault().getUrl()));
             }
 
             @Override

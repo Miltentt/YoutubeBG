@@ -52,8 +52,10 @@ repository = Youtube_BG_Repository.getInstance(getContext());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.playlist_popup,null,false);
 
-        builder.setView(view)
-                .setTitle("Playlists");
+        builder.setView(view);
+
+
+
 
        initObserver();
        repository.getPlaylists().subscribe(observer);
