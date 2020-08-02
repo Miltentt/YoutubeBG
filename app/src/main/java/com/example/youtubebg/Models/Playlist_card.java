@@ -1,6 +1,6 @@
 package com.example.youtubebg.Models;
 
-import com.example.youtubebg.TypeConverter;
+import com.example.youtubebg.DataBase.TypeConverter;
 
 import java.io.Serializable;
 import java.util.List;

@@ -22,19 +22,10 @@ import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends AppCompatActivity implements Fragment_search.searchresult {
-    private Search_Response search_response = new Search_Response();
     private RecyclerView recyclerView;
     private Search_Adapter adapter;
     private MainActivity_ViewModel mainActivity_viewModel;
     private SingleObserver<Search_Response> observer;
-
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +33,15 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
         setContentView(R.layout.activity_main);
         mainActivity_viewModel = ViewModelProviders.of(this).get(MainActivity_ViewModel.class);
         initRecycler();
-
-
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.layout.menu, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -68,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
     }
 
 
+
     @Override
     public void search(String search) {
         mainActivity_viewModel.getSearch(search);
@@ -76,18 +67,23 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
           initObserver();
       }
         mainActivity_viewModel.getObservable().subscribe(observer);
-
-
-
     }
+
+
+
+
     private void initRecycler()
     {
-        adapter = new Search_Adapter(search_response.getItems(), this.getSupportFragmentManager(), getApplicationContext());
+        adapter = new Search_Adapter(new Search_Response().getItems(), this.getSupportFragmentManager(), getApplicationContext());
         recyclerView = findViewById(R.id.Youtube_Search_recyclerview);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
+
+
+
+
 
     private void initObserver()
     {
@@ -99,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
             @Override
             public void onSuccess(Search_Response search_response) {
                 adapter.updateList(search_response.getItems());
-                Log.i("xd",(search_response.getItems().get(0).getSnippet().getThumbnails().getDefault().getUrl()));
             }
 
             @Override
@@ -108,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
             }
         };
     }
+
 
 
 }

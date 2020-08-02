@@ -17,12 +17,10 @@ import io.reactivex.schedulers.Schedulers;
 public class Youtube_BG_Repository {
 
     private static  Youtube_BG_Repository instance;
-   private Search_Response list = new Search_Response();
    private Retrofit1 retrofit1;
     private Playlist_Database db;
     private List<Playlist_card> playlists;
     private Playlist_card playlist;
-    private Single Search_response;
     private boolean retro;
 
     public static Youtube_BG_Repository getInstance(Context context)
@@ -33,21 +31,19 @@ public class Youtube_BG_Repository {
         }
         return instance;
     }
-    public Youtube_BG_Repository(Context context){
-        retrofit1= Retrofit1.getInstance();
-db = Playlist_Database.getDatabase(context);
+    public Youtube_BG_Repository(Context context) {
+        retrofit1 = Retrofit1.getInstance();
+        db = Playlist_Database.getDatabase(context);
     }
+
+    // Retrofit
     public Single getSearch(String search)
     {
-        Search_response = Retrofit1.youtubeApi.searchVideo(search, "video", "AIzaSyDtg9GVjWLW_KzJzyNPsMKTYOYD8YDrod8", "snippet,id", "10", "")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-        return  Search_response;
+        return  Retrofit1.youtubeApi.searchVideo(search, "video", "AIzaSyDtg9GVjWLW_KzJzyNPsMKTYOYD8YDrod8", "snippet,id", "10", "");
     }
-    public Single getObservable()
-    {
-        return Search_response;
-    }
+
+
+    //  Room Database
 public Single<List<Playlist_card>> getPlaylists()
 {
 
