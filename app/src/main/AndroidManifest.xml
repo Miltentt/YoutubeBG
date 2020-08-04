@@ -21,7 +21,9 @@
         </activity>
         <activity android:name=".Views.Playlists">
         </activity>
-        <activity android:name=".Views.New_Playlist">
+        <activity android:name=".Search_Video.Views.Play_Youtube_Video">
+        </activity>
+        <activity android:name=".Search_Video.Views.New_Playlist">
         </activity>
         <activity android:name=".Views.Play_Playlist">
         </activity>

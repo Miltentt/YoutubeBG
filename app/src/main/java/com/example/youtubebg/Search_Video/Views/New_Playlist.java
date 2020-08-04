@@ -1,4 +1,4 @@
-package com.example.youtubebg.Views;
+package com.example.youtubebg.Search_Video.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.youtubebg.R;
-import com.example.youtubebg.Search_Video.Views.MainActivity;
-import com.example.youtubebg.ViewModels.New_Playlist_ViewModel;
+import com.example.youtubebg.Search_Video.ViewModel.New_Playlist_ViewModel;
 
 public class New_Playlist extends AppCompatActivity {
 private EditText Playlist_Name;

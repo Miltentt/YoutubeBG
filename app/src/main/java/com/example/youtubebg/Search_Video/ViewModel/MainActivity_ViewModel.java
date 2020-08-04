@@ -18,15 +18,15 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity_ViewModel extends AndroidViewModel {
+public class MainActivity_ViewModel extends ViewModel {
     private Youtube_BG_Repository repository;
     private Single Search_response;
 
 
 
-    public MainActivity_ViewModel(Application application) {
-super(application);
-        repository = Youtube_BG_Repository.getInstance(application);
+    public MainActivity_ViewModel() {
+
+        repository = Youtube_BG_Repository.getInstance();
     }
 
 

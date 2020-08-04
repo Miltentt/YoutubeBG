@@ -1,8 +1,5 @@
 package com.example.youtubebg.adapters;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,22 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.youtubebg.Models.Playlist_card;
-import com.example.youtubebg.Models.Search_Response;
 import com.example.youtubebg.R;
-import com.example.youtubebg.Views.Playlist_popup;
-import com.example.youtubebg.Views.YoutubePlayerr;
 import com.squareup.picasso.Picasso;
 
-import java.io.FileDescriptor;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class Delete_Playlist_Adapter extends RecyclerView.Adapter<Delete_Playlist_Adapter.MyViewHolder>  {

@@ -1,4 +1,4 @@
-package com.example.youtubebg.Views;
+package com.example.youtubebg.Search_Video.Views;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -13,8 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import io.reactivex.Observer;
-import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 
@@ -22,9 +20,8 @@ import com.example.youtubebg.Models.Playlist_card;
 import com.example.youtubebg.Models.Search_Response;
 import com.example.youtubebg.R;
 import com.example.youtubebg.Repository.Youtube_BG_Repository;
-import com.example.youtubebg.adapters.Playlist_Adapter;
+import com.example.youtubebg.Search_Video.Views.New_Playlist;
 import com.example.youtubebg.adapters.Popup_adapter;
-import com.example.youtubebg.adapters.Search_Adapter;
 
 import java.util.LinkedList;
 import java.util.List;

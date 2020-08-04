@@ -18,7 +18,8 @@ public class Delete_Playlist_ViewModel extends AndroidViewModel {
     public Delete_Playlist_ViewModel(@NonNull Application application) {
 
             super(application);
-            repository = Youtube_BG_Repository.getInstance(application);
+            repository = Youtube_BG_Repository.getInstance();
+            repository.getRoomInstance(application);
     }
     public void deletePlaylist(Playlist_card card)
     {
