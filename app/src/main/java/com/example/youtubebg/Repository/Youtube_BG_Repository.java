@@ -9,6 +9,7 @@ import com.example.youtubebg.retrofit.RetrofitYoutube;
 import java.util.List;
 
 import androidx.room.RoomDatabase;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -43,7 +44,7 @@ public class Youtube_BG_Repository {
 
 
     //  Room Database
-public Single<List<Playlist_card>> getPlaylists()
+public Flowable<List<Playlist_card>> getPlaylists()
 {
 
     return db.playlist_dao().LoadAllPlaylists()
@@ -63,7 +64,7 @@ public void addPlaylist(Playlist_card playlist_card)
 {
     db.playlist_dao().Insert(playlist_card);
 }
-public Single<Playlist_card> getPlaylist(int id)
+public Flowable<Playlist_card> getPlaylist(int id)
 {
    return  db.playlist_dao().LoadPlaylist(id)
            .subscribeOn(Schedulers.io())

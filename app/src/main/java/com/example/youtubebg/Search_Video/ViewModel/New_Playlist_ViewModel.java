@@ -10,13 +10,13 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.ViewModel;
 
-public class New_Playlist_ViewModel extends AndroidViewModel {
+public class New_Playlist_ViewModel extends ViewModel {
     private Youtube_BG_Repository repository;
-    public New_Playlist_ViewModel(@NonNull Application application) {
-        super(application);
+    public New_Playlist_ViewModel() {
+
         repository = Youtube_BG_Repository.getInstance();
-        repository.getRoomInstance(application);
     }
 
     public void createPlaylist(String name, String photo,String video, String namess )
@@ -26,7 +26,6 @@ public class New_Playlist_ViewModel extends AndroidViewModel {
         List<String> names = new LinkedList<>();
         names.add(namess);
         repository.addPlaylist(new Playlist_card(name,photo,vid,names));
-
     }
 
 

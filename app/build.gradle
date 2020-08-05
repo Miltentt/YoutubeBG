@@ -51,4 +51,5 @@ dependencies {
     implementation 'android.arch.persistence.room:rxjava2:1.1.1'
     implementation 'androidx.media:media:1.1.0'
     implementation 'androidx.core:core:1.1.0'
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:2.2.0"
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModel;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 public class Delete_Playlist_ViewModel extends AndroidViewModel {
@@ -21,11 +22,8 @@ public class Delete_Playlist_ViewModel extends AndroidViewModel {
             repository = Youtube_BG_Repository.getInstance();
             repository.getRoomInstance(application);
     }
-    public void deletePlaylist(Playlist_card card)
-    {
-        repository.deletePlaylist(card);
-    }
-    public Single<List<Playlist_card>> loadPlaylists()
+
+    public Flowable<List<Playlist_card>> loadPlaylists()
     {
         return repository.getPlaylists();
     }

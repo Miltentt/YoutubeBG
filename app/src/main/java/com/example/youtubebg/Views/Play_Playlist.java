@@ -11,6 +11,8 @@ import com.example.youtubebg.Search_Video.Views.MainActivity;
 import com.example.youtubebg.ViewModels.Play_Playlist_ViewModel;
 import com.example.youtubebg.adapters.Play_Playlist_Adapter;
 
+import org.reactivestreams.Subscription;
+
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -19,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import io.reactivex.FlowableSubscriber;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 
@@ -26,7 +29,7 @@ public class Play_Playlist extends AppCompatActivity implements Play_Playlist_Ad
     private Play_Playlist_Adapter adapter;
     private RecyclerView recyclerView;
     private Playlist_card card;
-    private SingleObserver observer;
+    private FlowableSubscriber observer;
     private int id;
     Play_Playlist_ViewModel play_playlist_viewModel;
 
@@ -93,22 +96,27 @@ public void initRecycler()
         return super.onOptionsItemSelected(item);
     }
     private void initObserver() {
-        observer = new SingleObserver<Playlist_card>() {
+        observer = new FlowableSubscriber<Playlist_card>() {
+
 
             @Override
-            public void onSubscribe(Disposable d) {
+            public void onSubscribe(Subscription s) {
 
             }
 
             @Override
-            public void onSuccess(Playlist_card playlist_card) {
-
-card=playlist_card;
-adapter.updateAdapter(card.getNames());
+            public void onNext(Playlist_card playlist_card) {
+                card=playlist_card;
+                adapter.updateAdapter(card.getNames());
             }
 
             @Override
-            public void onError(Throwable e) {
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onComplete() {
 
             }
         };

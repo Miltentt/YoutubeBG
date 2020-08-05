@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Views.Playlists">
+        <activity android:name=".Playlists.Views.Fragment_Playlists">
         </activity>
         <activity android:name=".Search_Video.Views.Play_Youtube_Video">
         </activity>
@@ -29,9 +29,12 @@
         </activity>
         <activity android:name=".Views.Delete_Songs">
         </activity>
-        <activity android:name=".Views.Delete_Playlist">
+        <activity android:name=".Playlists.Views.Fragment_Delete_Playlist">
+        </activity>
+        <activity android:name=".Playlists.Views.Playlists_MainActivity">
         </activity>
         <activity android:name=".Views.YoutubePlayerr">
+
 
             <intent-filter>
                 <action android:name="com.iphonik.chameleon.AppPreferenceActivity" />

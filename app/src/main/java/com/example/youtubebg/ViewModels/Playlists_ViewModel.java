@@ -10,17 +10,19 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.ViewModel;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
-public class Playlists_ViewModel extends AndroidViewModel  {
+public class Playlists_ViewModel extends ViewModel {
     private Youtube_BG_Repository repository;
-    public Playlists_ViewModel(@NonNull Application application) {
-        super(application);
-        repository = Youtube_BG_Repository.getInstance(application);
+    public Playlists_ViewModel() {
+
+        repository = Youtube_BG_Repository.getInstance();
     }
 
-    public Single<List<Playlist_card>> loadPlaylists()
+    public Flowable<List<Playlist_card>> loadPlaylists()
     {
         return repository.getPlaylists();
     }

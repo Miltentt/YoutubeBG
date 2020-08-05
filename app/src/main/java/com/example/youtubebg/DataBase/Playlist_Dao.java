@@ -6,6 +6,7 @@ import java.util.List;
 
 import androidx.room.Dao;
 import androidx.room.*;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
@@ -16,10 +17,12 @@ public interface Playlist_Dao {
     void Insert(Playlist_card... playlist_cards);
 
     @Query("SELECT * FROM Playlist_card")
-    Single<List<Playlist_card>> LoadAllPlaylists();
+    Flowable<List<Playlist_card>> LoadAllPlaylists();
 
     @Query("SELECT * FROM Playlist_card WHERE id=:id")
-    Single<Playlist_card> LoadPlaylist(int id);
+    Flowable<Playlist_card> LoadPlaylist(int id);
     @Delete
     void Delete(Playlist_card... feats);
+
+
 }

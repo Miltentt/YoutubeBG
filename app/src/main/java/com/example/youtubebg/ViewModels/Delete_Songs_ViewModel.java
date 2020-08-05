@@ -9,14 +9,16 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.ViewModel;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
-public class Delete_Songs_ViewModel extends AndroidViewModel {
+public class Delete_Songs_ViewModel extends ViewModel {
     private Youtube_BG_Repository repository;
-    public Delete_Songs_ViewModel(@NonNull Application application) {
+    public Delete_Songs_ViewModel() {
 
-        super(application);
-        repository = Youtube_BG_Repository.getInstance(application);
+
+        repository = Youtube_BG_Repository.getInstance();
     }
     public void deletePlaylist(Playlist_card card)
     {
@@ -26,7 +28,7 @@ public class Delete_Songs_ViewModel extends AndroidViewModel {
     {
         repository.addPlaylist(card);
     }
-    public Single<List<Playlist_card>> loadPlaylists()
+    public Flowable<List<Playlist_card>> loadPlaylists()
     {
         return repository.getPlaylists();
     }

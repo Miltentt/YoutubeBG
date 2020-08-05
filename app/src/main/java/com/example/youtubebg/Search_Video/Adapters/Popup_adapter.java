@@ -1,4 +1,4 @@
-package com.example.youtubebg.adapters;
+package com.example.youtubebg.Search_Video.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +53,6 @@ public void setCallBack(adapterCallBack callBack)
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView video;
         TextView name;
 
         public MyViewHolder(@NonNull View itemView) {
