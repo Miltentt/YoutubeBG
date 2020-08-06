@@ -30,6 +30,7 @@ public Flowable<List<Playlist_card>> returnPlaylists()
 {
     return repository.getPlaylists().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread());
+
 }
 
 public void addSongToPlaylist(Search_Response.Item item, Playlist_card card)

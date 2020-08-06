@@ -62,8 +62,6 @@ public class Fragment_Delete_Playlist extends Fragment implements Delete_Playlis
     @Override
     public void openPlaylist(Playlist_card card) {
    playlists_sharedViewModel.deletePlaylist(card);
-list.remove(card);
-adapter.updateList(list);
     }
 
     private void initObserver() {
