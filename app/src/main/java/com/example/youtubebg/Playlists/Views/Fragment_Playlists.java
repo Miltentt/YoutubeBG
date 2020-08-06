@@ -14,17 +14,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.FlowableSubscriber;
-import io.reactivex.SingleObserver;
-import io.reactivex.disposables.Disposable;
 
 import com.example.youtubebg.Models.Playlist_card;
 import com.example.youtubebg.Playlists.ViewModels.Playlists_SharedViewModel;
 import com.example.youtubebg.R;
-import com.example.youtubebg.ViewModels.Playlists_ViewModel;
-import com.example.youtubebg.Views.Play_Playlist;
-import com.example.youtubebg.adapters.Playlist_Adapter;
-
-import org.reactivestreams.Subscription;
+import com.example.youtubebg.Playlists.Adapters.Playlist_Adapter;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -40,7 +34,7 @@ public class Fragment_Playlists extends Fragment implements Playlist_Adapter.cal
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        View v = inflater.inflate(R.layout.playlists,container,false);
-        playlists_sharedViewModel = ViewModelProviders.of(this).get(Playlists_SharedViewModel.class);
+        playlists_sharedViewModel = ViewModelProviders.of(getActivity()).get(Playlists_SharedViewModel.class);
         initObserver();
         adapter = new Playlist_Adapter(new LinkedList<Playlist_card>(), Fragment_Playlists.this);
         initRecycler(v);
@@ -61,7 +55,7 @@ public class Fragment_Playlists extends Fragment implements Playlist_Adapter.cal
 
     @Override
     public void openPlaylist(int id) {
-        Intent i = new Intent(getContext(), Play_Playlist.class);
+        Intent i = new Intent(getContext(), Play_Playlist_Activity.class);
         i.putExtra("id", id);
         startActivity(i);
     }

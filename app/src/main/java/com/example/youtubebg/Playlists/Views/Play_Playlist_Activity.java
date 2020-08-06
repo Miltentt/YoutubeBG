@@ -5,31 +5,27 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.youtubebg.Playlists.ViewModels.Play_Playlist_SharedViewModel;
 import com.example.youtubebg.R;
 import com.example.youtubebg.Search_Video.Views.MainActivity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
-public class Playlists_MainActivity extends AppCompatActivity {
+public class Play_Playlist_Activity extends AppCompatActivity {
+
+private Play_Playlist_SharedViewModel play_playlist_sharedViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-setContentView(R.layout.activity_playlist);
-initiateFragment();
-    }
-
-
-
-    public void initiateFragment()
-    {
-
+        setContentView(R.layout.activity_playlist);
+play_playlist_sharedViewModel = ViewModelProviders.of(this).get(Play_Playlist_SharedViewModel.class);
+        play_playlist_sharedViewModel.createLiveData(getIntent().getIntExtra("id",0));
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.playlist_view,new Fragment_Playlists())
+                .replace(R.id.playlist_view,new Play_Playlist())
                 .commit();
-
-
     }
 
     @Override
@@ -38,7 +34,6 @@ initiateFragment();
         getMenuInflater().inflate(R.layout.playlist_menu, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -49,15 +44,20 @@ initiateFragment();
                 break;
             }
             case R.id.delete: {
-                // TODO ensure fragments arent being added to backstact once this fragment is commited
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.playlist_view,new Fragment_Delete_Playlist())
+                        .replace(R.id.playlist_view,new Delete_Songs())
                         .addToBackStack(null)
                         .commit();
+
+
+                break;
             }
 
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
 
 }

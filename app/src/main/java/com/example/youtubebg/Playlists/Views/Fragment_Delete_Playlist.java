@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.SharedElementCallback;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -36,7 +37,7 @@ public class Fragment_Delete_Playlist extends Fragment implements Delete_Playlis
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
        View v = inflater.inflate(R.layout.playlists,container,false);
-        playlists_sharedViewModel = ViewModelProviders.of(this).get(Playlists_SharedViewModel.class);
+        playlists_sharedViewModel = ViewModelProviders.of(getActivity()).get(Playlists_SharedViewModel.class);
         initRecycler(v);
         initObserver();
         return v;
@@ -64,6 +65,11 @@ public class Fragment_Delete_Playlist extends Fragment implements Delete_Playlis
                adapter.updateList(playlist_cards);
            }
        });
+    }
+
+    @Override
+    public void setEnterSharedElementCallback(@Nullable SharedElementCallback callback) {
+        super.setEnterSharedElementCallback(callback);
     }
 }
 

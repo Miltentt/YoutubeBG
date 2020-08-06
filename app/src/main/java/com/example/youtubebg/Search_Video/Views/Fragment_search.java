@@ -2,7 +2,6 @@ package com.example.youtubebg.Search_Video.Views;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.youtubebg.Fragments.Search_Popup;
 import com.example.youtubebg.R;
 
 

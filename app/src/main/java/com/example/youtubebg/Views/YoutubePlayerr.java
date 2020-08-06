@@ -14,7 +14,7 @@ import com.example.youtubebg.R;
 import com.example.youtubebg.Service.Floating_Window_Service;
 import com.example.youtubebg.ViewModels.Service_ViewModel;
 import com.example.youtubebg.ViewModels.YoutubePlaylist_ViewModel;
-import com.example.youtubebg.adapters.Play_Playlist_Adapter;
+import com.example.youtubebg.Playlists.Adapters.Play_Playlist_Adapter;
 
 import java.util.LinkedList;
 import java.util.List;

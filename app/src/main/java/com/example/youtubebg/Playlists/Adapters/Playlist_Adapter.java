@@ -1,4 +1,4 @@
-package com.example.youtubebg.adapters;
+package com.example.youtubebg.Playlists.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
