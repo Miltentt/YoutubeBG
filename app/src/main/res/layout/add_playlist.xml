@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="250dp"
+        android:backgroundTint="@android:color/holo_red_dark"
         android:ems="10"
         android:hint="Name your Playlist"
         android:inputType="textPersonName"

@@ -1,5 +1,6 @@
-package com.example.youtubebg.adapters;
+package com.example.youtubebg.Playlists.Adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class Delete_Playlist_Adapter extends RecyclerView.Adapter<Delete_Playlis
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.delete_playlist_recycler,parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_delete_playlist,parent, false);
 
 
         return new MyViewHolder(itemView);
@@ -46,7 +47,7 @@ public class Delete_Playlist_Adapter extends RecyclerView.Adapter<Delete_Playlis
         holder.title.setText(results.get(position).getName());
         Picasso.get().load(results.get(position).getPhoto()).into(holder.thumbnail);
         holder.delete.setOnClickListener(e->{ onClick(position); });
-
+Log.i("xd",results.get(position).getPhoto());
 
 
 
@@ -64,8 +65,8 @@ public class Delete_Playlist_Adapter extends RecyclerView.Adapter<Delete_Playlis
         public ImageButton delete;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.grav);
-            thumbnail = itemView.findViewById(R.id.video);
+            title = itemView.findViewById(R.id.title1);
+            thumbnail = itemView.findViewById(R.id.thumbnail1);
             delete = itemView.findViewById(R.id.delete);
 
 

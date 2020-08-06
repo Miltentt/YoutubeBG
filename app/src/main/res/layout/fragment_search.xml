@@ -15,7 +15,7 @@
             android:id="@+id/search"
             android:layout_width="239dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/background_light"
+            android:backgroundTint="@android:color/holo_red_dark"
             android:ems="10"
             android:inputType="textPersonName"
             android:textColor="@android:color/darker_gray" />

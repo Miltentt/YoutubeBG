@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
     {
         adapter = new Search_Adapter(new Search_Response().getItems(), this.getSupportFragmentManager(), this);
         recyclerView = findViewById(R.id.Youtube_Search_recyclerview);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }

@@ -66,8 +66,8 @@ public class Search_Adapter extends RecyclerView.Adapter<Search_Adapter.MyViewHo
         public ImageButton add;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.textView2);
-            thumbnail = itemView.findViewById(R.id.imageView);
+            title = itemView.findViewById(R.id.title);
+            thumbnail = itemView.findViewById(R.id.thumbnail);
             add = itemView.findViewById(R.id.add);
         }
     }

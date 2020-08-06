@@ -53,7 +53,7 @@ public class Fragment_Playlists extends Fragment implements Playlist_Adapter.cal
 
     public void initRecycler(View v) {
 
-        recyclerView = v.findViewById(R.id.playlists);
+        recyclerView = v.findViewById(R.id.Youtube_playlists);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

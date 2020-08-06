@@ -58,8 +58,8 @@ public interface callBack{
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-           video = itemView.findViewById(R.id.video);
-name = itemView.findViewById(R.id.grav);
+           video = itemView.findViewById(R.id.thumbnail);
+name = itemView.findViewById(R.id.title);
         }
     }
     public void onClick(int position)
