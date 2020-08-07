@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.example.youtubebg.Fragments.Youtube_Player_Fragment;
 import com.example.youtubebg.Models.Video;
+import com.example.youtubebg.Playlists.ViewModels.Youtube_Player_ViewModel;
 import com.example.youtubebg.R;
 import com.example.youtubebg.Service.Floating_Window_Service;
 import com.example.youtubebg.ViewModels.Service_ViewModel;
@@ -24,53 +25,42 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_Adapter.adapterCallBack {
 
     private Play_Playlist_Adapter adapter;
     private RecyclerView recyclerView;
-    private YoutubePlaylist_ViewModel youtubePlaylist_viewModel;
+    private Youtube_Player_ViewModel youtube_player_viewModel;
+    private Youtube_Player_Fragment youtube_player_fragment;
+    private Observer<Video> observer;
+    private List<String> ids = new LinkedList<>();
+    private List<String> names = new LinkedList<>();
+
+
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.youtubeplayer);
+        youtube_player_viewModel = ViewModelProviders.of(this).get(Youtube_Player_ViewModel.class);
+        youtube_player_viewModel.createObservable((List<Video>) getIntent().getSerializableExtra("videos"));
 
-
-        youtubePlaylist_viewModel = ViewModelProviders.of(this).get(YoutubePlaylist_ViewModel.class);
-
-        Youtube_Player_Fragment youtubeFragment = Youtube_Player_Fragment.newInstance(youtubePlaylist_viewModel.getId((List<Video>) getIntent().getSerializableExtra("videos"),getIntent().getStringExtra("id")));
-      getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flYoutube, youtubeFragment).commit();
-
-        adapter = new Play_Playlist_Adapter(youtubePlaylist_viewModel.getNames((List<Video>) getIntent().getSerializableExtra("videos")), this);
-        recyclerView = findViewById(R.id.videos);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        initRecycler();
+        initObserver();
+       initFragment();
 
  }
 
     @Override
-    public void saveVideo(String name) {
-
-        Youtube_Player_Fragment youtubeFragment = Youtube_Player_Fragment.newInstance(youtubePlaylist_viewModel.NextVideo((List<Video>) getIntent().getSerializableExtra("videos"),name));
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flYoutube, youtubeFragment).commit();
+    public void saveVideo(int position) {
+        youtube_player_fragment.playVideo(position);
     }
 
 
     public void StartFloating(){
         Intent i = new Intent(YoutubePlayerr.this, Floating_Window_Service.class);
-        List<String> names = new LinkedList<>();
-        names.add(getIntent().getStringExtra("first"));
-        List<Video> list = (List<Video>) getIntent().getSerializableExtra("videos");
-        for(int j = 0; j<list.size(); j++)
-        {
-            names.add(youtubePlaylist_viewModel.getNames((List<Video>) getIntent().getSerializableExtra("videos")).get(j));
-        }
         Service_ViewModel.makeObservable(names);
-        List<String> ids = new LinkedList<>();
-       ids = youtubePlaylist_viewModel.getId((List<Video>)getIntent().getSerializableExtra("videos"),getIntent().getStringExtra("id"));
         Service_ViewModel.makeObservableI(ids);
         startService(i);
     }
@@ -114,4 +104,49 @@ else
         }
         return false;
     }
+
+    private void initObserver()
+    {
+observer = new Observer<Video>() {
+    @Override
+    public void onSubscribe(Disposable d) {
+
+    }
+
+    @Override
+    public void onNext(Video s) {
+names.add(s.getTitles());
+ids.add(s.getId());
+adapter.updateAdapter(names);
+    }
+
+    @Override
+    public void onError(Throwable e) {
+
+    }
+
+    @Override
+    public void onComplete() {
+
+    }
+};
+    }
+public void initRecycler()
+{
+    adapter = new Play_Playlist_Adapter(new LinkedList<String>(), this);
+    recyclerView = findViewById(R.id.videos);
+    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+    recyclerView.setLayoutManager(layoutManager);
+    recyclerView.setAdapter(adapter);
+}
+
+public void initFragment()
+{
+    youtube_player_fragment = Youtube_Player_Fragment.newInstance(ids);
+    Youtube_Player_Fragment youtubeFragment = youtube_player_fragment;
+    getSupportFragmentManager().beginTransaction()
+            .replace(R.id.flYoutube, youtubeFragment).commit();
+    youtube_player_fragment.playVideo(0);
+}
+
 }

@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class Play_Playlist_Adapter extends RecyclerView.Adapter<Play_Playlist_Adapter.MyViewHolder> {
 
-    private List<String> list= new LinkedList<>();
+    private List<String> list;
     private adapterCallBack callBack;
     public Play_Playlist_Adapter(List<String> list, adapterCallBack callBack )
     {
@@ -62,12 +62,12 @@ public void updateAdapter(List<String> updatedlist)
 }
     public interface adapterCallBack
     {
-        public void saveVideo(String name);
+        public void saveVideo(int position);
 
     }
     private void onClick(int position)
     {
-callBack.saveVideo(list.get(position));
+callBack.saveVideo(position);
     }
 }
 

@@ -4,11 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.youtubebg.Playlists.ViewModels.Play_Playlist_SharedViewModel;
-import com.example.youtubebg.ViewModels.Delete_Songs_ViewModel;
 import com.example.youtubebg.Playlists.Adapters.Delete_Song_Adapter;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +22,7 @@ import com.example.youtubebg.R;
 
 import java.util.LinkedList;
 
-public class Delete_Songs extends Fragment implements Delete_Song_Adapter.adapterCallBack {
+public class Fragment_Delete_Songs extends Fragment implements Delete_Song_Adapter.adapterCallBack {
     private Playlist_card playlist_cardd;
     private Delete_Song_Adapter adapter;
     private RecyclerView recyclerView;

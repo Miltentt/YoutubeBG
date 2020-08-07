@@ -24,7 +24,7 @@ private Play_Playlist_SharedViewModel play_playlist_sharedViewModel;
 play_playlist_sharedViewModel = ViewModelProviders.of(this).get(Play_Playlist_SharedViewModel.class);
         play_playlist_sharedViewModel.createLiveData(getIntent().getIntExtra("id",0));
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.playlist_view,new Play_Playlist())
+                .replace(R.id.playlist_view,new Fragment_Play_Playlist())
                 .commit();
     }
 
@@ -45,7 +45,7 @@ play_playlist_sharedViewModel = ViewModelProviders.of(this).get(Play_Playlist_Sh
             }
             case R.id.delete: {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.playlist_view,new Delete_Songs())
+                        .replace(R.id.playlist_view,new Fragment_Delete_Songs())
                         .addToBackStack(null)
                         .commit();
 

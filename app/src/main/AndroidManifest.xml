@@ -28,7 +28,7 @@
         <activity android:name=".Search_Video.Views.New_Playlist">
         </activity>
 
-        <activity android:name=".Playlists.Views.Delete_Songs">
+        <activity android:name=".Playlists.Views.Fragment_Delete_Songs">
         </activity>
         <activity android:name=".Playlists.Views.Fragment_Delete_Playlist">
         </activity>

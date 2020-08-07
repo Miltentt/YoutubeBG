@@ -6,12 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.example.youtubebg.Models.Video;
 import com.example.youtubebg.R;
+import com.example.youtubebg.YoutubeConfig;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,23 +23,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 public class Youtube_Player_Fragment extends Fragment {
-    private static final String YOUTUBE_API_KEY = "AIzaSyDtg9GVjWLW_KzJzyNPsMKTYOYD8YDrod8";
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String VIDEO_ID = "VIDEO_ID";
 
-    // TODO: Rename and change types of parameters
-    private ArrayList<String> videoId;
-
-    public Youtube_Player_Fragment() {
-        // Required empty public constructor
-    }
+    private List<String> videoId;
+    private YouTubePlayerSupportFragment youTubePlayerFragment;
+    public Youtube_Player_Fragment() { }
 
 
-    public static Youtube_Player_Fragment newInstance(ArrayList<String> videoId) {
+    public static Youtube_Player_Fragment newInstance(List<String> videoId) {
         Youtube_Player_Fragment fragment = new Youtube_Player_Fragment();
         Bundle args = new Bundle();
-        args.putStringArrayList(VIDEO_ID, videoId);
+        args.putSerializable(VIDEO_ID, (Serializable) videoId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -44,39 +43,41 @@ public class Youtube_Player_Fragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            videoId = getArguments().getStringArrayList(VIDEO_ID);
+            videoId = (List<String>) getArguments().getSerializable(VIDEO_ID);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_youtube, container, false);
 
-        YouTubePlayerSupportFragment youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.flYoutubePlayer, youTubePlayerFragment).commit();
+         View rootView = inflater.inflate(R.layout.fragment_youtube, container, false);
 
-        youTubePlayerFragment.initialize(YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+
+        return rootView;
+    }
+
+
+      public void playVideo(int position)
+      {
+          youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
+          FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+          transaction.replace(R.id.flYoutubePlayer, youTubePlayerFragment).commit();
+        youTubePlayerFragment.initialize(YoutubeConfig.getYtApi(), new YouTubePlayer.OnInitializedListener() {
 
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider arg0, YouTubePlayer youTubePlayer, boolean b) {
                 if (!b) {
-                    //youTubePlayer.setFullscreen(true);
-                    youTubePlayer.loadVideos(videoId);
-                    //yoTubePlayer.play();
-
+                    youTubePlayer.loadVideos(videoId,position,0);
                 }
             }
 
             @Override
             public void onInitializationFailure(YouTubePlayer.Provider arg0, YouTubeInitializationResult arg1) {
-                // TODO Auto-generated method stub
 
             }
         });
 
-        return rootView;
+
     }
 
 }
