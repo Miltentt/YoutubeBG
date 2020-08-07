@@ -10,7 +10,6 @@ import java.util.List;
 
 import androidx.room.RoomDatabase;
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -76,7 +75,6 @@ public void deletePlaylist(Playlist_card playlist_card)
     db.playlist_dao().Delete(playlist_card);
 }
 
-
-
+public void updatePlaylist(Playlist_card playlist_card){ db.playlist_dao().updatePlaylist(playlist_card);}
 
 }

@@ -8,6 +8,7 @@ import com.example.youtubebg.ViewModels.Delete_Songs_ViewModel;
 import com.example.youtubebg.Playlists.Adapters.Delete_Song_Adapter;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +25,10 @@ import com.example.youtubebg.R;
 import java.util.LinkedList;
 
 public class Delete_Songs extends Fragment implements Delete_Song_Adapter.adapterCallBack {
+    private Playlist_card playlist_cardd;
     private Delete_Song_Adapter adapter;
     private RecyclerView recyclerView;
-    private Playlist_card card;
     private Play_Playlist_SharedViewModel play_playlist_sharedViewModel;
-
 
     @Nullable
     @Override
@@ -36,22 +36,18 @@ public class Delete_Songs extends Fragment implements Delete_Song_Adapter.adapte
         View v = inflater.inflate(R.layout.play_playlist,container,false);
         initRecycler(v);
         play_playlist_sharedViewModel = ViewModelProviders.of(getActivity()).get(Play_Playlist_SharedViewModel.class);
+        initObsever();
         return v;
     }
 
-/*
+
     @Override
     public void removeVideo(int position) {
-        card.getNames().remove(position);
-        card.getVideos().remove(position);
-        adapter.updateAdapter(card.getNames());
-        play_playlist_sharedViewModel.deletePlaylist(card);
-        play_playlist_sharedViewModel.updatePlaylist(card);
+
+        play_playlist_sharedViewModel.deletesong(position,playlist_cardd);
+
     }
-*/
-@Override
-public void removeVideo(int position) {
-}
+
 
     public void initRecycler(View v) {
         adapter = new Delete_Song_Adapter(new LinkedList<String>(), this);
@@ -66,6 +62,7 @@ public void removeVideo(int position) {
             @Override
             public void onChanged(Playlist_card playlist_card) {
                 adapter.updateAdapter(playlist_card.getNames());
+               playlist_cardd=playlist_card;
             }
         });
 

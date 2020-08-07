@@ -52,6 +52,12 @@ play_playlist_sharedViewModel = ViewModelProviders.of(this).get(Play_Playlist_Sh
 
                 break;
             }
+            case R.id.playlist:
+            {
+                Intent i = new Intent(this, Playlists_MainActivity.class);
+                startActivity(i);
+                break;
+            }
 
         }
         return super.onOptionsItemSelected(item);

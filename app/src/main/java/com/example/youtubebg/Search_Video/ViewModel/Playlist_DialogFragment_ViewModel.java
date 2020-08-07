@@ -35,10 +35,9 @@ public Flowable<List<Playlist_card>> returnPlaylists()
 
 public void addSongToPlaylist(Search_Response.Item item, Playlist_card card)
 {
-    repository.deletePlaylist(card);
     card.getVideos().add(item.getId().getVideoId());
     card.getNames().add(item.getSnippet().getTitle());
-    repository.addPlaylist(card);
+    repository.updatePlaylist(card);
 
 }
 

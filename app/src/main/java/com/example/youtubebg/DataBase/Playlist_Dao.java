@@ -13,6 +13,8 @@ import io.reactivex.Single;
 @Dao
 public interface Playlist_Dao {
 
+
+
     @Insert
     void Insert(Playlist_card... playlist_cards);
 
@@ -23,6 +25,9 @@ public interface Playlist_Dao {
     Flowable<Playlist_card> LoadPlaylist(int id);
     @Delete
     void Delete(Playlist_card... feats);
+
+    @Update
+    void updatePlaylist(Playlist_card... playlist_cards);
 
 
 }

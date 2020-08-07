@@ -30,7 +30,7 @@ public class Delete_Song_Adapter extends RecyclerView.Adapter<Delete_Song_Adapte
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.delete_song_recycler,parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_delete_song,parent, false);
 
 
         return new MyViewHolder(itemView);
