@@ -1,9 +1,10 @@
-package com.example.youtubebg.Views;
+package com.example.youtubebg.Playlists.Views;
 
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -14,8 +15,9 @@ import com.example.youtubebg.Playlists.ViewModels.Youtube_Player_ViewModel;
 import com.example.youtubebg.R;
 import com.example.youtubebg.Service.Floating_Window_Service;
 import com.example.youtubebg.ViewModels.Service_ViewModel;
-import com.example.youtubebg.ViewModels.YoutubePlaylist_ViewModel;
 import com.example.youtubebg.Playlists.Adapters.Play_Playlist_Adapter;
+
+import org.reactivestreams.Subscription;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import io.reactivex.FlowableSubscriber;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -34,7 +37,7 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
     private RecyclerView recyclerView;
     private Youtube_Player_ViewModel youtube_player_viewModel;
     private Youtube_Player_Fragment youtube_player_fragment;
-    private Observer<Video> observer;
+    private FlowableSubscriber<Video> observer;
     private List<String> ids = new LinkedList<>();
     private List<String> names = new LinkedList<>();
 
@@ -48,7 +51,9 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
 
         initRecycler();
         initObserver();
+        youtube_player_viewModel.returVideos().subscribeWith(observer);
        initFragment();
+
 
  }
 
@@ -107,10 +112,10 @@ else
 
     private void initObserver()
     {
-observer = new Observer<Video>() {
+observer = new FlowableSubscriber<Video>() {
     @Override
-    public void onSubscribe(Disposable d) {
-
+    public void onSubscribe(Subscription s) {
+        s.request(Long.MAX_VALUE);
     }
 
     @Override
@@ -146,7 +151,6 @@ public void initFragment()
     Youtube_Player_Fragment youtubeFragment = youtube_player_fragment;
     getSupportFragmentManager().beginTransaction()
             .replace(R.id.flYoutube, youtubeFragment).commit();
-    youtube_player_fragment.playVideo(0);
 }
 
 }

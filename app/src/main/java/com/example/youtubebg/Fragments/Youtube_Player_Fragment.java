@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -47,11 +48,28 @@ public class Youtube_Player_Fragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
          View rootView = inflater.inflate(R.layout.fragment_youtube, container, false);
+        youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.flYoutubePlayer, youTubePlayerFragment).commit();
+        youTubePlayerFragment.initialize(YoutubeConfig.getYtApi(), new YouTubePlayer.OnInitializedListener() {
 
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider arg0, YouTubePlayer youTubePlayer, boolean b) {
+                if (!b) {
+                    youTubePlayer.loadVideos(videoId,0,0);
+                }
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider arg0, YouTubeInitializationResult arg1) {
+
+            }
+        });
 
         return rootView;
     }

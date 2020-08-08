@@ -10,7 +10,6 @@ import com.example.youtubebg.Models.Playlist_card;
 import com.example.youtubebg.Playlists.ViewModels.Play_Playlist_SharedViewModel;
 import com.example.youtubebg.R;
 import com.example.youtubebg.Playlists.Adapters.Play_Playlist_Adapter;
-import com.example.youtubebg.Views.YoutubePlayerr;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -22,7 +21,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import io.reactivex.FlowableSubscriber;
 
 public class Fragment_Play_Playlist extends Fragment implements Play_Playlist_Adapter.adapterCallBack {
     private Play_Playlist_Adapter adapter;

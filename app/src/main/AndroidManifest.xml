@@ -34,7 +34,7 @@
         </activity>
         <activity android:name=".Playlists.Views.Playlists_MainActivity">
         </activity>
-        <activity android:name=".Views.YoutubePlayerr">
+        <activity android:name=".Playlists.Views.YoutubePlayerr">
 
 
             <intent-filter>
