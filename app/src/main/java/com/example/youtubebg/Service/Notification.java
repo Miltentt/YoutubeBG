@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.youtubebg.R;
-import com.example.youtubebg.Service.NotificationAction_Service;
 
 import android.support.v4.media.session.MediaSessionCompat;
 import androidx.core.app.NotificationCompat;
@@ -15,7 +14,8 @@ public class Notification {
     public static final String ACTION_PREVIUOS = "actionprevious";
     public static final String ACTION_PLAY = "actionplay";
     public static final String ACTION_NEXT = "actionnext";
-    public static void createNotification(Context context, String name, int playbutton, int pos, int size)
+    public static final String DISMISS = "Dismiss";
+    public static android.app.Notification createNotification(Context context, String name, int playbutton, int pos, int size)
     {
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
         MediaSessionCompat mediaSessionCompat = new MediaSessionCompat( context, "tag");
@@ -51,15 +51,14 @@ public class Notification {
 
         }
 
-
-
+Intent swipeIntent = new Intent(context,NotificationAction_Service.class).setAction(DISMISS);
+PendingIntent onSwipeDismiss = PendingIntent.getBroadcast(context,0,swipeIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
 
 android.app.Notification notification = new NotificationCompat.Builder(context, "channel1")
         .setSmallIcon(R.drawable.ic_music_note)
-        .setOnlyAlertOnce(true)
+        .setOnlyAlertOnce(false)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
-        .setOnlyAlertOnce(true)//show notification for only first time
         .setShowWhen(false)
 .setContentTitle(name)
         .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
@@ -68,9 +67,9 @@ android.app.Notification notification = new NotificationCompat.Builder(context, 
         .addAction(drw_previous, "Previous", pendingIntentPrevious)
             .addAction(playbutton, "Play", pendingIntentPlay)
             .addAction(drw_next, "Next", pendingIntentNext)
-
+.setDeleteIntent(onSwipeDismiss)
         .build();
-notificationManagerCompat.notify(1,notification);
+return notification;
     }
 
 
