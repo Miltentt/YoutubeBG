@@ -16,6 +16,8 @@ import androidx.lifecycle.ViewModelProviders;
 public class Play_Playlist_Activity extends AppCompatActivity {
 
 private Play_Playlist_SharedViewModel play_playlist_sharedViewModel;
+private  Fragment_Delete_Songs fragment_delete_songs = new Fragment_Delete_Songs();
+private Fragment_Play_Playlist fragment_play_playlist = new Fragment_Play_Playlist();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,7 +26,7 @@ private Play_Playlist_SharedViewModel play_playlist_sharedViewModel;
 play_playlist_sharedViewModel = ViewModelProviders.of(this).get(Play_Playlist_SharedViewModel.class);
         play_playlist_sharedViewModel.createLiveData(getIntent().getIntExtra("id",0));
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.playlist_view,new Fragment_Play_Playlist())
+                .replace(R.id.playlist_view,fragment_play_playlist)
                 .commit();
     }
 
@@ -44,8 +46,9 @@ play_playlist_sharedViewModel = ViewModelProviders.of(this).get(Play_Playlist_Sh
                 break;
             }
             case R.id.delete: {
+               if(getSupportFragmentManager().findFragmentByTag("delete")==null)
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.playlist_view,new Fragment_Delete_Songs())
+                        .replace(R.id.playlist_view,new Fragment_Delete_Songs(),"delete")
                         .addToBackStack(null)
                         .commit();
 

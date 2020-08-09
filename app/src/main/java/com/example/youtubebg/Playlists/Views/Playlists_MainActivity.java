@@ -49,9 +49,9 @@ initiateFragment();
                 break;
             }
             case R.id.delete: {
-                // TODO ensure fragments arent being added to backstact once this fragment is commited
+               if(getSupportFragmentManager().findFragmentByTag("delete")==null)
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.playlist_view,new Fragment_Delete_Playlist())
+                        .replace(R.id.playlist_view,new Fragment_Delete_Playlist(),"delete")
                         .addToBackStack(null)
                         .commit();
             }
