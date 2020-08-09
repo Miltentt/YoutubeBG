@@ -53,7 +53,8 @@ this.item=item;
         initRecycler();
         playlist_dialogFragment_viewModel = ViewModelProviders.of(this).get(Playlist_DialogFragment_ViewModel.class);
        playlist_dialogFragment_viewModel.returnPlaylists().subscribeWith(observer);
-TextView create_new_playlist = view.findViewById(R.id.textView3);
+
+       TextView create_new_playlist = view.findViewById(R.id.textView3);
 create_new_playlist.setOnClickListener(e->newplaylist());
         return builder.create();
     }
