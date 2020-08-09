@@ -6,6 +6,7 @@ import java.util.List;
 
 import androidx.room.Dao;
 import androidx.room.*;
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;

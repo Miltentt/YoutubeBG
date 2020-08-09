@@ -1,4 +1,4 @@
-package com.example.youtubebg.Fragments;
+package com.example.youtubebg.Playlists.Views;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,34 +6,30 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.example.youtubebg.Models.Video;
 import com.example.youtubebg.R;
 import com.example.youtubebg.YoutubeConfig;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-public class Youtube_Player_Fragment extends Fragment {
+public class Fragment_Player_Youtube extends Fragment {
 
     private static final String VIDEO_ID = "VIDEO_ID";
 
     private List<String> videoId;
     private YouTubePlayerSupportFragment youTubePlayerFragment;
-    public Youtube_Player_Fragment() { }
+    public Fragment_Player_Youtube() { }
 
 
-    public static Youtube_Player_Fragment newInstance(List<String> videoId) {
-        Youtube_Player_Fragment fragment = new Youtube_Player_Fragment();
+    public static Fragment_Player_Youtube newInstance(List<String> videoId) {
+        Fragment_Player_Youtube fragment = new Fragment_Player_Youtube();
         Bundle args = new Bundle();
         args.putSerializable(VIDEO_ID, (Serializable) videoId);
         fragment.setArguments(args);

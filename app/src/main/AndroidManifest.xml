@@ -3,7 +3,7 @@
     package="com.example.youtubebg">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.ACTION_MANAGE_OVERLAY_PERMISSION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <application
 
         android:allowBackup="true"
@@ -19,23 +19,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Playlists.Views.Fragment_Playlists">
-        </activity>
         <activity android:name=".Playlists.Views.Play_Playlist_Activity">
         </activity>
         <activity android:name=".Search_Video.Views.Play_Youtube_Video">
         </activity>
         <activity android:name=".Search_Video.Views.New_Playlist">
         </activity>
-
-        <activity android:name=".Playlists.Views.Fragment_Delete_Songs">
-        </activity>
-        <activity android:name=".Playlists.Views.Fragment_Delete_Playlist">
-        </activity>
         <activity android:name=".Playlists.Views.Playlists_MainActivity">
         </activity>
         <activity android:name=".Playlists.Views.YoutubePlayerr">
-
 
             <intent-filter>
                 <action android:name="com.iphonik.chameleon.AppPreferenceActivity" />
@@ -43,10 +35,6 @@
             </intent-filter>
         </activity>
         <service android:name=".Service.Floating_Window_Service">
-
-        </service>
-        <service android:name=".Service.OnClearFromRecentService">
-
         </service>
         <receiver android:name=".Service.NotificationAction_Service">
 

@@ -9,6 +9,7 @@ import com.example.youtubebg.retrofit.RetrofitYoutube;
 import java.util.List;
 
 import androidx.room.RoomDatabase;
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -55,14 +56,22 @@ public RoomDatabase getRoomInstance(Context context)
 {
     db=Playlist_Database.getDatabase(context);
     return db;
-
 }
 
 
 public void addPlaylist(Playlist_card playlist_card)
 {
-    db.playlist_dao().Insert(playlist_card);
+
+    Completable.fromAction(()->db.playlist_dao().Insert(playlist_card))
+            .subscribeOn(Schedulers.io())
+            .subscribe();
+
 }
+
+
+
+
+
 public Flowable<Playlist_card> getPlaylist(int id)
 {
    return  db.playlist_dao().LoadPlaylist(id)
@@ -72,9 +81,17 @@ public Flowable<Playlist_card> getPlaylist(int id)
 
 public void deletePlaylist(Playlist_card playlist_card)
 {
-    db.playlist_dao().Delete(playlist_card);
+    Completable.fromAction(()->
+    db.playlist_dao().Delete(playlist_card))
+            .subscribeOn(Schedulers.io())
+            .subscribe();
 }
 
-public void updatePlaylist(Playlist_card playlist_card){ db.playlist_dao().updatePlaylist(playlist_card);}
+public void updatePlaylist(Playlist_card playlist_card){
+    Completable.fromAction(()->
+            db.playlist_dao().updatePlaylist(playlist_card))
+            .subscribeOn(Schedulers.io())
+            .subscribe();
+        }
 
 }

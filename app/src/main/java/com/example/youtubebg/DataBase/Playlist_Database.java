@@ -20,7 +20,6 @@ public abstract class Playlist_Database extends RoomDatabase {
                             Room.databaseBuilder(context.getApplicationContext(),
                                     Playlist_Database.class,
                                     "Playlists")
-                                    .allowMainThreadQueries()
                                     .build();
                 }
             }
