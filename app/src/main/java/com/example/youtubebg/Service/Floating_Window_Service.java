@@ -28,8 +28,6 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 public class Floating_Window_Service extends Service {
-    private View myview;
-    private int i = 0;
     private YouTubePlayerView youTubePlayerView;
     private int input = 0;
     private NotificationManager notificationManager;
@@ -113,7 +111,7 @@ public class Floating_Window_Service extends Service {
 
             @Override
             public void onReady(YouTubePlayer youTubePlayer) {
-                String videoId = ids.get(i);
+                String videoId = ids.get(position);
                 youTubePlayer.loadVideo(videoId, 0f);
                 onTrackPlay();
             }
@@ -121,9 +119,8 @@ public class Floating_Window_Service extends Service {
             @Override
             public void onStateChange(YouTubePlayer youTubePlayer, PlayerConstants.PlayerState playerState) {
                 if (playerState == PlayerConstants.PlayerState.ENDED) {
-                    i++;
-                    youTubePlayer.loadVideo(ids.get(i), 0f);
                     position++;
+                    youTubePlayer.loadVideo(ids.get(position), 0f);
                    startForeground(1,Notification.createNotification(Floating_Window_Service.this, names.get(position),
                             R.drawable.ic_pause_black_24dp, position, names.size()-1));
                     input=1;
@@ -134,13 +131,7 @@ public class Floating_Window_Service extends Service {
                             break;
                         }
                         case 1: {
-                            i++;
-                            youTubePlayer.loadVideo(ids.get(i), 0f);
-                            break;
-                        }
-                        case 2: {
-                            i--;
-                            youTubePlayer.loadVideo(ids.get(i), 0f);
+                            youTubePlayer.loadVideo(ids.get(position), 0f);
                             break;
                         }
                     }
@@ -157,7 +148,7 @@ public class Floating_Window_Service extends Service {
         creatNotification();
         this.registerReceiver(broadcastReceiver, new IntentFilter("track"));
         LayoutInflater li = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        myview = li.inflate(R.layout.youtubeplayer_service, null);
+       View myview = li.inflate(R.layout.youtubeplayer_service, null);
          youTubePlayerView = myview.findViewById(R.id.youtube_player_view);
         youTubePlayerView.setEnableAutomaticInitialization(false);
         youTubePlayerView.initialize(listener,false);
@@ -187,7 +178,7 @@ if(notificationManager != null)
         position--;
         startForeground(1,  Notification.createNotification(this, names.get(position),
                 R.drawable.ic_pause_black_24dp, position, names.size()-1));
-        input=2;
+        input=1;
         youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::pause);
 
     }
