@@ -18,7 +18,8 @@
             android:backgroundTint="@android:color/holo_red_dark"
             android:ems="10"
             android:inputType="textPersonName"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@android:color/darker_gray"
+            android:imeOptions="actionSend"/>
 
         <ImageButton
             android:id="@+id/imageButton"

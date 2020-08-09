@@ -29,8 +29,6 @@ public class Fragment_Delete_Playlist extends Fragment implements Delete_Playlis
     RecyclerView recyclerView;
     private Playlists_SharedViewModel playlists_sharedViewModel;
     private Delete_Playlist_Adapter adapter;
-    private FlowableSubscriber<List<Playlist_card>> observer;
-    private List<Playlist_card> list;
 
     @Nullable
     @Override
@@ -67,10 +65,7 @@ public class Fragment_Delete_Playlist extends Fragment implements Delete_Playlis
        });
     }
 
-    @Override
-    public void setEnterSharedElementCallback(@Nullable SharedElementCallback callback) {
-        super.setEnterSharedElementCallback(callback);
-    }
+
 }
 
 

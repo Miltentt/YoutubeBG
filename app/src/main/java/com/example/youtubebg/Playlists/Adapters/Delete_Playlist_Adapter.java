@@ -47,9 +47,6 @@ public class Delete_Playlist_Adapter extends RecyclerView.Adapter<Delete_Playlis
         holder.title.setText(results.get(position).getName());
         Picasso.get().load(results.get(position).getPhoto()).into(holder.thumbnail);
         holder.delete.setOnClickListener(e->{ onClick(position); });
-Log.i("xd",results.get(position).getPhoto());
-
-
 
     }
 

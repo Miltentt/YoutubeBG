@@ -3,9 +3,11 @@ package com.example.youtubebg.Search_Video.Views;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -32,7 +34,15 @@ public class Fragment_search extends Fragment {
         searchEditText = view.findViewById(R.id.search);
         searchButton = view.findViewById(R.id.imageButton);
         searchButton.setOnClickListener(e->searchh());
-
+        searchEditText.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
+searchEditText.setOnEditorActionListener((v,actionID,e)-> {
+    if(actionID== EditorInfo.IME_ACTION_SEND)
+    {
+        searchh();
+        return true;
+    }
+   else return false;
+});
         return view;
 
     }
@@ -41,9 +51,6 @@ public class Fragment_search extends Fragment {
     public void onAttach(@NonNull Context activity) {
         super.onAttach(activity);
         search = (searchresult) activity;
-
-
-
     }
 
     public void searchh()
