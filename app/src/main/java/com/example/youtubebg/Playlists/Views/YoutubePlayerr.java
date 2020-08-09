@@ -63,7 +63,7 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
         Intent i = new Intent(YoutubePlayerr.this, Floating_Window_Service.class);
         i.putStringArrayListExtra("names", (ArrayList) names);
         i.putStringArrayListExtra("ids", (ArrayList) ids);
-        startService(i);
+        startForegroundService(i);
     }
 
 

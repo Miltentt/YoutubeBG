@@ -139,7 +139,7 @@ public class Floating_Window_Service extends Service {
 
 names = intent.getStringArrayListExtra("names");
 ids = intent.getStringArrayListExtra("ids");
-        return super.onStartCommand(intent, flags, startId);
+        return  START_STICKY;
     }
 
 
