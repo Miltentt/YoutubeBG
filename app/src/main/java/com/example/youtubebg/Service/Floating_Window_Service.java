@@ -24,12 +24,10 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import java.util.List;
 
 import androidx.annotation.Nullable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
+
 
 public class Floating_Window_Service extends Service {
     private YouTubePlayerView youTubePlayerView;
-    private int input = 0;
     private NotificationManager notificationManager;
     private int position = 0;
     private List<String> names;
@@ -69,6 +67,7 @@ public class Floating_Window_Service extends Service {
 
 
         private YouTubePlayerListener listener = new YouTubePlayerListener() {
+
             @Override
             public void onVideoLoadedFraction(YouTubePlayer youTubePlayer, float v) {
 
@@ -121,21 +120,8 @@ public class Floating_Window_Service extends Service {
                 if (playerState == PlayerConstants.PlayerState.ENDED) {
                     position++;
                     youTubePlayer.loadVideo(ids.get(position), 0f);
-                   startForeground(1,Notification.createNotification(Floating_Window_Service.this, names.get(position),
-                            R.drawable.ic_pause_black_24dp, position, names.size()-1));
-                    input=1;
-                }
-                if (playerState == PlayerConstants.PlayerState.PAUSED) {
-                    switch (input) {
-                        case 0: {
-                            break;
-                        }
-                        case 1: {
-                            youTubePlayer.loadVideo(ids.get(position), 0f);
-                            break;
-                        }
-                    }
-                    input = 0;
+                    startForeground(1, Notification.createNotification(Floating_Window_Service.this, names.get(position),
+                            R.drawable.ic_pause_black_24dp, position, names.size() - 1));
                 }
             }
         };
@@ -178,8 +164,8 @@ if(notificationManager != null)
         position--;
         startForeground(1,  Notification.createNotification(this, names.get(position),
                 R.drawable.ic_pause_black_24dp, position, names.size()-1));
-        input=1;
-        youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::pause);
+
+        youTubePlayerView.getYouTubePlayerWhenReady(youTubePlayer -> youTubePlayer.loadVideo(ids.get(position),0f));
 
     }
 
@@ -189,7 +175,6 @@ if(notificationManager != null)
         startForeground(1, Notification.createNotification(this, names.get(position),
                 R.drawable.ic_pause_black_24dp, position, names.size()-1));
 isPlaying=true;
-        input=0;
 youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::play);
 
 
@@ -202,7 +187,6 @@ youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::play);
                 R.drawable.ic_play_arrow_black_24dp, position, names.size()-1));
 
 isPlaying=false;
-        input=0;
         youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::pause);
 
     }
@@ -213,8 +197,7 @@ isPlaying=false;
         position++;
         startForeground(1,Notification.createNotification(this, names.get(position),
                 R.drawable.ic_pause_black_24dp, position, names.size()-1));
-        input=1;
-        youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::pause);
+        youTubePlayerView.getYouTubePlayerWhenReady(youTubePlayer -> youTubePlayer.loadVideo(ids.get(position),0f));
 
     }
 
@@ -226,7 +209,6 @@ isPlaying=false;
     }
     youTubePlayerView.release();
 unregisterReceiver(broadcastReceiver);
-    input=0;
 youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::pause);
     }
 
