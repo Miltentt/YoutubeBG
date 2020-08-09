@@ -95,7 +95,6 @@ dismiss();
 
 
     private void initObserver() {
-        Log.i("xd","observer");
         observer = new FlowableSubscriber<List<Playlist_card>>() {
 
 
@@ -107,12 +106,10 @@ dismiss();
             @Override
             public void onNext(List<Playlist_card> playlist_cards) {
                 adapter.update(playlist_cards);
-                Log.i("xd","got it");
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.i("xd","xdddd");
             }
 
             @Override

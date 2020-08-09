@@ -18,7 +18,7 @@ private String id;
         super.onCreate(bundle);
         setContentView(R.layout.acitivity_youtube_player);
 youTubePlayerView = findViewById(R.id.youtubeplayer);
-youTubePlayerView.initialize(YoutubeConfig.getYtApi(),this);
+youTubePlayerView.initialize(YoutubeConfig.getYtApiKey(),this);
 id = getIntent().getStringExtra("id");
 
     }

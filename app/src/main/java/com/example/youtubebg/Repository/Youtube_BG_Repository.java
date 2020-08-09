@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.youtubebg.DataBase.Playlist_Database;
 import com.example.youtubebg.Models.Playlist_card;
+import com.example.youtubebg.YoutubeConfig;
 import com.example.youtubebg.retrofit.RetrofitYoutube;
 
 import java.util.List;
@@ -35,10 +36,11 @@ public class Youtube_BG_Repository {
         retrofitYoutube = RetrofitYoutube.getInstance();
     }
 
+
     // Retrofit
     public Single getSearch(String search)
     {
-        return  RetrofitYoutube.youtubeApi.searchVideo(search, "video", "AIzaSyDtg9GVjWLW_KzJzyNPsMKTYOYD8YDrod8", "snippet,id", "20", "");
+        return  RetrofitYoutube.youtubeApi.searchVideo(search, "video", YoutubeConfig.getYtApiKey(), "snippet,id", "20", "");
     }
 
 
@@ -67,9 +69,6 @@ public void addPlaylist(Playlist_card playlist_card)
             .subscribe();
 
 }
-
-
-
 
 
 public Flowable<Playlist_card> getPlaylist(int id)

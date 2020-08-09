@@ -8,10 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.IBinder;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-
 import com.example.youtubebg.R;
 
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
@@ -133,9 +129,7 @@ public class Floating_Window_Service extends Service {
 
         creatNotification();
         this.registerReceiver(broadcastReceiver, new IntentFilter("track"));
-        LayoutInflater li = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-       View myview = li.inflate(R.layout.youtubeplayer_service, null);
-         youTubePlayerView = myview.findViewById(R.id.youtube_player_view);
+         youTubePlayerView = new YouTubePlayerView(this);
         youTubePlayerView.setEnableAutomaticInitialization(false);
         youTubePlayerView.initialize(listener,false);
     }
@@ -148,6 +142,7 @@ ids = intent.getStringArrayListExtra("ids");
         return super.onStartCommand(intent, flags, startId);
     }
 
+
     private void creatNotification()
     {
         NotificationChannel channel = new NotificationChannel("channel1","name", NotificationManager.IMPORTANCE_HIGH);
@@ -157,6 +152,7 @@ if(notificationManager != null)
     notificationManager.createNotificationChannel(channel);
 }
     }
+
 
 
     public void onTrackPrevious() {
@@ -175,7 +171,7 @@ if(notificationManager != null)
         startForeground(1, Notification.createNotification(this, names.get(position),
                 R.drawable.ic_pause_black_24dp, position, names.size()-1));
 isPlaying=true;
-youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::play);
+youTubePlayerView.getYouTubePlayerWhenReady(youTubePlayer -> youTubePlayer.play());
 
 
     }
@@ -187,7 +183,7 @@ youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::play);
                 R.drawable.ic_play_arrow_black_24dp, position, names.size()-1));
 
 isPlaying=false;
-        youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::pause);
+        youTubePlayerView.getYouTubePlayerWhenReady(youTubePlayer -> youTubePlayer.pause());
 
     }
 
@@ -209,7 +205,7 @@ isPlaying=false;
     }
     youTubePlayerView.release();
 unregisterReceiver(broadcastReceiver);
-youTubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::pause);
+youTubePlayerView.getYouTubePlayerWhenReady(youTubePlayer -> youTubePlayer.pause());
     }
 
     @Nullable

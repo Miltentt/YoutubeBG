@@ -52,7 +52,7 @@ public class Fragment_Player_Youtube extends Fragment {
         youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.flYoutubePlayer, youTubePlayerFragment).commit();
-        youTubePlayerFragment.initialize(YoutubeConfig.getYtApi(), new YouTubePlayer.OnInitializedListener() {
+        youTubePlayerFragment.initialize(YoutubeConfig.getYtApiKey(), new YouTubePlayer.OnInitializedListener() {
 
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider arg0, YouTubePlayer youTubePlayer, boolean b) {
@@ -76,7 +76,7 @@ public class Fragment_Player_Youtube extends Fragment {
           youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
           FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
           transaction.replace(R.id.flYoutubePlayer, youTubePlayerFragment).commit();
-        youTubePlayerFragment.initialize(YoutubeConfig.getYtApi(), new YouTubePlayer.OnInitializedListener() {
+        youTubePlayerFragment.initialize(YoutubeConfig.getYtApiKey(), new YouTubePlayer.OnInitializedListener() {
 
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider arg0, YouTubePlayer youTubePlayer, boolean b) {
