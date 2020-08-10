@@ -3,7 +3,6 @@ package com.example.youtubebg.Search_Video.Adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.youtubebg.Models.Playlist_card;
@@ -35,7 +34,7 @@ public void setCallBack(adapterCallBack callBack)
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.playlist_popup_recycler,parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_playlist_popup,parent, false);
 
 
         return new MyViewHolder(itemView);

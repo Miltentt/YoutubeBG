@@ -27,7 +27,6 @@ public Youtube_Player_ViewModel()
     public void createObservable(List<Video> videos)
     {
          observable = Flowable.fromIterable(videos)
-
         .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
@@ -38,15 +37,6 @@ public Flowable<Video> returVideos()
 }
 
 
-    public List<String> sendVideos(List<Video> videos)
-    {
-        List<String> ids = new LinkedList<>();
-        for(int i =0;i<videos.size();i++)
-        {
-            ids.add(videos.get(i).getId());
-        }
-        return ids;
-    }
 
 }
 

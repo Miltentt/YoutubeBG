@@ -2,10 +2,7 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <item android:title="Playlists"
-        android:id="@+id/playlist"
+    <item android:title="Delete"
+        android:id="@+id/delete"
         ></item>
-    <item android:title="Search"
-        android:id="@+id/search" ></item>
-
 </menu>

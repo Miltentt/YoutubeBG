@@ -35,7 +35,7 @@
             android:paddingBottom="10dp"
             android:text="TextView"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@android:color/primary_text_dark"
+            android:textColor="@android:color/darker_gray"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/thumbnail"
             app:layout_constraintLeft_toLeftOf="@id/thumbnail" />

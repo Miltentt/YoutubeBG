@@ -22,6 +22,7 @@ private LiveData<List<Playlist_card>> livedata_playlists;
         livedata_playlists = LiveDataReactiveStreams.fromPublisher(repository.getPlaylists()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()));
+
     }
 
 public LiveData<List<Playlist_card>> returnPlaylists()

@@ -15,13 +15,16 @@ import androidx.lifecycle.ViewModel;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
+import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity_ViewModel extends AndroidViewModel {
     private Youtube_BG_Repository repository;
-    private Single Search_response;
-
+    private Single<Search_Response> search_response;
+private CompositeDisposable disposable;
 
 
     public MainActivity_ViewModel(Application application) {
@@ -33,16 +36,33 @@ super(application);
 
     public Single getObservable() {
 
-        return Search_response;
+        return search_response;
     }
 
 
     public void getSearch(String search)
 
     {
-        Search_response =repository.getSearch(search)
+       search_response=  repository.getSearch(search)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+             search_response.subscribe(new SingleObserver<Search_Response>() {
+                 @Override
+                 public void onSubscribe(Disposable d) {
+                     disposable.add(d);
+                 }
+
+                 @Override
+                 public void onSuccess(Search_Response search_response) {
+
+                 }
+
+                 @Override
+                 public void onError(Throwable e) {
+
+                 }
+             });
+
     }
 
 
