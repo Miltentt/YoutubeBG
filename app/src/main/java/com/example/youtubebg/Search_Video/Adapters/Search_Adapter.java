@@ -48,7 +48,10 @@ public class Search_Adapter extends RecyclerView.Adapter<Search_Adapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.title.setText(results.get(position).getSnippet().getTitle());
-        Picasso.get().load(results.get(position).getSnippet().getThumbnails().getDefault().getUrl()).into(holder.thumbnail);
+        Picasso.get().load(results.get(position).getSnippet().getThumbnails().getDefault().getUrl())
+                .resize(480,271)
+                .centerCrop()
+                .into(holder.thumbnail);
         holder.add.setOnClickListener(e->{ openDialog(results.get(position)); });
         holder.thumbnail.setOnClickListener(e-> PlayVideo(position));
     }

@@ -9,8 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:text="Playlists"
         android:gravity="center"
+        android:text="Playlists"
+        android:textColor="@color/design_default_color_on_secondary"
         android:textSize="40sp" />
 
     <View
@@ -28,6 +29,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Create a new Playlist..."
+        android:textColor="@color/design_default_color_on_secondary"
         android:textSize="30sp" />
 
     <View

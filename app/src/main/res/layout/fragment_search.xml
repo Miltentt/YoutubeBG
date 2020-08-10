@@ -19,7 +19,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:textColor="@android:color/darker_gray"
-            android:imeOptions="actionSend"/>
+            android:imeOptions="actionGo"/>
 
         <ImageButton
             android:id="@+id/imageButton"

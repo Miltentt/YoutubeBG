@@ -4,7 +4,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+
+
+import androidx.appcompat.widget.AppCompatImageView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,7 +47,10 @@ public class Delete_Playlist_Adapter extends RecyclerView.Adapter<Delete_Playlis
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.title.setText(results.get(position).getName());
-        Picasso.get().load(results.get(position).getPhoto()).into(holder.thumbnail);
+        Picasso.get().load(results.get(position).getPhoto())
+                .resize(480,271)
+                .centerCrop()
+                .into(holder.thumbnail);
         holder.delete.setOnClickListener(e->{ onClick(position); });
 
     }
@@ -59,7 +64,7 @@ public class Delete_Playlist_Adapter extends RecyclerView.Adapter<Delete_Playlis
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public ImageView thumbnail;
-        public ImageButton delete;
+        public ImageView delete;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title1);

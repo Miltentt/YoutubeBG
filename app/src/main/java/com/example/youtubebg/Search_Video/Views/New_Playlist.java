@@ -1,8 +1,9 @@
 package com.example.youtubebg.Search_Video.Views;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,15 +25,18 @@ private String title;
 @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_playlist);
+        setContentView(R.layout.activity_add_playlist);
         Bundle extras = getIntent().getExtras();
          photo = extras.getString("photo");
         id = extras.getString("id");
         title = extras.getString("names");
         name = findViewById(R.id.grav);
         new_playlist_viewModel = ViewModelProviders.of(this).get(New_Playlist_ViewModel.class);
+        initListener();
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener((v -> Next()));
     }
-    public void finish (View view)
+    public void Next()
     {
         if(name.getText().toString().equals(""))
         {
@@ -44,4 +48,18 @@ private String title;
         }
 
     }
+
+    public void initListener()
+    {
+        name.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
+        name.setOnEditorActionListener((v,actionID,e)-> {
+            if(actionID== EditorInfo.IME_ACTION_GO)
+            {
+                Next();
+                return true;
+            }
+            else return false;
+        });
+    }
+
 }

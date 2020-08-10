@@ -1,6 +1,5 @@
 package com.example.youtubebg.Playlists.Views;
 
-import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -147,7 +146,10 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        if (isMyServiceRunning(Floating_Window_Service.class) == true) {
+            Intent a = new Intent(YoutubePlayerr.this, Floating_Window_Service.class);
+            stopService(a);
+        }
         }
     }
 

@@ -4,6 +4,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.youtubebg.R;
@@ -50,7 +52,7 @@ public class Delete_Song_Adapter extends RecyclerView.Adapter<Delete_Song_Adapte
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView name;
-        ImageButton delete;
+        ImageView delete;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

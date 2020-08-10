@@ -36,7 +36,7 @@ public class Fragment_search extends Fragment {
         searchButton.setOnClickListener(e->searchh());
         searchEditText.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
 searchEditText.setOnEditorActionListener((v,actionID,e)-> {
-    if(actionID== EditorInfo.IME_ACTION_SEND)
+    if(actionID== EditorInfo.IME_ACTION_GO)
     {
         searchh();
         return true;

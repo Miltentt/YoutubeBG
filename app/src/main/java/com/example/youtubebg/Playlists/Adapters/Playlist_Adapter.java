@@ -41,7 +41,9 @@ public interface callBack{
 
     @Override
     public void onBindViewHolder(@NonNull Playlist_Adapter.MyViewHolder holder, int position) {
-        Picasso.get().load(card.get(position).getPhoto()).into(holder.video);
+        Picasso.get().load(card.get(position).getPhoto())   .resize(480,271)
+                .centerCrop()
+                .into(holder.video);
         holder.name.setText(card.get(position).getName());
         holder.video.setOnClickListener(e->onClick(position));
     }
