@@ -10,6 +10,8 @@ import com.example.youtubebg.Repository.Youtube_BG_Repository;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
@@ -26,10 +28,10 @@ public class Playlist_DialogFragment_ViewModel extends ViewModel {
 
     }
 
-public Flowable<List<Playlist_card>> returnPlaylists()
+public LiveData<List<Playlist_card>> returnPlaylists()
 {
-    return repository.getPlaylists().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread());
+    return LiveDataReactiveStreams.fromPublisher(repository.getPlaylists().subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()));
 
 }
 

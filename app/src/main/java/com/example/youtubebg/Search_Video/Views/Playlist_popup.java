@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,14 +46,15 @@ this.item=item;
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        playlist_dialogFragment_viewModel = ViewModelProviders.of(this).get(Playlist_DialogFragment_ViewModel.class);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.playlist_popup,null,false);
         recyclerView = view.findViewById(R.id.playlists);
         builder.setView(view);
         initObserver();
         initRecycler();
-        playlist_dialogFragment_viewModel = ViewModelProviders.of(this).get(Playlist_DialogFragment_ViewModel.class);
-       playlist_dialogFragment_viewModel.returnPlaylists().subscribeWith(observer);
+
+
 
        TextView create_new_playlist = view.findViewById(R.id.textView3);
 create_new_playlist.setOnClickListener(e->newplaylist());
@@ -62,7 +64,6 @@ create_new_playlist.setOnClickListener(e->newplaylist());
 
     public void initRecycler()
     {
-        Log.i("xd","recycler");
         adapter = new Popup_adapter(new LinkedList<Playlist_card>());
         adapter.setCallBack(this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -78,14 +79,12 @@ create_new_playlist.setOnClickListener(e->newplaylist());
 
 public void newplaylist ()
 {
-
     Intent i = new Intent(getActivity(), New_Playlist.class);
     i.putExtra("photo",item.getSnippet().getThumbnails().getDefault().getUrl());
     i.putExtra("id",item.getId().getVideoId());
     i.putExtra("names",item.getSnippet().getTitle());
     startActivityForResult(i,1);
     dismiss();
-
 }
 
     @Override
@@ -96,27 +95,11 @@ dismiss();
 
 
     private void initObserver() {
-        observer = new FlowableSubscriber<List<Playlist_card>>() {
-
-
-            @Override
-            public void onSubscribe(Subscription s) {
-                s.request(Long.MAX_VALUE);
-            }
-
-            @Override
-            public void onNext(List<Playlist_card> playlist_cards) {
-                adapter.update(playlist_cards);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        };
+playlist_dialogFragment_viewModel.returnPlaylists().observe(this, new Observer<List<Playlist_card>>() {
+    @Override
+    public void onChanged(List<Playlist_card> playlist_cards) {
+        adapter.update(playlist_cards);
+    }
+});
     }
 }

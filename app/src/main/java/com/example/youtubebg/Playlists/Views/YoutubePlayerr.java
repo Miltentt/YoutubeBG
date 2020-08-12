@@ -21,6 +21,7 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,9 +34,6 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
     private Youtube_Player_ViewModel youtube_player_viewModel;
     private Fragment_Player_Youtube youtube_player_fragment;
     private FlowableSubscriber<Video> observer;
-    private List<String> ids = new ArrayList<>();
-    private List<String> names = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -46,7 +44,7 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
 
         initRecycler();
         initObserver();
-        youtube_player_viewModel.returVideos().subscribeWith(observer);
+
         initFragment();
 
 
@@ -60,8 +58,8 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
 
     public void StartFloating() {
         Intent i = new Intent(YoutubePlayerr.this, Floating_Window_Service.class);
-        i.putStringArrayListExtra("names", (ArrayList) names);
-        i.putStringArrayListExtra("ids", (ArrayList) ids);
+        i.putStringArrayListExtra("names", (ArrayList) youtube_player_viewModel.returnNames());
+        i.putStringArrayListExtra("ids", (ArrayList) youtube_player_viewModel.returnIds());
         startForegroundService(i);
     }
 
@@ -103,29 +101,12 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
     }
 
     private void initObserver() {
-        observer = new FlowableSubscriber<Video>() {
-            @Override
-            public void onSubscribe(Subscription s) {
-                s.request(Long.MAX_VALUE);
-            }
-
-            @Override
-            public void onNext(Video s) {
-                names.add(s.getTitles());
-                ids.add(s.getId());
-                adapter.updateAdapter(names);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        };
+       youtube_player_viewModel.returNamesLiveData().observe(this, new Observer<List<String>>() {
+           @Override
+           public void onChanged(List<String> strings) {
+               adapter.updateAdapter(strings);
+           }
+       });
     }
 
     public void initRecycler() {
@@ -137,7 +118,7 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
     }
 
     public void initFragment() {
-        youtube_player_fragment = Fragment_Player_Youtube.newInstance(ids);
+        youtube_player_fragment = Fragment_Player_Youtube.newInstance(youtube_player_viewModel.returnIds());
         Fragment_Player_Youtube youtubeFragment = youtube_player_fragment;
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flYoutube, youtubeFragment).commit();
@@ -151,5 +132,6 @@ public class YoutubePlayerr extends AppCompatActivity implements Play_Playlist_A
             stopService(a);
         }
         }
-    }
+
+}
 

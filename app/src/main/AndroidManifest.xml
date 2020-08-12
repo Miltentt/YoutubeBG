@@ -28,7 +28,7 @@
         </activity>
         <activity android:name=".Playlists.Views.Playlists_MainActivity">
         </activity>
-        <activity android:name=".Playlists.Views.YoutubePlayerr">
+        <activity android:name=".Playlists.Views.YoutubePlayerr" android:configChanges="orientation|screenSize">
 
             <intent-filter>
                 <action android:name="com.iphonik.chameleon.AppPreferenceActivity" />

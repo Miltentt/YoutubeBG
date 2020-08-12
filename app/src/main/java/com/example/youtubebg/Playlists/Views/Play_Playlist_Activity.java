@@ -94,4 +94,10 @@ play_playlist_sharedViewModel = ViewModelProviders.of(this).get(Play_Playlist_Sh
                 .replace(R.id.playlist_view,fragment_play_playlist)
                 .commit();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        play_playlist_sharedViewModel.removeVideos();
+    }
 }

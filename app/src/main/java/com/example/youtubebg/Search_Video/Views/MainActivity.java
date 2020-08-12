@@ -11,6 +11,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,10 +31,8 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
     private RecyclerView recyclerView;
     private Search_Adapter adapter;
     private MainActivity_ViewModel mainActivity_viewModel;
-    private SingleObserver<Search_Response> observer;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private CompositeDisposable disposable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,17 +40,13 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
         mainActivity_viewModel = ViewModelProviders.of(this).get(MainActivity_ViewModel.class);
         initRecycler();
         initDrawer();
+        initObserver();
 
     }
 
     @Override
     public void search(String search) {
         mainActivity_viewModel.getSearch(search);
-      if(observer==null)
-      {
-          initObserver();
-      }
-        mainActivity_viewModel.getObservable().subscribe(observer);
     }
 
 
@@ -72,7 +67,12 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
 
     private void initObserver()
     {
-        observer.onSuccess((Search_Response)t->adapter.updateList());
+       mainActivity_viewModel.getLivedata().observe(this, new Observer<Search_Response>() {
+           @Override
+           public void onChanged(Search_Response search_response) {
+               adapter.updateList(search_response.getItems());
+           }
+       });
     }
 
     public void initDrawer()

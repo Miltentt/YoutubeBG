@@ -23,7 +23,6 @@ import com.example.youtubebg.R;
 import java.util.LinkedList;
 
 public class Fragment_Delete_Songs extends Fragment implements Delete_Song_Adapter.adapterCallBack {
-    private Playlist_card playlist_cardd;
     private Delete_Song_Adapter adapter;
     private RecyclerView recyclerView;
     private Play_Playlist_SharedViewModel play_playlist_sharedViewModel;
@@ -42,7 +41,7 @@ public class Fragment_Delete_Songs extends Fragment implements Delete_Song_Adapt
     @Override
     public void removeVideo(int position) {
 
-        play_playlist_sharedViewModel.deletesong(position,playlist_cardd);
+        play_playlist_sharedViewModel.deletesong(position);
 
     }
 
@@ -60,7 +59,7 @@ public class Fragment_Delete_Songs extends Fragment implements Delete_Song_Adapt
             @Override
             public void onChanged(Playlist_card playlist_card) {
                 adapter.updateAdapter(playlist_card.getNames());
-               playlist_cardd=playlist_card;
+
             }
         });
 

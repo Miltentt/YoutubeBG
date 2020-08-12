@@ -25,8 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class Fragment_Play_Playlist extends Fragment implements Play_Playlist_Adapter.adapterCallBack {
     private Play_Playlist_Adapter adapter;
     private RecyclerView recyclerView;
-    private Playlist_card card;
-    private int id;
     Play_Playlist_SharedViewModel play_playlist_sharedViewModel;
 
     @Nullable
@@ -43,7 +41,7 @@ public class Fragment_Play_Playlist extends Fragment implements Play_Playlist_Ad
     @Override
     public void saveVideo(int position) {
         Intent i = new Intent(getContext(), YoutubePlayerr.class);
-        i.putExtra("videos", (Serializable) play_playlist_sharedViewModel.shufflePlaylist(position,card));
+        i.putExtra("videos", (Serializable) play_playlist_sharedViewModel.shufflePlaylist(position));
         startActivity(i);
     }
 
@@ -65,7 +63,6 @@ public void initRecycler(View v)
             @Override
             public void onChanged(Playlist_card playlist_card) {
                 adapter.updateAdapter(playlist_card.getNames());
-                card=playlist_card;
             }
         });
     }
