@@ -31,4 +31,4 @@ This project makes use of:
 
  ## Status
  
- Although lacking some features (e.g. playing a playlist in normal order, lack of autocomplete for Youtube video search), I am pretty happy with how this app turns out. Since I made it for personal use, it has all the features that I intended to implement and for now I am done with this project
+ Although lacking some features (e.g. playing a playlist in normal order, lack of autocomplete for Youtube video search), I am pretty happy with how this app turned out. Since I made it for personal use and it has all the features that I intended to implement, for now I am done with this project
