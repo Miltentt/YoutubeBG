@@ -29,3 +29,6 @@ This project makes use of:
 ![Screenshot_125](https://user-images.githubusercontent.com/49290632/90128647-7c991a80-dd67-11ea-9759-8dcf8c6020e7.png)
 ![lolll](https://user-images.githubusercontent.com/49290632/90129727-77d56600-dd69-11ea-81be-72d62af9afc2.png)
 
+ ## Status
+ 
+ Although lacking some features (e.g. playing a playlist in normal order, lack of autocomplete for Youtube video search), I am pretty happy with how this app turns out. Since I made it for personal use, it has all the features that I intended to implement and for now I am done with this project
