@@ -5,7 +5,7 @@ YoutubeBG is an application for Android devices, that let's you browse through Y
 
 ## Technologies
 
--RxJava 2
--Retrofit
--Room Database
+- RxJava 2
+- Retrofit
+- Room Database
 - Design patter - MVVM
