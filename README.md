@@ -16,6 +16,6 @@ YoutubeBG is an application for Android devices, that let's you browse through Y
 This project makes use of:
 - Youtube Data API
 - Youtube Player API
-- [PierfrancescoSoffritti's android-youtube-player] (https://github.com/PierfrancescoSoffritti/android-youtube-player)
+- [PierfrancescoSoffritti's android-youtube-player](https://github.com/PierfrancescoSoffritti/android-youtube-player)
 
 
