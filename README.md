@@ -8,8 +8,8 @@ YoutubeBG is an application for Android devices, that let's you browse through Y
 - RxJava 2
 - Retrofit
 - Room Database
-- Design patter - MVVM
 - LiveData
+- Design pattern - MVVM
 
 ## Dependencies
 
@@ -18,4 +18,11 @@ This project makes use of:
 - Youtube Player API
 - [PierfrancescoSoffritti's android-youtube-player](https://github.com/PierfrancescoSoffritti/android-youtube-player)
 
+## Features
+
+- Browse and play Youtube videos
+- Create a playlist of videos, shuffle and play them
+- Turn on the background option and listen to the videos in the background or with the locked screen
+
+![Screenshot_123](https://user-images.githubusercontent.com/49290632/90128638-799e2a00-dd67-11ea-8462-22d0729b9798.png)
 
