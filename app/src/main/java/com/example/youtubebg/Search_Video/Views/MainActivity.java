@@ -3,6 +3,7 @@ package com.example.youtubebg.Search_Video.Views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -100,6 +101,14 @@ public class MainActivity extends AppCompatActivity implements Fragment_search.s
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            drawerLayout.openDrawer(Gravity.LEFT);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 

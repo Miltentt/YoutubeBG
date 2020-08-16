@@ -37,10 +37,10 @@ public class Floating_Window_Service extends Service {
             String action = intent.getExtras().getString("actionname");
 
             switch (action) {
-                case Notification.ACTION_PREVIUOS:
+                case NotificationUtil.ACTION_PREVIUOS:
                     onTrackPrevious();
                     break;
-                case Notification.ACTION_PLAY:
+                case NotificationUtil.ACTION_PLAY:
                     if (isPlaying) {
 
                         onTrackPause();
@@ -49,7 +49,7 @@ public class Floating_Window_Service extends Service {
 
                     }
                     break;
-                case Notification.ACTION_NEXT: {
+                case NotificationUtil.ACTION_NEXT: {
                     onTrackNext();
                     break;
                 }
@@ -113,7 +113,7 @@ public class Floating_Window_Service extends Service {
                 if (playerState == PlayerConstants.PlayerState.ENDED) {
                     position++;
                     youTubePlayer.loadVideo(ids.get(position), 0f);
-                    startForeground(1, Notification.createNotification(Floating_Window_Service.this, names.get(position),
+                    startForeground(1, NotificationUtil.createNotification(Floating_Window_Service.this, names.get(position),
                             R.drawable.ic_pause_black_24dp, position, names.size() - 1));
                 }
             }
@@ -141,10 +141,14 @@ public class Floating_Window_Service extends Service {
     private void creatNotification()
     {
         NotificationChannel channel = new NotificationChannel("channel1","name", NotificationManager.IMPORTANCE_HIGH);
+        channel.setSound(null,null);
+
+
         notificationManager = getSystemService(NotificationManager.class);
 if(notificationManager != null)
 {
     notificationManager.createNotificationChannel(channel);
+
 }
     }
 
@@ -153,7 +157,7 @@ if(notificationManager != null)
     public void onTrackPrevious() {
 
         position--;
-        startForeground(1,  Notification.createNotification(this, names.get(position),
+        startForeground(1,  NotificationUtil.createNotification(this, names.get(position),
                 R.drawable.ic_pause_black_24dp, position, names.size()-1));
 
         youTubePlayerView.getYouTubePlayerWhenReady(youTubePlayer -> youTubePlayer.loadVideo(ids.get(position),0f));
@@ -163,7 +167,7 @@ if(notificationManager != null)
 
     public void onTrackPlay() {
 
-        startForeground(1, Notification.createNotification(this, names.get(position),
+        startForeground(1, NotificationUtil.createNotification(this, names.get(position),
                 R.drawable.ic_pause_black_24dp, position, names.size()-1));
 isPlaying=true;
 youTubePlayerView.getYouTubePlayerWhenReady(youTubePlayer -> youTubePlayer.play());
@@ -174,7 +178,7 @@ youTubePlayerView.getYouTubePlayerWhenReady(youTubePlayer -> youTubePlayer.play(
 
     public void onTrackPause() {
 
-        startForeground(1, Notification.createNotification(this, names.get(position),
+        startForeground(1, NotificationUtil.createNotification(this, names.get(position),
                 R.drawable.ic_play_arrow_black_24dp, position, names.size()-1));
 
 isPlaying=false;
@@ -186,7 +190,7 @@ isPlaying=false;
     public void onTrackNext() {
 
         position++;
-        startForeground(1,Notification.createNotification(this, names.get(position),
+        startForeground(1, NotificationUtil.createNotification(this, names.get(position),
                 R.drawable.ic_pause_black_24dp, position, names.size()-1));
         youTubePlayerView.getYouTubePlayerWhenReady(youTubePlayer -> youTubePlayer.loadVideo(ids.get(position),0f));
 

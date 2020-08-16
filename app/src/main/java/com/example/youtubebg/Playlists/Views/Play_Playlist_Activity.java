@@ -2,6 +2,7 @@ package com.example.youtubebg.Playlists.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -54,6 +55,12 @@ play_playlist_sharedViewModel = ViewModelProviders.of(this).get(Play_Playlist_Sh
                         .commit();
                 break;
             }
+          case android.R.id.home: {
+                drawerLayout.openDrawer(Gravity.LEFT);
+                break;
+            }
+
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -100,4 +107,5 @@ play_playlist_sharedViewModel = ViewModelProviders.of(this).get(Play_Playlist_Sh
         super.onPause();
         play_playlist_sharedViewModel.removeVideos();
     }
+
 }

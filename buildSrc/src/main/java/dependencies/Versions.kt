@@ -4,7 +4,7 @@ object Versions {
 
     val gradle = "3.5.3"
     val compilesdk = 28
-    val minsdk = 21
+    val minsdk = 26
     val targetsdk = 28
     val kotlin = "1.3.61"
     val nav_components = "2.3.0-alpha06"

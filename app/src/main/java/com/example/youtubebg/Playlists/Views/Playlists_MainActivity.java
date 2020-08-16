@@ -3,6 +3,7 @@ package com.example.youtubebg.Playlists.Views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -63,7 +64,10 @@ initiateFragment();
                         .addToBackStack(null)
                         .commit();
             }
-
+            case android.R.id.home: {
+                drawerLayout.openDrawer(Gravity.LEFT);
+                break;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
